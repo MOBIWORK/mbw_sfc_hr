@@ -1,5 +1,5 @@
-app_name = "mbw_sfc_hr"
-app_title = "MBW SFC HR"
+app_name = "SFC HR"
+app_title = "SFC HR"
 app_publisher = "mbw"
 app_description = "for Hr"
 app_email = "mbw@gmail.com"

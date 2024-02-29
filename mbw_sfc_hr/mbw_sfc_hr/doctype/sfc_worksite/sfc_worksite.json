@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-02-21 11:31:57.529006",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_break1",
+  "name_address",
+  "address",
+  "geofence",
+  "status",
+  "column_break1",
+  "map",
+  "longitude",
+  "latitude",
+  "tab_break2",
+  "is_limited",
+  "employees",
+  "mac",
+  "wifi"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_break1",
+   "fieldtype": "Tab Break",
+   "label": "Location Information"
+  },
+  {
+   "fieldname": "name_address",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Location Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Addresses",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geofence",
+   "fieldtype": "Float",
+   "label": "Radius"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nLock",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "map",
+   "fieldtype": "Geolocation",
+   "label": "Map"
+  },
+  {
+   "fieldname": "longitude",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Longitude"
+  },
+  {
+   "fieldname": "latitude",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Latitude"
+  },
+  {
+   "fieldname": "tab_break2",
+   "fieldtype": "Tab Break",
+   "label": "Configure"
+  },
+  {
+   "default": "Setting Employee",
+   "fieldname": "is_limited",
+   "fieldtype": "Select",
+   "label": "Employee Limit",
+   "options": "All employee\nSetting Employee"
+  },
+  {
+   "depends_on": "eval:doc.is_limited !==\"All employee\"",
+   "fieldname": "employees",
+   "fieldtype": "Table",
+   "label": "Employee",
+   "options": "SFC Employee child"
+  },
+  {
+   "fieldname": "mac",
+   "fieldtype": "Table",
+   "label": "Set up IP attendance",
+   "options": "SFC Worksite Ip intermediate"
+  },
+  {
+   "fieldname": "wifi",
+   "fieldtype": "Table",
+   "label": "Set up Mac attendance",
+   "options": "SFC Worksite Wifi intermediate"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-27 08:52:22.314676",
+ "modified_by": "Administrator",
+ "module": "MBW SFC HR",
+ "name": "sfc Worksite",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

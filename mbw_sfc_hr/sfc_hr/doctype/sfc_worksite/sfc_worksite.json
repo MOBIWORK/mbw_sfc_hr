@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2024-02-21 11:31:57.529006",
+ "creation": "2024-02-29 16:44:15.060487",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -29,14 +29,12 @@
   {
    "fieldname": "name_address",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Location Name",
    "reqd": 1
   },
   {
    "fieldname": "address",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Addresses",
    "reqd": 1
   },
@@ -48,7 +46,6 @@
   {
    "fieldname": "status",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "label": "Status",
    "options": "Active\nLock",
    "reqd": 1
@@ -72,18 +69,17 @@
   {
    "fieldname": "latitude",
    "fieldtype": "Float",
-   "hidden": 1,
    "label": "Latitude"
   },
   {
    "fieldname": "tab_break2",
    "fieldtype": "Tab Break",
-   "label": "Configure"
+   "label": "  Configure"
   },
   {
    "default": "Setting Employee",
    "fieldname": "is_limited",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "label": "Employee Limit",
    "options": "All employee\nSetting Employee"
   },
@@ -109,7 +105,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-27 08:52:22.314676",
+ "modified": "2024-02-29 17:05:52.522856",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Worksite",

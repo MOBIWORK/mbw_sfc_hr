@@ -1,7 +1,7 @@
-app_name = "SFC HR"
+app_name = "mbw_sfc_hr"
 app_title = "SFC HR"
-app_publisher = "mbw"
-app_description = "for Hr"
+app_publisher = "MBW"
+app_description = "For HR"
 app_email = "mbw@gmail.com"
 app_license = "mit"
 # required_apps = []

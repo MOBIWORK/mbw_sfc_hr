@@ -227,3 +227,15 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+import frappe
+import csv
+
+def load_custom_translations():
+    translation_file_path = frappe.get_app_path("mbw_sfc_hr", "translations", "vi.csv")
+    with open(translation_file_path, newline='', encoding='utf-8') as csvfile:
+        translation_reader = csv.DictReader(csvfile)
+        for row in translation_reader:
+            frappe._dict(row)
+
+def after_install():
+    load_custom_translations()

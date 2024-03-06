@@ -18,7 +18,8 @@
   "is_limited",
   "employees",
   "mac",
-  "wifi"
+  "wifi",
+  "sfc_key"
  ],
  "fields": [
   {
@@ -101,11 +102,16 @@
    "fieldtype": "Table",
    "label": "Set up Mac attendance",
    "options": "SFC Worksite Wifi intermediate"
+  },
+  {
+   "fieldname": "sfc_key",
+   "fieldtype": "Data",
+   "label": "SFC Key"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-29 17:05:52.522856",
+ "modified": "2024-03-06 09:54:21.200065",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Worksite",

@@ -106,12 +106,13 @@
   {
    "fieldname": "sfc_key",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "SFC Key"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-06 09:54:21.200065",
+ "modified": "2024-03-06 15:32:44.575378",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Worksite",

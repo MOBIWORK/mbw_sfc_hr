@@ -32,7 +32,7 @@
   "label": "SFC Key",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2024-03-06 15:31:52.359618",
+  "modified": "2024-03-07 09:19:45.269062",
   "module": "SFC HR",
   "name": "Company-custom_sfc_key",
   "no_copy": 0,
@@ -51,7 +51,7 @@
   "show_dashboard": 0,
   "sort_options": 0,
   "translatable": 1,
-  "unique": 0,
+  "unique": 1,
   "width": null
  },
  {
@@ -87,7 +87,7 @@
   "label": "SFC Key",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2024-03-06 15:32:06.511265",
+  "modified": "2024-03-07 09:19:37.990327",
   "module": "SFC HR",
   "name": "Department-custom_sfc_key",
   "no_copy": 0,
@@ -106,7 +106,7 @@
   "show_dashboard": 0,
   "sort_options": 0,
   "translatable": 1,
-  "unique": 0,
+  "unique": 1,
   "width": null
  },
  {
@@ -142,7 +142,7 @@
   "label": "SFC Key",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2024-03-06 15:32:12.559724",
+  "modified": "2024-03-07 09:19:26.716108",
   "module": "SFC HR",
   "name": "Employee-custom_sfc_key",
   "no_copy": 0,
@@ -161,7 +161,7 @@
   "show_dashboard": 0,
   "sort_options": 0,
   "translatable": 1,
-  "unique": 0,
+  "unique": 1,
   "width": null
  },
  {
@@ -197,7 +197,7 @@
   "label": "SFC Key",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2024-03-06 15:32:19.744779",
+  "modified": "2024-03-07 09:19:13.381402",
   "module": "SFC HR",
   "name": "Shift Type-custom_sfc_key",
   "no_copy": 0,
@@ -216,7 +216,7 @@
   "show_dashboard": 0,
   "sort_options": 0,
   "translatable": 1,
-  "unique": 0,
+  "unique": 1,
   "width": null
  },
  {
@@ -621,7 +621,7 @@
   "fetch_if_empty": 0,
   "fieldname": "sfc_key",
   "fieldtype": "Data",
-  "hidden": 0,
+  "hidden": 1,
   "hide_border": 0,
   "hide_days": 0,
   "hide_seconds": 0,
@@ -637,7 +637,7 @@
   "label": "SFC Key",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2024-03-06 11:21:34.294164",
+  "modified": "2024-03-07 09:19:07.346013",
   "module": "SFC HR",
   "name": "Attendance-custom_sfc_key",
   "no_copy": 0,
@@ -656,7 +656,7 @@
   "show_dashboard": 0,
   "sort_options": 0,
   "translatable": 1,
-  "unique": 0,
+  "unique": 1,
   "width": null
  },
  {

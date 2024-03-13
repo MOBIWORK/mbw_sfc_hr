@@ -1,0 +1,270 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-03-13 14:47:46.574637",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_id",
+  "employee_name",
+  "job_title",
+  "department",
+  "work_hours_monthly",
+  "number_of_hours_monthly",
+  "late_arrival_time_monthly",
+  "late_arrival_work_monthly",
+  "number_of_late_arrival",
+  "early_arrival_time_monthly",
+  "early_arrival_work_monthly",
+  "number_of_early_arrival",
+  "number_work_absent_monthly",
+  "number_hour_absent_monthly",
+  "number_absent",
+  "number_of_breaktime",
+  "number_of_holiday_monthly",
+  "column_break_mso7",
+  "work_of_mission_monthly",
+  "extra_hours_monthly",
+  "extra_hour_holiday_monthly",
+  "extra_hour_off_monthly",
+  "extra_hour_day_monthly",
+  "extra_hour_night_monthly",
+  "number_of_extra_hour",
+  "overtime_hours_monthly",
+  "overtime_works_monthly",
+  "overtime_hour_holiday_monthly",
+  "overtime_hour_off_monthly",
+  "number_of_overtime",
+  "number_of_checkin_shift_monthly",
+  "number_work_shift_monthly",
+  "number_hour_shift_monthly",
+  "number_work_holiday_monthly",
+  "number_hour_holiday_monthly",
+  "number_of_day_work",
+  "attendance_daily"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Id",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "job_title",
+   "fieldtype": "Data",
+   "label": "Job title"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Data",
+   "label": "Department"
+  },
+  {
+   "fieldname": "work_hours_monthly",
+   "fieldtype": "Float",
+   "label": "Work hours"
+  },
+  {
+   "fieldname": "number_of_hours_monthly",
+   "fieldtype": "Float",
+   "label": "Number of hours"
+  },
+  {
+   "fieldname": "late_arrival_time_monthly",
+   "fieldtype": "Float",
+   "label": "Late arrival time"
+  },
+  {
+   "fieldname": "late_arrival_work_monthly",
+   "fieldtype": "Float",
+   "label": "Late arrival work"
+  },
+  {
+   "fieldname": "number_of_late_arrival",
+   "fieldtype": "Int",
+   "label": "Number of late arrival"
+  },
+  {
+   "fieldname": "early_arrival_time_monthly",
+   "fieldtype": "Float",
+   "label": "Early arrival time monthly"
+  },
+  {
+   "fieldname": "early_arrival_work_monthly",
+   "fieldtype": "Float",
+   "label": "Early arrival work monthly"
+  },
+  {
+   "fieldname": "number_of_early_arrival",
+   "fieldtype": "Int",
+   "label": "Number of early arrival"
+  },
+  {
+   "fieldname": "number_work_absent_monthly",
+   "fieldtype": "Float",
+   "label": "Number work absent monthly"
+  },
+  {
+   "fieldname": "number_hour_absent_monthly",
+   "fieldtype": "Float",
+   "label": "Number hour absent monthly"
+  },
+  {
+   "fieldname": "number_absent",
+   "fieldtype": "Int",
+   "label": "Number absent"
+  },
+  {
+   "fieldname": "number_of_breaktime",
+   "fieldtype": "Int",
+   "label": "Number of break time"
+  },
+  {
+   "fieldname": "number_of_holiday_monthly",
+   "fieldtype": "Float",
+   "label": "Number of holiday monthly"
+  },
+  {
+   "fieldname": "work_of_mission_monthly",
+   "fieldtype": "Float",
+   "label": "Work of mission monthly"
+  },
+  {
+   "fieldname": "extra_hours_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hours monthly"
+  },
+  {
+   "fieldname": "extra_hour_holiday_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour holiday monthly"
+  },
+  {
+   "fieldname": "extra_hour_off_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour off monthly"
+  },
+  {
+   "fieldname": "extra_hour_day_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour day monthly"
+  },
+  {
+   "fieldname": "extra_hour_night_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour night"
+  },
+  {
+   "fieldname": "number_of_extra_hour",
+   "fieldtype": "Int",
+   "label": "Number of extra hour"
+  },
+  {
+   "fieldname": "overtime_hours_monthly",
+   "fieldtype": "Float",
+   "label": "Overtime hours monthly"
+  },
+  {
+   "fieldname": "overtime_works_monthly",
+   "fieldtype": "Float",
+   "label": "Overtime works monthly"
+  },
+  {
+   "fieldname": "overtime_hour_holiday_monthly",
+   "fieldtype": "Float",
+   "label": "Overtime hour holiday monthly"
+  },
+  {
+   "fieldname": "overtime_hour_off_monthly",
+   "fieldtype": "Float",
+   "label": "Overtime hour off monthly"
+  },
+  {
+   "fieldname": "number_of_overtime",
+   "fieldtype": "Int",
+   "label": "Number of overtime"
+  },
+  {
+   "fieldname": "number_of_checkin_shift_monthly",
+   "fieldtype": "Float",
+   "label": "Number of checkin shift monthly"
+  },
+  {
+   "fieldname": "number_work_shift_monthly",
+   "fieldtype": "Float",
+   "label": "Number work shift monthly"
+  },
+  {
+   "fieldname": "number_hour_shift_monthly",
+   "fieldtype": "Float",
+   "label": "Number hour shift monthly"
+  },
+  {
+   "fieldname": "number_work_holiday_monthly",
+   "fieldtype": "Float",
+   "label": "Number work holiday monthly"
+  },
+  {
+   "fieldname": "number_hour_holiday_monthly",
+   "fieldtype": "Float",
+   "label": "Number hour holiday"
+  },
+  {
+   "fieldname": "number_of_day_work",
+   "fieldtype": "Int",
+   "label": "Number of days work"
+  },
+  {
+   "fieldname": "attendance_daily",
+   "fieldtype": "Table",
+   "label": "Attendance Daily",
+   "options": "SFC Attendance Daily Report"
+  },
+  {
+   "fieldname": "column_break_mso7",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-03-13 18:32:16.803920",
+ "modified_by": "Administrator",
+ "module": "SFC HR",
+ "name": "SFC Attendance Monthly Report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

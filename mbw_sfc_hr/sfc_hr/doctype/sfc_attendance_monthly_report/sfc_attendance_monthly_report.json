@@ -5,6 +5,8 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "month",
+  "year",
   "employee",
   "employee_id",
   "employee_name",
@@ -241,11 +243,21 @@
   {
    "fieldname": "column_break_mso7",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Int",
+   "label": "Month"
+  },
+  {
+   "fieldname": "year",
+   "fieldtype": "Int",
+   "label": "Year"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-13 18:32:16.803920",
+ "modified": "2024-03-14 10:05:40.775233",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Monthly Report",

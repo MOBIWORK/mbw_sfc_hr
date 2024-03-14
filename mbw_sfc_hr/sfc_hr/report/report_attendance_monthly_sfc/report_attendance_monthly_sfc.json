@@ -1,0 +1,28 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2024-03-14 09:21:24.036082",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{}",
+ "letterhead": null,
+ "modified": "2024-03-14 09:22:20.272980",
+ "modified_by": "Administrator",
+ "module": "SFC HR",
+ "name": "Report Attendance Monthly SFC",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "SFC Attendance Monthly Report",
+ "reference_report": "",
+ "report_name": "Report Attendance Monthly SFC",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}

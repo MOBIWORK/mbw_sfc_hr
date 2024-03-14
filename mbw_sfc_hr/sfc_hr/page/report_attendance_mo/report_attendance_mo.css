@@ -1,0 +1,164 @@
+* {
+    box-sizing:  border-box;
+  }
+  
+  .table-area {
+      z-index: 0;
+    }
+    
+    .wrap-table {
+      width: 100%;
+      overflow-x: scroll;
+
+    }
+    
+    table, td, th {  
+      border: 1px solid #919191;
+      text-align: left;
+    }
+    .table-section {
+      position: relative;
+    }
+  
+    .table-section table {
+      border-collapse: collapse;
+    }
+    .table-section table thead tr td {
+      white-space: normal;
+      width: fit-content;
+      text-align: center;
+    }
+  
+    .table-section table thead tr:nth-child(2) td,.table-section tbody.body-table tr td  {
+      width:fit-content!important;
+    }
+  
+    .table-section tbody.body-table tr td {
+      text-align: right;
+    }
+  
+    .table-background-jobs {
+      margin-bottom: 0px;
+      margin-top: 0px;
+      font-size: var(--text-md);
+      table-layout: fixed;
+    }
+    
+    .table-background-jobs th {
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+    
+    .table-background-jobs td {
+      color: var(--text-light);
+    }
+    
+    .table-background-jobs th,
+    .table-background-jobs td {
+      padding: var(--padding-sm) var(--padding-md);
+    }
+    
+    .table-background-jobs tbody tr:hover {
+      background-color: var(--highlight-color);
+    }
+    
+    .job-name {
+      font-size: var(--text-md);
+      font-family: var(--font-family-monospace);
+      word-break: break-word;
+    }
+    
+    .no-background-jobs {
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    
+    .no-background-jobs > img {
+      margin-bottom: var(--margin-md);
+      max-height: 100px;
+    }
+    
+    .footer {
+      padding: var(--padding-md);
+    }
+    
+    .table-section {
+      position: relative;
+      width: 100%;
+      overflow-y: scroll;
+    }
+    table.table.table-background-jobs {
+      min-width: 10000px;
+      width: fit-content;
+      max-height: 500px!important;
+      overflow-y: scroll; 
+      table-layout: fixed;
+    }
+  
+    table.table.table-background-jobs thead {
+      font-weight: 600;
+      z-index: 2;
+      position: sticky;
+      top: 0; /* Đặt vị trí sticky ở đỉnh của phần tử cha */
+      background-color: #f2f2f2; /* Màu nền cho phần thead khi sticky */
+  }
+  
+  /* co dinh cot ten nhan vien*/
+  /* table tr td:first-child {
+    position: sticky!important;
+    left: 0;
+    background-color: #ffffff;
+    z-index: 2;
+  } */
+
+  table td {
+    white-space: nowrap!important;
+    width: fit-content!important;
+  }
+  /* table thead tr:first-child td:nth-child(-n+4) {
+    position: sticky!important;
+    left: 0;
+    background-color: #ffffff;
+    z-index: 2;
+  } */
+
+  /* table thead tr:nth-child(2) td:nth-child(-n+6),table tbody tr td:nth-child(-n+6)  {
+    left: 40px;
+  } */
+
+
+  
+  .table-section table tr td:first-child {
+    /* width: 40px; */
+  }
+  
+  
+  .table-section table tbody tr:last-child {
+    font-weight: 600;
+  }
+
+
+  ul.pagging {
+    margin-top: 20px;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    
+  }
+
+  ul.pagging li{
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  ul.pagging li:hover {
+    color: red;
+    background-color: antiquewhite;
+  }

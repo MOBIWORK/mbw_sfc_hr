@@ -1,0 +1,269 @@
+{% if list_data.data.length %}
+
+<div class="table-section">
+    <table class="table table-background-jobs">
+        <thead>
+            <tr>
+                <td class="sticky-col"></td>
+                <td colspan="3"  class="sticky-col"></td>
+                <td  class="sticky-col">Công tổng</td>
+                <td  class="sticky-col">Tổng</td>
+                <td></td>
+                <td></td>
+                <!-- ngày trong tuần -->
+                <td>T5</td>
+                <!-- .... -->
+                <td colspan="3">Đi muộn</td>
+                <td colspan="3">Về sớm</td>
+                <td colspan="3">Vắng mặt</td>
+                <!-- <td colspan="3 ">Công hợp đồng</td> -->
+                <td>Quên chốt</td>
+                <td>Nghỉ không lý do</td>
+                <td colspan="12">Nghỉ</td>
+                <td colspan="3">Công chính</td>
+                <td colspan="11">Làm thêm</td>
+                <td colspan="10">Tăng ca</td>
+                <td colspan="5">CS</td>
+                <td colspan="5">HC</td>
+                <td colspan="5">CC</td>
+                <td colspan="5">TS</td>
+                <td colspan="2">Làm việc ngày lễ</td>
+                <td colspan="3">Công hợp đồng</td>
+                <td >Ngày chấm công</td>
+                <td >Công chuẩn</td>
+
+            </tr>
+            <tr>
+                <td  class="sticky-col"></td>
+                <td  class="sticky-col">Mã nhân viên</td>
+                <td  class="sticky-col">Mã đang nhập</td>
+                <td  class="sticky-col">Nhân viên</td>
+                <!-- công  tổng -->
+                <td  class="sticky-col">Số giờ</td>
+                <!-- tổng  -->
+                <td  class="sticky-col">Số công</td>
+
+                <td>Chức danh</td>
+                <td>Phòng ban</td>
+                <!-- ngày trong tháng  -->
+                <td>1</td>
+                <!-- đi muộn  -->
+                <td>Số phút</td>
+                <td>Số lần </td>
+                <td>Công muộn</td>
+                <!-- về sớm  -->
+                <td>Số phút</td>
+                <td>Số lần </td>
+                <td>Công sớm</td>
+                <!-- vắng mặt  -->
+                <td>Số phút</td>
+                <td>Số lần </td>
+                <td>Số công</td>
+                <!-- quên chốt -->
+                <td>Số lần</td>
+                <!-- nghỉ không lý do  -->
+                <td>Số công</td>
+                <!-- nghỉ  -->
+                <td>KL-Công</td>
+                <td>KL-Giờ</td>
+                <td>KH-Công</td>
+                <td>KH-Giờ</td>
+                <td>TL3-Công</td>
+                <td>TL3-Giờ</td>
+                <td>TL1-Công</td>
+                <td>TL1-Giờ</td>
+                <td>TS-Công</td>
+                <td>TS-Giờ</td>
+                <td>P-Công</td>
+                <td>P-Giờ</td>
+                <!-- công chính -->
+                <td>Công ca</td>
+                <td>Công lễ</td>
+                <td>Công tác</td>
+                <!-- Làm thêm  -->
+                <td>Giờ nghỉ</td>
+                <td>Nghỉ ngày</td>
+                <td>Nghỉ đêm</td>
+                <td>Giờ lễ</td>
+                <td>Lễ ngày</td>
+                <td>Lễ đêm</td>
+                <td>Giờ ngày</td>
+                <td>Ngày</td>
+                <td>Đêm </td>
+                <td>Tổng giờ </td>
+                <td>Số lần</td>
+                <!-- tăng ca  -->
+                <td>Giờ nghỉ</td>
+                <td>Giờ lễ</td>
+                <td>Giờ ngày</td>
+                <td>Tổng giờ</td>
+                <td>Công nghỉ</td>
+                <td>Công lễ</td>
+                <td>Công ngày</td>
+                <td>Số công</td>
+                <td>Công chuẩn </td>
+                <td>Số lần</td>
+                <!-- Cs  -->
+                <td>Số giờ</td>
+                <td>Số Công</td>
+                <td>Công thực tế</td>
+                <td>Giờ thực tế</td>
+                <td>Số lần </td>
+                <!-- hc  -->
+                <td>Số giờ</td>
+                <td>Số Công</td>
+                <td>Công thực tế</td>
+                <td>Giờ thực tế</td>
+                <td>Số lần </td>
+                <!-- CC  -->
+                <td>Số giờ</td>
+                <td>Số Công</td>
+                <td>Công thực tế</td>
+                <td>Giờ thực tế</td>
+                <td>Số lần </td>
+                <!-- TS  -->
+                <td>Số giờ</td>
+                <td>Số Công</td>
+                <td>Công thực tế</td>
+                <td>Giờ thực tế</td>
+                <td>Số lần </td>
+                <!-- Làm việc ngày lễ -->
+                <td>Số công</td>
+                <td>Số giờ</td>
+                <!-- Công hợp đồng -->
+                <td>Ngày chính thức</td>
+                <td>Thử việc</td>
+                <td>Chính thức</td>
+                <!-- ngày chấm công  -->
+                <td>Số ngày</td>
+                <!-- Công chuẩn  -->
+                <td>Công chuẩn</td>
+
+            </tr>
+        </thead>
+        <tbody class="body-table">
+            <!-- {% for item in list_sync %} -->
+            <td>1</td>
+            <td>Mã nhân viên</td>
+            <td>Mã đang nhập</td>
+            <td>Nhân viên</td>
+            <!-- công  tổng -->
+            <td>Số giờ</td>
+            <!-- tổng  -->
+            <td>Số công</td>
+
+            <td>Chức danh</td>
+            <td>Phòng ban</td>
+            <!-- ngày trong tháng  -->
+            <td>1</td>
+            <!-- đi muộn  -->
+            <td>Số phút</td>
+            <td>Số lần </td>
+            <td>Công muộn</td>
+            <!-- về sớm  -->
+            <td>Số phút</td>
+            <td>Số lần </td>
+            <td>Công sớm</td>
+            <!-- vắng mặt  -->
+            <td>Số phút</td>
+            <td>Số lần </td>
+            <td>Số công</td>
+            <!-- quên chốt -->
+            <td>Số lần</td>
+            <!-- nghỉ không lý do  -->
+            <td>Số công</td>
+            <!-- nghỉ  -->
+            <td>KL-Công</td>
+            <td>KL-Giờ</td>
+            <td>KH-Công</td>
+            <td>KH-Giờ</td>
+            <td>TL3-Công</td>
+            <td>TL3-Giờ</td>
+            <td>TL1-Công</td>
+            <td>TL1-Giờ</td>
+            <td>TS-Công</td>
+            <td>TS-Giờ</td>
+            <td>P-Công</td>
+            <td>P-Giờ</td>
+            <!-- công chính -->
+            <td>Công ca</td>
+            <td>Công lễ</td>
+            <td>Công tác</td>
+            <!-- Làm thêm  -->
+            <td>Giờ nghỉ</td>
+            <td>Nghỉ ngày</td>
+            <td>Nghỉ đêm</td>
+            <td>Giờ lễ</td>
+            <td>Lễ ngày</td>
+            <td>Lễ đêm</td>
+            <td>Giờ ngày</td>
+            <td>Ngày</td>
+            <td>Đêm </td>
+            <td>Tổng giờ </td>
+            <td>Số lần</td>
+            <!-- tăng ca  -->
+            <td>Giờ nghỉ</td>
+            <td>Giờ lễ</td>
+            <td>Giờ ngày</td>
+            <td>Tổng giờ</td>
+            <td>Công nghỉ</td>
+            <td>Công lễ</td>
+            <td>Công ngày</td>
+            <td>Số công</td>
+            <td>Công chuẩn </td>
+            <td>Số lần</td>
+            <!-- Cs  -->
+            <td>Số giờ</td>
+            <td>Số Công</td>
+            <td>Công thực tế</td>
+            <td>Giờ thực tế</td>
+            <td>Số lần </td>
+            <!-- hc  -->
+            <td>Số giờ</td>
+            <td>Số Công</td>
+            <td>Công thực tế</td>
+            <td>Giờ thực tế</td>
+            <td>Số lần </td>
+            <!-- CC  -->
+            <td>Số giờ</td>
+            <td>Số Công</td>
+            <td>Công thực tế</td>
+            <td>Giờ thực tế</td>
+            <td>Số lần </td>
+            <!-- TS  -->
+            <td>Số giờ</td>
+            <td>Số Công</td>
+            <td>Công thực tế</td>
+            <td>Giờ thực tế</td>
+            <td>Số lần </td>
+            <!-- Làm việc ngày lễ -->
+            <td>Số công</td>
+            <td>Số giờ</td>
+            <!-- Công hợp đồng -->
+            <td>Ngày chính thức</td>
+            <td>Thử việc</td>
+            <td>Chính thức</td>
+            <!-- ngày chấm công  -->
+            <td>Số ngày</td>
+            <!-- Công chuẩn  -->
+            <td>Công chuẩn</td>
+
+            </tr>
+
+            <!-- {% endfor %} -->
+
+           
+        </tbody>
+        <!-- <tfoot>
+       <tr>
+        {{list_total}}
+       </tr>
+      </tfoot> -->
+    </table>   
+</div>
+{% else %}
+<div class="no-background-jobs">
+    <img src="/assets/frappe/images/ui-states/list-empty-state.svg" alt="Empty State" />
+    <p class="text-muted">{{ __("Nothing to show") }}</p>
+</div>
+{% endif %}

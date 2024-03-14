@@ -1,0 +1,23 @@
+{
+ "content": null,
+ "creation": "2024-03-13 14:05:32.233045",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-03-13 14:05:32.233045",
+ "modified_by": "Administrator",
+ "module": "SFC HR",
+ "name": "report-attendance-mo",
+ "owner": "Administrator",
+ "page_name": "report-attendance-mo",
+ "roles": [
+  {
+   "role": "All"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Report Attendance Monthly SFC"
+}

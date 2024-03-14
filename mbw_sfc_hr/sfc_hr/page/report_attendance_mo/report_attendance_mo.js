@@ -5,11 +5,7 @@ frappe.pages['report-attendance-mo'].on_page_load = function(wrapper) {
 		report_attendance.show()
 	})
 }
-frappe.pages['report-attendance-mo'].on_page_show = function(wrapper) {
-	frappe.require("common.bundle.js").then(() =>{
 
-	})
-}
 
 class SFC_Attendance {
 	constructor(wrapper) {

@@ -48,7 +48,6 @@
   "number_hour_unexplain_absence_monthly",
   "number_work_unexplain_absence_monthly",
   "number_work_explain_absence_monthly",
-  "number_hour_explain_absence_monthly",
   "extra_hour_off_day_monthly",
   "extra_hour_off_night_monthly",
   "extra_hour_holiday_day_monthly",
@@ -294,11 +293,6 @@
    "label": "Number work explained absence monthly"
   },
   {
-   "fieldname": "number_hour_explain_absence_monthly",
-   "fieldtype": "Float",
-   "label": "Number hour explained absence monthly"
-  },
-  {
    "fieldname": "extra_hour_off_day_monthly",
    "fieldtype": "Float",
    "label": "Extra hour off day monthly"
@@ -401,7 +395,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-15 01:24:30.986985",
+ "modified": "2024-03-15 09:31:06.411943",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Monthly Report",

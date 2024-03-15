@@ -44,7 +44,16 @@
   "number_work_holiday_monthly",
   "number_hour_holiday_monthly",
   "number_of_day_work",
-  "attendance_daily"
+  "attendance_daily",
+  "number_hour_unexplain_absence_monthly",
+  "number_work_unexplain_absence_monthly",
+  "number_work_explain_absence_monthly",
+  "number_hour_explain_absence_monthly",
+  "extra_hour_off_day_monthly",
+  "extra_hour_off_night_monthly",
+  "extra_hour_holiday_day_monthly",
+  "extra_hour_holiday_night_monthly",
+  "extra_hour_monthly"
  ],
  "fields": [
   {
@@ -172,7 +181,7 @@
   {
    "fieldname": "extra_hour_night_monthly",
    "fieldtype": "Float",
-   "label": "Extra hour night"
+   "label": "Extra hour night monthly"
   },
   {
    "fieldname": "number_of_extra_hour",
@@ -253,11 +262,56 @@
    "fieldname": "year",
    "fieldtype": "Int",
    "label": "Year"
+  },
+  {
+   "fieldname": "number_hour_unexplain_absence_monthly",
+   "fieldtype": "Float",
+   "label": "Number hour unexplained absence monthly"
+  },
+  {
+   "fieldname": "number_work_unexplain_absence_monthly",
+   "fieldtype": "Float",
+   "label": "Number work unexplained absence monthly"
+  },
+  {
+   "fieldname": "number_work_explain_absence_monthly",
+   "fieldtype": "Float",
+   "label": "Number work explained absence monthly"
+  },
+  {
+   "fieldname": "number_hour_explain_absence_monthly",
+   "fieldtype": "Data",
+   "label": "Number hour explained absence monthly"
+  },
+  {
+   "fieldname": "extra_hour_off_day_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour off day monthly"
+  },
+  {
+   "fieldname": "extra_hour_off_night_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour off night monthly"
+  },
+  {
+   "fieldname": "extra_hour_holiday_day_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour holiday day monthly"
+  },
+  {
+   "fieldname": "extra_hour_holiday_night_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour holiday night monthly"
+  },
+  {
+   "fieldname": "extra_hour_monthly",
+   "fieldtype": "Float",
+   "label": "Extra hour monthly"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-14 10:05:40.775233",
+ "modified": "2024-03-14 17:59:57.268297",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Monthly Report",

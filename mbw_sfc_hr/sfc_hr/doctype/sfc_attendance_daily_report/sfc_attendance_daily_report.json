@@ -6,6 +6,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "att_day",
   "work_hours",
   "sign"
  ],
@@ -19,12 +20,17 @@
    "fieldname": "sign",
    "fieldtype": "Text",
    "label": "Sign"
+  },
+  {
+   "fieldname": "att_day",
+   "fieldtype": "Date",
+   "label": "Attendance day"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-03-13 18:27:40.801628",
+ "modified": "2024-03-15 15:45:34.538050",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Daily Report",

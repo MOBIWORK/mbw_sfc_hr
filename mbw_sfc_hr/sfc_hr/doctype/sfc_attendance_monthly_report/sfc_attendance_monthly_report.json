@@ -53,7 +53,22 @@
   "extra_hour_off_night_monthly",
   "extra_hour_holiday_day_monthly",
   "extra_hour_holiday_night_monthly",
-  "extra_hour_monthly"
+  "extra_hour_monthly",
+  "overtime_hour_total",
+  "overtime_work_off_monthly",
+  "overtime_work_holiday_monthly",
+  "overtime_works_total",
+  "overtime_works_extract",
+  "throughout_number",
+  "hc_work_monthly",
+  "hc_hour_monthly",
+  "hc_work_extract_monthly",
+  "hc_hour_extract_monthly",
+  "hc_number",
+  "throughout_hour_monthly",
+  "throughout_work_monthly",
+  "throughout_work_extract_monthly",
+  "throughout_hour_extract_monthly"
  ],
  "fields": [
   {
@@ -280,7 +295,7 @@
   },
   {
    "fieldname": "number_hour_explain_absence_monthly",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "label": "Number hour explained absence monthly"
   },
   {
@@ -307,11 +322,86 @@
    "fieldname": "extra_hour_monthly",
    "fieldtype": "Float",
    "label": "Extra hour monthly"
+  },
+  {
+   "fieldname": "overtime_hour_total",
+   "fieldtype": "Float",
+   "label": "Overtime hour total"
+  },
+  {
+   "fieldname": "overtime_work_off_monthly",
+   "fieldtype": "Float",
+   "label": "Overtime work off monthly"
+  },
+  {
+   "fieldname": "overtime_work_holiday_monthly",
+   "fieldtype": "Float",
+   "label": "Overtime work holiday monthly"
+  },
+  {
+   "fieldname": "overtime_works_total",
+   "fieldtype": "Float",
+   "label": "Overtime works total"
+  },
+  {
+   "fieldname": "overtime_works_extract",
+   "fieldtype": "Float",
+   "label": "Overtime works extract"
+  },
+  {
+   "fieldname": "throughout_number",
+   "fieldtype": "Int",
+   "label": "Throughout number"
+  },
+  {
+   "fieldname": "hc_work_monthly",
+   "fieldtype": "Float",
+   "label": "HC work monthly"
+  },
+  {
+   "fieldname": "hc_hour_monthly",
+   "fieldtype": "Float",
+   "label": "HC hour monthly"
+  },
+  {
+   "fieldname": "hc_work_extract_monthly",
+   "fieldtype": "Float",
+   "label": "HC work extract monthly"
+  },
+  {
+   "fieldname": "hc_hour_extract_monthly",
+   "fieldtype": "Float",
+   "label": "HC hour extract monthly"
+  },
+  {
+   "fieldname": "hc_number",
+   "fieldtype": "Int",
+   "label": "HC number"
+  },
+  {
+   "fieldname": "throughout_hour_monthly",
+   "fieldtype": "Float",
+   "label": "Throughout hour monthly"
+  },
+  {
+   "fieldname": "throughout_work_monthly",
+   "fieldtype": "Float",
+   "label": "Throughout work monthly"
+  },
+  {
+   "fieldname": "throughout_work_extract_monthly",
+   "fieldtype": "Float",
+   "label": "Throughout work extract monthly"
+  },
+  {
+   "fieldname": "throughout_hour_extract_monthly",
+   "fieldtype": "Float",
+   "label": "Throughout hour extract monthly"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-14 17:59:57.268297",
+ "modified": "2024-03-15 01:24:30.986985",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Monthly Report",

@@ -258,64 +258,64 @@ class SFC_Attendance {
 					${
 						data.map((employee ,index)=> `<tr>
 						<td>${index+1}</td>
-						<td>${employee.employee}Mã NV</td>
-						<td>${employee.employee_id}Mã đăng nhập</td>
-						<td>${employee.employee_name}Nhân viên </td>
-						<td>${employee.job_title}Chức danh</td>
-						<td>${employee.department}Phòng ban </td>
-						<td>${employee.number_of_hours_monthly}Số giờ - Công tổng</td>
-						<td>${employee.work_hours_monthly}Số công -Công tổng</td>
-						<td>${employee.late_arrival_time_monthly}Số phút  --Tổng hợp đi muộn</td>
-						<td>${employee.number_of_late_arrival}Số lần --Tổng hợp đi muộn</td>
-						<td>${employee.late_arrival_work_monthly}Công muộn --Tổng hợp đi muộn</td>
-						<td>${employee.early_arrival_time_monthly} Số phút --Tổng hợp về sớm</td>
-						<td>${employee.number_of_early_arrival} Số lần  --Tổng hợp về sớm</td>
-						<td>${employee.early_arrival_work_monthly}Công sớm  --Tổng hợp về sớm</td>
-						<td>${employee.number_hour_absent_monthly}Số phút  --Tổng hợp vắng mặt</td>
-						<td>${employee.number_absent} Số lần  --Tổng hợp vắng mặt</td>
-						<td>${employee.number_work_absent_monthly} Số công --Tổng hợp vắng mặt</td>
-						<td>${employee.number_of_breaktime}  --Quên chốt</td>
-						<td>${employee.number_work_unexplain_absence} Số công --Tổng hợp nghỉ không lý do</td>
-						<td>${employee.fieldName} Tổng công --Tổng hợp nghỉ lý do</td>
-						<td>${employee.number_of_holiday_monthly} Tổng giờ   --Tổng hợp nghỉ lý do</td>
-						<td>${employee.fieldName} Công ca --Tổng hợp Công chính</td>
-						<td>${employee.fieldName} Công lễ --Tổng hợp Công chính</td>
-						<td>${employee.fieldName} Công tác --Tổng hợp Công chính</td>
-						<td>${employee.extra_hour_off} Giờ nghỉ --Tổng hợp làm thêm</td>
-						<td>${employee.fieldName} Nghỉ ngày  --Tổng hợp làm thêm</td>
-						<td>${employee.fieldName} Nghỉ đêm --Tổng hợp làm thêm</td>
-						<td>${employee.extra_hour_holiday} Giờ lễ --Tổng hợp làm thêm</td>
-						<td>${employee.extra_hour_holiday_day} Lễ ngày --Tổng hợp làm thêm</td>
-						<td>${employee.extra_hour_holiday_night} Lễ đêm --Tổng hợp làm thêm</td>
-						<td>${employee.fieldName} Giờ ngày   --Tổng hợp làm thêm</td>
-						<td>${employee.extra_hour_day} Ngày --Tổng hợp làm thêm</td>
-						<td>${employee.extra_hour_night} Đêm --Tổng hợp làm thêm</td>
-						<td>${employee.extra_hour} Tổng giờ --Tổng hợp làm thêm</td>
-						<td>${employee.fieldName} Số lần  --Tổng hợp làm thêm</td>
-						<td>${employee.overtime_hour_off} Giờ nghỉ --Tổng hợp tăng ca</td>
-						<td>${employee.overtime_hour_holiday} Giờ lễ  --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Giờ ngày --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Tổng giờ --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Công nghỉ --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Công lễ --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Công ngày --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName}  Số công --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Công chuẩn  --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName}  Số lần --Tổng hợp tăng ca</td>
-						<td>${employee.fieldName} Số giờ  --Tổng hợp qua ngày</td>
-						<td>${employee.fieldName} Số công --Tổng hợp qua ngày</td>
-						<td>${employee.fieldName}Công thực tế--Tổng hợp qua ngày</td>
-						<td>${employee.fieldName} Giờ thực tế --Tổng hợp qua ngày</td>
-						<td>${employee.fieldName} Số lần  --Tổng hợp qua ngày</td>
-						<td>${employee.fieldName} Số công --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
-						<td>${employee.fieldName} Số giờ --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
-						<td>${employee.fieldName} Công thực tế --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
-						<td>${employee.fieldName} Giờ thực tế --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
-						<td>${employee.fieldName} Số lần  --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
-						<td>${employee.number_work_holiday} Số công --Tổng hợp làm việc ngày lễ</td>
-						<td>${employee.number_hour_holiday} Số giờ  --Tổng hợp làm việc ngày lễ</td>
-						<td>${employee.fieldName} Số ngày --Tổng hợp ngày chấm công</td>
-						<td>${employee.fieldName} Công chuẩn  --Tổng hợp Công chuẩn </td>
+						<td>${employee?.employee}Mã NV</td>
+						<td>${employee?.employee_id}Mã đăng nhập</td>
+						<td>${employee?.employee_name}Nhân viên </td>
+						<td>${employee?.job_title}Chức danh</td>
+						<td>${employee?.department}Phòng ban </td>
+						<td>${employee?.number_of_hours_monthly}Số giờ - Công tổng</td>
+						<td>${employee?.work_hours_monthly}Số công -Công tổng</td>
+						<td>${employee?.late_arrival_time_monthly}Số phút  --Tổng hợp đi muộn</td>
+						<td>${employee?.number_of_late_arrival}Số lần --Tổng hợp đi muộn</td>
+						<td>${employee?.late_arrival_work_monthly}Công muộn --Tổng hợp đi muộn</td>
+						<td>${employee?.early_arrival_time_monthly} Số phút --Tổng hợp về sớm</td>
+						<td>${employee?.number_of_early_arrival} Số lần  --Tổng hợp về sớm</td>
+						<td>${employee?.early_arrival_work_monthly}Công sớm  --Tổng hợp về sớm</td>
+						<td>${employee?.number_hour_absent_monthly}Số phút  --Tổng hợp vắng mặt</td>
+						<td>${employee?.number_absent} Số lần  --Tổng hợp vắng mặt</td>
+						<td>${employee?.number_work_absent_monthly} Số công --Tổng hợp vắng mặt</td>
+						<td>${employee?.number_of_breaktime}  --Quên chốt</td>
+						<td>${employee?.number_work_unexplain_absence} Số công --Tổng hợp nghỉ không lý do</td>
+						<td>${employee?.work_hours} Tổng công --Tổng hợp nghỉ lý do</td>
+						<td>${employee?.number_of_hours} Tổng giờ   --Tổng hợp nghỉ lý do</td>
+						<td>${employee?.number_work_shift} Công ca --Tổng hợp Công chính</td>
+						<td>${employee?.number_of_holiday} Công lễ --Tổng hợp Công chính</td>
+						<td>${employee?.number_of_misson} Công tác --Tổng hợp Công chính</td>
+						<td>${employee?.extra_hour_off} Giờ nghỉ --Tổng hợp làm thêm</td>
+						<td>${employee?.fieldName} Nghỉ ngày  --Tổng hợp làm thêm</td>
+						<td>${employee?.fieldName} Nghỉ đêm --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_hour_holiday} Giờ lễ --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_hour_holiday_day} Lễ ngày --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_hour_holiday_night} Lễ đêm --Tổng hợp làm thêm</td>
+						<td>${employee?.fieldName} Giờ ngày   --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_hour_day} Ngày --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_hour_night} Đêm --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_hour} Tổng giờ --Tổng hợp làm thêm</td>
+						<td>${employee?.extra_number} Số lần  --Tổng hợp làm thêm</td>
+						<td>${employee?.overtime_hour_off} Giờ nghỉ --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_hour_holiday} Giờ lễ  --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_hours} Giờ ngày --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_hour_total} Tổng giờ --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_work_off} Công nghỉ --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_work_holiday} Công lễ --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_works} Công ngày --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_works_total}  Số công --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_works_extract} Công chuẩn  --Tổng hợp tăng ca</td>
+						<td>${employee?.overtime_number}  Số lần --Tổng hợp tăng ca</td>
+						<td>${employee?.throughout_hour} Số giờ  --Tổng hợp qua ngày</td>
+						<td>${employee?.throughout_work} Số công --Tổng hợp qua ngày</td>
+						<td>${employee?.throughout_work_extract}Công thực tế--Tổng hợp qua ngày</td>
+						<td>${employee?.throughout_hour_extract} Giờ thực tế --Tổng hợp qua ngày</td>
+						<td>${employee?.throughout_number} Số lần  --Tổng hợp qua ngày</td>
+						<td>${employee?.hc_work_monthly} Số công --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
+						<td>${employee?.hc_hour_monthly} Số giờ --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
+						<td>${employee?.hc_work_extract_monthly} Công thực tế --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
+						<td>${employee?.hc_hour_extract_monthly} Giờ thực tế --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
+						<td>${employee?.hc_number} Số lần  --Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)</td>
+						<td>${employee?.number_work_holiday} Số công --Tổng hợp làm việc ngày lễ</td>
+						<td>${employee?.number_hour_holiday} Số giờ  --Tổng hợp làm việc ngày lễ</td>
+						<td>${employee?.work_number} Số ngày --Tổng hợp ngày chấm công</td>
+						<td>${employee?.number_work_shift} Công chuẩn  --Tổng hợp Công chuẩn </td>
 					   </tr> `)
 					}		
 				</tbody>

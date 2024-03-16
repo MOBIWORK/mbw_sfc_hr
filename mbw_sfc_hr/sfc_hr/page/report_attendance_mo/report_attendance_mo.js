@@ -168,11 +168,12 @@ class SFC_Attendance {
 	}
 
 	renderTable(data=[],pagging=[]) {
-		let dayMonth =  this.renderColumnDays()
-		let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
-		let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
-		daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
-		daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
+		// let dayMonth =  this.renderColumnDays()
+		// let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
+		// let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
+		// daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
+		// daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
+		let {dayWork,daymonthTable,daymonthTable2} = this.renderColumnDays(data.attendance_daily)
 		if(data.length) {
 			return `<div class="wrap-table"><div class="table-section">
 			<table class="table table-background-jobs">
@@ -270,7 +271,7 @@ class SFC_Attendance {
 						<td>${employee?.employee_name}</td>
 						<td>${employee?.job_title}</td>
 						<td>${employee?.department}</td>
-
+						${dayWork}
 
 						<td>${employee?.number_of_hours_monthly}</td>
 						<td>${employee?.work_hours_monthly}</td>
@@ -344,15 +345,27 @@ class SFC_Attendance {
 	}
 
 
-	renderColumnDays() {
+	renderColumnDays(data_date) {
+		let objectDateWork= {}
+		for(let value in data_date) {
+			let date = new Date(att_day).getDate()
+			objectDateWork[date] = value
+		}
 		let month = this.fieldMonth.get_value();
 		let year = this.fieldYear.get_value();
 		let dayMonth=  getDaysAndWeekdays(month,year)
 		let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
 		let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
+		let dayWork = []
+		for(let value  in  daymonthTable) {
+			if(objectDateWork[value]) {
+				dayMonth.push(renderColorTd(objectDateWork[value]["work_hours"],objectDateWork[value]["sign"],daymonthTable2[value]))
+			}
+		}
+		dayWork = dayWork.reduce((prev,now) => `${prev} ${now}`,'')
 		daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
 		daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
-		return {daymonthTable,daymonthTable2}
+		return {daymonthTable,daymonthTable2,dayWork}
 	}
 }
 
@@ -374,6 +387,57 @@ function getDaysAndWeekdays(month, year) {
     }
 
     return daysArray;
+}
+
+function renderColorTd(work, syntax,day) {
+	if(day == "Thứ 7" || day == "Chủ nhật") {
+		return `<td class="box-gray">OFF</td>`
+	}
+	if(!work) {
+		switch(syntax){
+			case "HE":
+				return `<td class="text-red">${syntax}</td>`
+				break;
+			case "FID" :
+				return `<td class="box-red">${syntax}</td>`
+				break;
+			case "ON" :
+				return `<td class="text-yellow">${syntax}</td>`
+				break;	
+			case "EA" :
+				return `<td class="text-green">v</td>`
+				break;
+			default: 
+				return `<td >${syntax}</td>`
+		}
+	}
+	switch(syntax){
+		case "HE":
+			return `<td class="text-red">${work}<sup>${syntax}</sup>)</td>`
+			break;
+		case "FID" :
+			return `<td class="box-red">${work}<sup>${syntax}</sup>)</td>`
+			break;
+		case "ON" :
+			return `<td class="text-yellow">${work}<sup>${syntax}</sup>)</td>`
+			break;	
+		case "EA" :
+			return `<td class="text-green">v</td>`
+			break;
+		case "+" :
+		case "P" :
+		case "KL" :
+		case "VM" :
+		case "OT" :
+		case "CT" :
+		case "CD" :
+		case "DC" :
+		case "GT" :
+			return `<td >${work}<sup>${syntax}</sup>)</td>`
+			break;		
+		default: 
+			return `<td>${work || " "}</td`
+	}
 }
 
 // phân trang

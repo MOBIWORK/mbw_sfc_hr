@@ -168,6 +168,11 @@ class SFC_Attendance {
 	}
 
 	renderTable(data=[],pagging=[]) {
+		let dayMonth =  this.renderColumnDays()
+		let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
+		let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
+		daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
+		daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
 		if(data.length) {
 			return `<div class="wrap-table"><div class="table-section">
 			<table class="table table-background-jobs">
@@ -175,6 +180,7 @@ class SFC_Attendance {
 			<tr>
 			 <td colspan="6">Thông tin nhân viên</td>
 			 <td colspan="2">Công tổng</td>
+			 ${daymonthTable}
 			 <td colspan="3">Tổng hợp đi muộn</td>
 			 <td colspan="3">Tổng hợp về sớm</td>
 			 <td colspan="3">Tổng hợp vắng mặt</td>
@@ -200,6 +206,7 @@ class SFC_Attendance {
 			 <td>Phòng ban </td>
 			 <td>Số giờ </td>
 			 <td>Số công </td>
+			 ${daymonthTable2}
 			 <td>Số phút </td>
 			 <td>Số lần</td>
 			 <td>Công muộn</td>
@@ -263,6 +270,8 @@ class SFC_Attendance {
 						<td>${employee?.employee_name}</td>
 						<td>${employee?.job_title}</td>
 						<td>${employee?.department}</td>
+
+
 						<td>${employee?.number_of_hours_monthly}</td>
 						<td>${employee?.work_hours_monthly}</td>
 						<td>${employee?.late_arrival_time_monthly}</td>
@@ -333,7 +342,40 @@ class SFC_Attendance {
 			</div>
 		`
 	}
+
+
+	renderColumnDays() {
+		let month = this.fieldMonth.get_value();
+		let year = this.fieldYear.get_value();
+		let dayMonth=  getDaysAndWeekdays(month,year)
+		let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
+		let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
+		daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
+		daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
+		return {daymonthTable,daymonthTable2}
+	}
 }
+
+function getDaysAndWeekdays(month, year) {
+	console.log({month,year});
+	if(!month || !year) return []
+    const daysInMonth = new Date(year, month, 0).getDate(); // Lấy số ngày của tháng
+    const daysArray = [];
+	console.log(daysInMonth);
+	const dayweek = ["Chủ nhật","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"]
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month - 1, day);
+        const dayOfWeek = date.getDay(); // Lấy thứ của ngày, 0 là Chủ nhật, 1 là Thứ 2, ..., 6 là Thứ 7
+        // Thêm vào mảng đối tượng đại diện cho ngày và thứ
+        daysArray.push({
+            date: day,
+            dayOfWeek: dayweek[dayOfWeek] // Chuyển Chủ nhật từ 0 sang 7
+        });
+    }
+
+    return daysArray;
+}
+
 // phân trang
 {/* <ul class="pagging">
 			${pagging.map((page)=> `<li  onclick="log(${page})"

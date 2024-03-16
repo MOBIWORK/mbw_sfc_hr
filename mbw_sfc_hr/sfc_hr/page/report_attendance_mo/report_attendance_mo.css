@@ -162,3 +162,24 @@
     color: red;
     background-color: antiquewhite;
   }
+
+
+  .box-gray {
+    background-color: #ccc;
+  }
+
+  .box-red {
+    background-color: rgb(230, 144, 144);
+  }
+
+  .text-red {
+    color : red;
+  }
+
+  .text-yellow {
+    color: yellow;
+  }
+
+  .text-green {
+    color: green;
+  }

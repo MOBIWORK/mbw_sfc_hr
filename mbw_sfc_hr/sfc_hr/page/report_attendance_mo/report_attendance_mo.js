@@ -107,7 +107,7 @@ class SFC_Attendance {
 				{ "value": 11, "label": __("November") },
 				{ "value": 12, "label": __("December") },
 			],
-			// "default": frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth() + 1,
+			"default": frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth() + 1,
 			change: () => {
 				this.loadData()
 			},
@@ -117,6 +117,7 @@ class SFC_Attendance {
 			label: __("Year"),
 			fieldtype: "Int",
 			fieldname: "year",
+			"default": frappe.datetime.str_to_obj(frappe.datetime.get_today()).getFullYear(),
 			change: () => {
 			},
 		});	
@@ -168,12 +169,9 @@ class SFC_Attendance {
 	}
 
 	renderTable(data=[],pagging=[]) {
-		// let dayMonth =  this.renderColumnDays()
-		// let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
-		// let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
-		// daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
-		// daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
-		let {dayWork,daymonthTable,daymonthTable2} = this.renderColumnDays(data.attendance_daily)
+	
+		let {daymonthTable,daymonthTable2,daymonth,daymonth2} = this.renderColumnDays()
+		console.log({daymonthTable,daymonthTable2,daymonth,daymonth2});
 		if(data.length) {
 			return `<div class="wrap-table"><div class="table-section">
 			<table class="table table-background-jobs">
@@ -264,69 +262,72 @@ class SFC_Attendance {
 				<tbody class="body-table">
 					
 					${
-						data.map((employee ,index)=> `<tr>
-						<td>${index+1}</td>
-						<td>${employee?.employee}</td>
-						<td>${employee?.employee_id}</td>
-						<td>${employee?.employee_name}</td>
-						<td>${employee?.job_title}</td>
-						<td>${employee?.department}</td>
-						${dayWork}
-
-						<td>${employee?.number_of_hours_monthly}</td>
-						<td>${employee?.work_hours_monthly}</td>
-						<td>${employee?.late_arrival_time_monthly}</td>
-						<td>${employee?.number_of_late_arrival}</td>
-						<td>${employee?.late_arrival_work_monthly}</td>
-						<td>${employee?.early_arrival_time_monthly} </td>
-						<td>${employee?.number_of_early_arrival} </td>
-						<td>${employee?.early_arrival_work_monthly}</td>
-						<td>${employee?.number_hour_absent_monthly}</td>
-						<td>${employee?.number_absent} </td>
-						<td>${employee?.number_work_absent_monthly} </td>
-						<td>${employee?.number_of_breaktime}</td>
-						<td>${employee?.number_work_unexplain_absence}</td>
-						<td>${employee?.work_hours} </td>
-						<td>${employee?.number_of_hours}</td>
-						<td>${employee?.number_work_shift} </td>
-						<td>${employee?.number_of_holiday} </td>
-						<td>${employee?.number_of_misson} </td>
-						<td>${employee?.extra_hour_off} </td>
-						<td>${employee?.fieldName} </td>
-						<td>${employee?.fieldName} </td>
-						<td>${employee?.extra_hour_holiday} </td>
-						<td>${employee?.extra_hour_holiday_day} </td>
-						<td>${employee?.extra_hour_holiday_night} </td>
-						<td>${employee?.fieldName} </td>
-						<td>${employee?.extra_hour_day} </td>
-						<td>${employee?.extra_hour_night}</td>
-						<td>${employee?.extra_hour} </td>
-						<td>${employee?.extra_number} </td>
-						<td>${employee?.overtime_hour_off} </td>
-						<td>${employee?.overtime_hour_holiday} </td>
-						<td>${employee?.overtime_hours} </td>
-						<td>${employee?.overtime_hour_total} </td>
-						<td>${employee?.overtime_work_off} </td>
-						<td>${employee?.overtime_work_holiday} </td>
-						<td>${employee?.overtime_works} </td>
-						<td>${employee?.overtime_works_total}  </td>
-						<td>${employee?.overtime_works_extract} </td>
-						<td>${employee?.overtime_number} </td>
-						<td>${employee?.throughout_hour} </td>
-						<td>${employee?.throughout_work} </td>
-						<td>${employee?.throughout_work_extract}</td>
-						<td>${employee?.throughout_hour_extract} </td>
-						<td>${employee?.throughout_number}</td>
-						<td>${employee?.hc_work_monthly} </td>
-						<td>${employee?.hc_hour_monthly}</td>
-						<td>${employee?.hc_work_extract_monthly} </td>
-						<td>${employee?.hc_hour_extract_monthly} </td>
-						<td>${employee?.hc_number} </td>
-						<td>${employee?.number_work_holiday} </td>
-						<td>${employee?.number_hour_holiday} </td>
-						<td>${employee?.work_number}</td>
-						<td>${employee?.number_work_shift} </td>
-					   </tr> `)
+						data.map((employee ,index)=>{
+							let dayWork = this.renderColumnDaysData(employee.attendance_daily,daymonth, daymonth2)
+							return  `<tr>
+							<td>${index+1}</td>
+							<td>${employee?.employee || ""}</td>
+							<td>${employee?.employee_id || ""}</td>
+							<td>${employee?.employee_name || ""}</td>
+							<td>${employee?.job_title || ""}</td>
+							<td>${employee?.department || ""}</td>
+							
+							<td>${employee?.number_of_hours_monthly || ""}</td>
+							<td>${employee?.work_hours_monthly || ""}</td>
+							${dayWork}
+							<td>${employee?.late_arrival_time_monthly || ""}</td>
+							<td>${employee?.number_of_late_arrival || ""}</td>
+							<td>${employee?.late_arrival_work_monthly || ""}</td>
+							<td>${employee?.early_arrival_time_monthly || ""} </td>
+							<td>${employee?.number_of_early_arrival || ""} </td>
+							<td>${employee?.early_arrival_work_monthly || ""}</td>
+							<td>${employee?.number_hour_absent_monthly || ""}</td>
+							<td>${employee?.number_absent || ""} </td>
+							<td>${employee?.number_work_absent_monthly || ""} </td>
+							<td>${employee?.number_of_breaktime || ""}</td>
+							<td>${employee?.number_work_unexplain_absence || ""}</td>
+							<td>${employee?.work_hours || ""} </td>
+							<td>${employee?.number_of_hours || ""}</td>
+							<td>${employee?.number_work_shift || ""} </td>
+							<td>${employee?.number_of_holiday || ""} </td>
+							<td>${employee?.number_of_misson || ""} </td>
+							<td>${employee?.extra_hour_off || ""} </td>
+							<td>${employee?.fieldName || ""} </td>
+							<td>${employee?.fieldName || ""} </td>
+							<td>${employee?.extra_hour_holiday || ""} </td>
+							<td>${employee?.extra_hour_holiday_day || ""} </td>
+							<td>${employee?.extra_hour_holiday_night || ""} </td>
+							<td>${employee?.fieldName || ""} </td>
+							<td>${employee?.extra_hour_day || ""} </td>
+							<td>${employee?.extra_hour_night || ""}</td>
+							<td>${employee?.extra_hour || ""} </td>
+							<td>${employee?.extra_number || ""} </td>
+							<td>${employee?.overtime_hour_off || ""} </td>
+							<td>${employee?.overtime_hour_holiday || ""} </td>
+							<td>${employee?.overtime_hours || ""} </td>
+							<td>${employee?.overtime_hour_total || ""} </td>
+							<td>${employee?.overtime_work_off || ""} </td>
+							<td>${employee?.overtime_work_holiday || ""} </td>
+							<td>${employee?.overtime_works || ""} </td>
+							<td>${employee?.overtime_works_total || ""}  </td>
+							<td>${employee?.overtime_works_extract || ""} </td>
+							<td>${employee?.overtime_number || ""} </td>
+							<td>${employee?.throughout_hour || ""} </td>
+							<td>${employee?.throughout_work || ""} </td>
+							<td>${employee?.throughout_work_extract || ""}</td>
+							<td>${employee?.throughout_hour_extract || ""} </td>
+							<td>${employee?.throughout_number || ""}</td>
+							<td>${employee?.hc_work_monthly || ""} </td>
+							<td>${employee?.hc_hour_monthly || ""}</td>
+							<td>${employee?.hc_work_extract_monthly || ""} </td>
+							<td>${employee?.hc_hour_extract_monthly || ""} </td>
+							<td>${employee?.hc_number || ""} </td>
+							<td>${employee?.number_work_holiday || ""} </td>
+							<td>${employee?.number_hour_holiday || ""} </td>
+							<td>${employee?.work_number || ""}</td>
+							<td>${employee?.number_work_shift || ""} </td>
+						   </tr> `
+						})
 					}		
 				</tbody>
 			  
@@ -345,36 +346,40 @@ class SFC_Attendance {
 	}
 
 
-	renderColumnDays(data_date) {
-		let objectDateWork= {}
-		for(let value in data_date) {
-			let date = new Date(att_day).getDate()
-			objectDateWork[date] = value
-		}
+	renderColumnDays() {
+		
 		let month = this.fieldMonth.get_value();
 		let year = this.fieldYear.get_value();
 		let dayMonth=  getDaysAndWeekdays(month,year)
-		let daymonthTable = dayMonth.map(days => `<td>${days.date}</td>`)
-		let daymonthTable2 = dayMonth.map(days => `<td>${days.dayOfWeek}</td>`)
+		let daymonth = dayMonth.map(days => days.date)
+		let daymonth2 = dayMonth.map(days => days.dayOfWeek)
+		let daymonthTable = daymonth.reduce((prev,now) => `${prev} <td>${now}</td>`,'')
+		let daymonthTable2 = daymonth2.reduce((prev,now) => `${prev}<td>${now}</td>`,'')
+		return {daymonthTable,daymonthTable2,daymonth,daymonth2}
+	}
+
+
+	renderColumnDaysData(data_date,daymonthTable,daymonthTable2) {
+		let objectDateWork= {}
+		for(let value of data_date) {
+			let date =  Number.parseInt(value.att_day?.split("-")[2]);
+			objectDateWork[date] = value
+		}
 		let dayWork = []
-		for(let value  in  daymonthTable) {
-			if(objectDateWork[value]) {
-				dayMonth.push(renderColorTd(objectDateWork[value]["work_hours"],objectDateWork[value]["sign"],daymonthTable2[value]))
-			}
+		for(let value of daymonthTable) {
+			console.log(value,objectDateWork[value]);
+			dayWork.push(renderColorTd(objectDateWork[value] ? objectDateWork[value]["work_hours"] : 0,objectDateWork[value] ? objectDateWork[value]["sign"] : 0,daymonthTable2[value-1]))
 		}
 		dayWork = dayWork.reduce((prev,now) => `${prev} ${now}`,'')
-		daymonthTable = daymonthTable.reduce((prev,now) => `${prev} ${now}`,'')
-		daymonthTable2 = daymonthTable2.reduce((prev,now) => `${prev} ${now}`,'')
-		return {daymonthTable,daymonthTable2,dayWork}
+		console.log({dayWork});
+		return dayWork
 	}
 }
 
 function getDaysAndWeekdays(month, year) {
-	console.log({month,year});
 	if(!month || !year) return []
     const daysInMonth = new Date(year, month, 0).getDate(); // Lấy số ngày của tháng
     const daysArray = [];
-	console.log(daysInMonth);
 	const dayweek = ["Chủ nhật","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"]
     for (let day = 1; day <= daysInMonth; day++) {
         const date = new Date(year, month - 1, day);
@@ -390,6 +395,7 @@ function getDaysAndWeekdays(month, year) {
 }
 
 function renderColorTd(work, syntax,day) {
+	console.log({work, syntax,day});
 	if(day == "Thứ 7" || day == "Chủ nhật") {
 		return `<td class="box-gray">OFF</td>`
 	}
@@ -413,13 +419,13 @@ function renderColorTd(work, syntax,day) {
 	}
 	switch(syntax){
 		case "HE":
-			return `<td class="text-red">${work}<sup>${syntax}</sup>)</td>`
+			return `<td class="text-red">${work}</td>`
 			break;
 		case "FID" :
-			return `<td class="box-red">${work}<sup>${syntax}</sup>)</td>`
+			return `<td class="box-red">${work}</td>`
 			break;
 		case "ON" :
-			return `<td class="text-yellow">${work}<sup>${syntax}</sup>)</td>`
+			return `<td class="text-yellow">${work}</td>`
 			break;	
 		case "EA" :
 			return `<td class="text-green">v</td>`
@@ -436,7 +442,7 @@ function renderColorTd(work, syntax,day) {
 			return `<td >${work}<sup>${syntax}</sup>)</td>`
 			break;		
 		default: 
-			return `<td>${work || " "}</td`
+			return `<td>${work || " "}</td>`
 	}
 }
 

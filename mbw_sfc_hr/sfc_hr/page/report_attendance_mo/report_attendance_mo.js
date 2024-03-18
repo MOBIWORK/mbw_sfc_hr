@@ -133,7 +133,7 @@ class SFC_Attendance {
 		});	
 
 
-		this.fieldCompany = this.page.add_field({
+		this.fieldDepartment = this.page.add_field({
 			label: __("Department"),
 			fieldtype: "Link",
 			fieldname: "department",
@@ -155,7 +155,12 @@ class SFC_Attendance {
 
 	//refresh filter
 	refreshFilters() {
-		this.fieldIdNvHr.set_field("")
+		this.fieldIdNvHr.set_value("")
+		this.fieldDepartment.set_value("")
+		this.fieldCompany.set_value(frappe.defaults.get_user_default("Company"))
+		this.fieldYear.set_value(frappe.datetime.str_to_obj(frappe.datetime.get_today()).getFullYear())
+		this.fieldMonth.set_value(frappe.datetime.str_to_obj(frappe.datetime.get_today()).getMonth() + 1)
+		this.loadData()
 	}
 
 	//handle page
@@ -373,7 +378,7 @@ class SFC_Attendance {
 		let dayWork = []
 		for(let value of daymonthTable) {
 			console.log(value,objectDateWork[value]);
-			dayWork.push(renderColorTd(objectDateWork[value] ? objectDateWork[value]["work_hours"] : 0,objectDateWork[value] ? objectDateWork[value]["sign"] : 0,daymonthTable2[value-1]))
+			dayWork.push(renderColorTd(objectDateWork[value] ? objectDateWork[value]["work_hours"] : "",objectDateWork[value] ? objectDateWork[value]["sign"] : "",daymonthTable2[value-1]))
 		}
 		dayWork = dayWork.reduce((prev,now) => `${prev} ${now}`,'')
 		console.log({dayWork});

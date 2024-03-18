@@ -225,7 +225,7 @@ class SFC_Attendance {
 			 <td>Số phút  </td>
 			 <td> Số lần  </td>
 			 <td> Số công </td>
-			 <td>  --Quên chốt</td>
+			 <td> Số lần</td>
 			 <td> Số công </td>
 			 <td> Tổng công </td>
 			 <td> Tổng giờ   </td>
@@ -282,60 +282,60 @@ class SFC_Attendance {
 							<td>${employee?.job_title || ""}</td>
 							<td>${employee?.department || ""}</td>
 							
-							<td>${employee?.number_of_hours_monthly || ""}</td>
-							<td>${employee?.work_hours_monthly || ""}</td>
+							<td>${employee?.number_of_hours_monthly }</td>
+							<td>${employee?.work_hours_monthly }</td>
 							${dayWork}
-							<td>${employee?.late_arrival_time_monthly || ""}</td>
-							<td>${employee?.number_of_late_arrival || ""}</td>
-							<td>${employee?.late_arrival_work_monthly || ""}</td>
-							<td>${employee?.early_arrival_time_monthly || ""} </td>
-							<td>${employee?.number_of_early_arrival || ""} </td>
-							<td>${employee?.early_arrival_work_monthly || ""}</td>
-							<td>${employee?.number_hour_absent_monthly || ""}</td>
-							<td>${employee?.number_absent || ""} </td>
-							<td>${employee?.number_work_absent_monthly || ""} </td>
-							<td>${employee?.number_of_breaktime || ""}</td>
-							<td>${employee?.number_work_unexplain_absence || ""}</td>
-							<td>${employee?.work_hours || ""} </td>
-							<td>${employee?.number_of_hours || ""}</td>
-							<td>${employee?.number_work_shift || ""} </td>
-							<td>${employee?.number_of_holiday || ""} </td>
-							<td>${employee?.number_of_misson || ""} </td>
-							<td>${employee?.extra_hour_off || ""} </td>
-							<td>${employee?.fieldName || ""} </td>
-							<td>${employee?.fieldName || ""} </td>
-							<td>${employee?.extra_hour_holiday || ""} </td>
-							<td>${employee?.extra_hour_holiday_day || ""} </td>
-							<td>${employee?.extra_hour_holiday_night || ""} </td>
-							<td>${employee?.fieldName || ""} </td>
-							<td>${employee?.extra_hour_day || ""} </td>
-							<td>${employee?.extra_hour_night || ""}</td>
-							<td>${employee?.extra_hour || ""} </td>
-							<td>${employee?.extra_number || ""} </td>
-							<td>${employee?.overtime_hour_off || ""} </td>
-							<td>${employee?.overtime_hour_holiday || ""} </td>
-							<td>${employee?.overtime_hours || ""} </td>
-							<td>${employee?.overtime_hour_total || ""} </td>
-							<td>${employee?.overtime_work_off || ""} </td>
-							<td>${employee?.overtime_work_holiday || ""} </td>
-							<td>${employee?.overtime_works || ""} </td>
-							<td>${employee?.overtime_works_total || ""}  </td>
-							<td>${employee?.overtime_works_extract || ""} </td>
-							<td>${employee?.overtime_number || ""} </td>
-							<td>${employee?.throughout_hour || ""} </td>
-							<td>${employee?.throughout_work || ""} </td>
-							<td>${employee?.throughout_work_extract || ""}</td>
-							<td>${employee?.throughout_hour_extract || ""} </td>
-							<td>${employee?.throughout_number || ""}</td>
-							<td>${employee?.hc_work_monthly || ""} </td>
-							<td>${employee?.hc_hour_monthly || ""}</td>
-							<td>${employee?.hc_work_extract_monthly || ""} </td>
-							<td>${employee?.hc_hour_extract_monthly || ""} </td>
-							<td>${employee?.hc_number || ""} </td>
-							<td>${employee?.number_work_holiday || ""} </td>
-							<td>${employee?.number_hour_holiday || ""} </td>
-							<td>${employee?.work_number || ""}</td>
-							<td>${employee?.number_work_shift || ""} </td>
+							<td>${employee?.late_arrival_time_monthly }</td>
+							<td>${employee?.number_of_late_arrival }</td>
+							<td>${employee?.late_arrival_work_monthly }</td>
+							<td>${employee?.early_arrival_time_monthly  } </td>
+							<td>${employee?.number_of_early_arrival } </td>
+							<td>${employee?.early_arrival_work_monthly }</td>
+							<td>${employee?.number_hour_absent_monthly }</td>
+							<td>${employee?.number_absent } </td>
+							<td>${employee?.number_work_absent_monthly} </td>
+							<td>${employee?.number_of_breaktime }</td>
+							<td>${employee?.number_work_unexplain_absence_monthly }</td>
+							<td>${employee?.work_hours_monthly } </td>
+							<td>${employee?.number_of_hours_monthly }</td>
+							<td>${employee?.number_work_shift_monthly } </td>
+							<td>${employee?.number_of_holiday_monthly } </td>
+							<td>${employee?.work_of_mission_monthly } </td>
+							<td>${employee?.extra_hour_off_monthly } </td>
+							<td>${employee?.extra_hour_off_day_monthly } </td>
+							<td>${employee?.extra_hour_off_night_monthly } </td>
+							<td>${employee?.extra_hour_holiday_monthly } </td>
+							<td>${employee?.extra_hour_holiday_day_monthly } </td>
+							<td>${employee?.extra_hour_holiday_night_monthly } </td>
+							<td>${employee?.extra_hour_off_monthly } </td>
+							<td>${employee?.extra_hour_day_monthly } </td>
+							<td>${employee?.extra_hour_night_monthly }</td>
+							<td>${employee?.extra_hour_monthly } </td>
+							<td>${employee?.number_of_extra_hour } </td>
+							<td>${employee?.overtime_hour_off_monthly } </td>
+							<td>${employee?.overtime_hour_holiday_monthly } </td>
+							<td>${employee?.overtime_hours_monthly } </td>
+							<td>${employee?.overtime_hour_total } </td>
+							<td>${employee?.overtime_work_off_monthly } </td>
+							<td>${employee?.overtime_work_holiday_monthly} </td>
+							<td>${employee?.overtime_works_monthly } </td>
+							<td>${employee?.overtime_works_total }  </td>
+							<td>${employee?.overtime_works_extract } </td>
+							<td>${employee?.number_of_overtime } </td>
+							<td>${employee?.throughout_hour_monthly } </td>
+							<td>${employee?.throughout_work_monthly } </td>
+							<td>${employee?.throughout_work_extract_monthly }</td>
+							<td>${employee?.throughout_hour_extract_monthly } </td>
+							<td>${employee?.throughout_number }</td>
+							<td>${employee?.hc_work_monthly } </td>
+							<td>${employee?.hc_hour_monthly }</td>
+							<td>${employee?.hc_work_extract_monthly } </td>
+							<td>${employee?.hc_hour_extract_monthly } </td>
+							<td>${employee?.hc_number } </td>
+							<td>${employee?.number_work_holiday_monthly  } </td>
+							<td>${employee?.number_hour_holiday_monthly  } </td>
+							<td>${employee?.number_of_day_work }</td>
+							<td>${employee?.number_work_shift_monthly } </td>
 						   </tr> `
 						})
 					}		

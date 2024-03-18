@@ -153,6 +153,11 @@ class SFC_Attendance {
 		  });
 	}
 
+	//refresh filter
+	refreshFilters() {
+		this.fieldIdNvHr.set_field("")
+	}
+
 	//handle page
 	// + add page to path
 	addPageToURL( value) {
@@ -179,7 +184,7 @@ class SFC_Attendance {
 			<tr>
 			 <td colspan="6">Thông tin nhân viên</td>
 			 <td colspan="2">Công tổng</td>
-			 ${daymonthTable}
+			 ${daymonthTable2}
 			 <td colspan="3">Tổng hợp đi muộn</td>
 			 <td colspan="3">Tổng hợp về sớm</td>
 			 <td colspan="3">Tổng hợp vắng mặt</td>
@@ -205,7 +210,7 @@ class SFC_Attendance {
 			 <td>Phòng ban </td>
 			 <td>Số giờ </td>
 			 <td>Số công </td>
-			 ${daymonthTable2}
+			 ${daymonthTable}
 			 <td>Số phút </td>
 			 <td>Số lần</td>
 			 <td>Công muộn</td>

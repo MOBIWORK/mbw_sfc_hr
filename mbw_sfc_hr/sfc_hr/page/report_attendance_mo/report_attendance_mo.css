@@ -41,7 +41,6 @@
       margin-bottom: 0px;
       margin-top: 0px;
       font-size: var(--text-md);
-      table-layout: fixed;
     }
     
     .table-background-jobs th {
@@ -165,11 +164,11 @@
 
 
   .box-gray {
-    background-color: #ccc;
+    border: 1px solid gray;
   }
 
   .box-red {
-    background-color: rgb(230, 144, 144);
+    border: 1px solid red;
   }
 
   .text-red {

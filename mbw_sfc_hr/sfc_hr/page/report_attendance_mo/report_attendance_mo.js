@@ -187,7 +187,7 @@ class SFC_Attendance {
 			<table class="table table-background-jobs">
 			<thead>
 			<tr>
-			 <td colspan="6">Thông tin nhân viên</td>
+			 <td colspan="5">Thông tin nhân viên</td>
 			 <td colspan="2">Công tổng</td>
 			 ${daymonthTable2}
 			 <td colspan="3">Tổng hợp đi muộn</td>
@@ -209,7 +209,6 @@ class SFC_Attendance {
 			<tr>
 			 <td>STT</td>
 			 <td>Mã NV</td>
-			 <td>Mã đăng nhập</td>
 			 <td>Nhân viên </td>
 			 <td>Chức danh</td>
 			 <td>Phòng ban </td>
@@ -277,7 +276,6 @@ class SFC_Attendance {
 							return  `<tr>
 							<td>${index+1}</td>
 							<td>${employee?.employee || ""}</td>
-							<td>${employee?.employee_id || ""}</td>
 							<td>${employee?.employee_name || ""}</td>
 							<td>${employee?.job_title || ""}</td>
 							<td>${employee?.department || ""}</td>

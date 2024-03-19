@@ -376,7 +376,7 @@ class SFC_Attendance {
 		let dayWork = []
 		for(let value of daymonthTable) {
 			console.log(value,objectDateWork[value]);
-			dayWork.push(renderColorTd(objectDateWork[value] ? objectDateWork[value]["work_hours"] : "",objectDateWork[value] ? objectDateWork[value]["sign"] : "x",daymonthTable2[value-1]))
+			dayWork.push(renderColorTd(objectDateWork[value] ? objectDateWork[value]["work_hours"] == 0 ||objectDateWork[value]["work_hours"] ? objectDateWork[value]["work_hours"]  : "" : "",objectDateWork[value] ? objectDateWork[value]["sign"] : "x",daymonthTable2[value-1]))
 		}
 		dayWork = dayWork.reduce((prev,now) => `${prev} ${now}`,'')
 		console.log({dayWork});
@@ -407,7 +407,7 @@ function renderColorTd(work, syntax,day) {
 	if(day == "Thứ 7" || day == "Chủ nhật") {
 		return `<td class="box-gray">OFF</td>`
 	}
-	if(!work) {
+	if(work !== 0 && !work) {
 		switch(syntax){
 			case "HE":
 				return `<td class="text-red">${syntax}</td>`

@@ -176,13 +176,13 @@
 
 
   .text-red {
-    color : red;
+    color : red!important;
   }
 
   .text-yellow {
-    color: yellow;
+    color: yellow!important;
   }
 
   .text-green {
-    color: green;
+    color: green!important;
   }

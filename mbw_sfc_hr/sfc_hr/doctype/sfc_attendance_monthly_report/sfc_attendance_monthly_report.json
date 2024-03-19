@@ -8,7 +8,6 @@
   "month",
   "year",
   "employee",
-  "employee_id",
   "employee_name",
   "job_title",
   "department",
@@ -67,7 +66,8 @@
   "throughout_hour_monthly",
   "throughout_work_monthly",
   "throughout_work_extract_monthly",
-  "throughout_hour_extract_monthly"
+  "throughout_hour_extract_monthly",
+  "number_hour_explain_absence_monthly"
  ],
  "fields": [
   {
@@ -76,13 +76,6 @@
    "in_list_view": 1,
    "label": "Employee",
    "options": "Employee",
-   "reqd": 1
-  },
-  {
-   "fieldname": "employee_id",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Employee Id",
    "reqd": 1
   },
   {
@@ -391,11 +384,16 @@
    "fieldname": "throughout_hour_extract_monthly",
    "fieldtype": "Float",
    "label": "Throughout hour extract monthly"
+  },
+  {
+   "fieldname": "number_hour_explain_absence_monthly",
+   "fieldtype": "Float",
+   "label": "Number hour explained absence monthly"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-15 09:31:06.411943",
+ "modified": "2024-03-19 12:00:33.035966",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Monthly Report",

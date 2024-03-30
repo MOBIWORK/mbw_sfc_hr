@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.custom-slider-container {
+  position: relative;
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  /* background-color: #000000; */
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+
+
+.custom-arrow.visible {
+  opacity: 1; /* Hiển thị khi hover vào slider container */
+}
+
+/* //dot */
+.custom-dots-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.custom-slider div.slick-list div.slick-track .slick-slide{
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.custom-slider div.slick-list div.slick-track div.slick-current{
+  opacity: 1;
+}
+
+:where(.css-dev-only-do-not-override-1jlkgmc).ant-tabs .ant-tabs-tab+.ant-tabs-tab  {
+  margin: 0px;
+}
+
+* {
+  letter-spacing: -0.025em;
+
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+p {
+  margin : 0;
+}
+
+
+/*Style chú giải*/
+.map-legend {
+  position: absolute;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 300px;
+  right: 10px;
+  top: 5px;
+}
+.map-legend h2 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.map-legend ul {
+  list-style: none;
+  padding: 0;
+}
+.map-legend li {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+.legend-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}

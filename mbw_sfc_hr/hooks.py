@@ -4,6 +4,13 @@ app_publisher = "MBW"
 app_description = "For HR"
 app_email = "mbw@gmail.com"
 app_license = "mit"
+
+website_route_rules = [
+	{
+		"from_route": "/mbw_sfc_desk/<path:app_path>",
+		"to_route": "mbw_sfc_desk",
+	},
+]
 # required_apps = []
 
 # Includes in <head>

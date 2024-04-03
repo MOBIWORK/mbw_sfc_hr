@@ -157,3 +157,56 @@ export const getDaysAndWeekdays = (month: any, year: any) => {
 
   return daysArray;
 }
+
+
+export function renderColorTd(work, syntax,day) {
+	console.log({work, syntax,day});
+	if(day == "Thứ 7" || day == "Chủ nhật") {
+		return `<td class="box-gray">OFF</td>`
+	}
+	if(work !== 0 && !work) {
+		switch(syntax){
+			case "HE":
+				return `<td class="text-red">${syntax}</td>`
+				break;
+			case "FID" :
+				return `<td class="box-red">${syntax}</td>`
+				break;
+			case "ON" :
+				return `<td class="text-yellow">${syntax}</td>`
+				break;	
+			case "EA" :
+				return `<td class="text-green">v</td>`
+				break;
+			default: 
+				return `<td >${syntax}</td>`
+		}
+	}
+	switch(syntax){
+		case "HE":
+			return `<td class="text-red">${work}</td>`
+			break;
+		case "FID" :
+			return `<td class="box-red">${work}</td>`
+			break;
+		case "ON" :
+			return `<td class="text-yellow">${work}</td>`
+			break;	
+		case "EA" :
+			return `<td class="text-green">v</td>`
+			break;
+		case "+" :
+		case "P" :
+		case "KL" :
+		case "VM" :
+		case "OT" :
+		case "CT" :
+		case "CD" :
+		case "DC" :
+		case "GT" :
+			return `<td >${work}<sup>${syntax}</sup>)</td>`
+			break;		
+		default: 
+			return `<td>${work || " "}</td>`
+	}
+}

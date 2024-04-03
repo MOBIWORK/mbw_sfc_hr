@@ -20,62 +20,15 @@ export const listMenu: MenuItem[] = [
     icon: <BarChartOutlined style={{ fontSize: "22px" }} />,
     key: "dashboard",
   },
-  //giam sat
+  //bảng công
   {
     label: (
-      <Link className={"text-[#212B36] hover:text-[#212B36]"} to="#">
-          Giám sát
-      </Link>
-    ),
-    icon: <FileSearchOutlined style={{ fontSize: "22px" }} />,
-    key: "giamsat",
-    children: [
-      {
-        label: (
-          <Link className={""} to="/monitor-album">
-              Giám sát chụp ảnh khách hàng
-          </Link>
-        ),
-        key: "giamsat-image",
-      },
-      {
-        label: (
-          <Link className={""} to="employee-monitor">
-              Giám sát viếng thăm khách hàng
-          </Link>
-        ),
-        key: "employee-monitor",
-      },
-      {
-        label: (
-          <Link className={""} to="employee-monitor-kpi">
-              Giám sát nhân viên theo kpi
-          </Link>
-        ),
-        key: "employee-monitor-kpi",
-      },
-    ],
-  },
-  //control router
-  {
-    label: (
-      <Link className={""} to="/router-control">
-       Quản lý tuyến
+      <Link className={""} to="/worksheet">
+       Bảng công
       </Link>
     ),
     icon: <FileDoneOutlined style={{ fontSize: "22px" }} />,
-    key: "control",
-  },
-
-  //cham diem trung bay
-  {
-    label: (
-      <a className={""} href="/mbw_audit">
-          Chấm điểm trưng bày
-      </a>
-    ),
-    icon: <FileImageOutlined style={{ fontSize: "22px" }} />,
-    key: "checkinimage",
+    key: "worksheet",
   },
   //report
   {

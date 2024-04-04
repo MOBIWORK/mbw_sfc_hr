@@ -30,7 +30,7 @@ export default function Worksheet() {
   const [keySDepartment, setKeySDepartment] = useState("");
   let keySearchDepartment = useDebounce(keySDepartment, 500);
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
-    getDaysAndWeekdays(month, 2024)
+    getDaysAndWeekdays(month, year)
   );
   
   useEffect(() => {
@@ -301,6 +301,7 @@ export default function Worksheet() {
                 title="STT"
                 dataIndex="stt"
                 key="stt"
+                fixed
                 render={(_: any, record: any, index: number) => index + 1}
               />
               <Column
@@ -308,24 +309,28 @@ export default function Worksheet() {
                 title="Mã nhân viên"
                 dataIndex="employee"
                 key="employee"
+                fixed
               />
               <Column
                 className="!text-center"
                 title="Nhân viên"
                 dataIndex="employee_name"
                 key="employee_name"
+                fixed
               />
               <Column
                 className="!text-center"
                 title="Chức danh"
                 dataIndex="job_title"
                 key="job_title"
+                fixed
               />
               <Column
                 className="!text-center"
                 title="Phòng ban"
                 dataIndex="department"
                 key="department"
+                fixed
               />
             </ColumnGroup>
             <ColumnGroup title="Cộng tổng" className="!min-w-[205px]">
@@ -371,27 +376,27 @@ export default function Worksheet() {
                         switch (value?.sign) {
                           case "HE":
                             return (
-                              <div className="text-red-700">
+                              <div className="text-red-700 !h-14 flex justify-center items-center">
                                 {value?.work_hours}
                               </div>
                             );
                             break;
                           case "FID":
                             return (
-                              <div className="border-solid border-[red]">
+                              <div className="border-solid border-[red] !h-14 flex justify-center items-center">
                                 {value?.work_hours}
                               </div>
                             );
                             break;
                           case "ON":
                             return (
-                              <div className="text-yellow-500">
+                              <div className="text-yellow-500 !h-14 flex justify-center items-center">
                                 {value?.work_hours}
                               </div>
                             );
                             break;
                           case "EA":
-                            return <div className="text-green-500">v</div>;
+                            return <div className="text-green-500 !h-14 flex justify-center items-center">v</div>;
                             break;
                           default:
                             return <div>x</div>;
@@ -401,27 +406,27 @@ export default function Worksheet() {
                       switch (value?.sign) {
                         case "HE":
                           return (
-                            <div className="text-red-700">
+                            <div className="text-red-700 !h-14 flex justify-center items-center">
                               {value?.work_hours}
                             </div>
                           );
                           break;
                         case "FID":
                           return (
-                            <div className="border-solid border-[red]">
+                            <div className="border-solid border-[red] !h-14 flex justify-center items-center">
                               {value?.work_hours}
                             </div>
                           );
                           break;
                         case "ON":
                           return (
-                            <div className="text-yellow-500">
+                            <div className="text-yellow-500 !h-14 flex justify-center items-center">
                               {value?.work_hours}
                             </div>
                           );
                           break;
                         case "EA":
-                          return <div className="text-green-500">v</div>;
+                          return <div className="text-green-500 !h-14 flex justify-center items-center">v</div>;
                           break;
                         case "+":
                         case "P":
@@ -440,7 +445,7 @@ export default function Worksheet() {
                           );
                           break;
                         default:
-                          return <div>{value?.work_hours || " "} </div>;
+                          return <div className="!h-14 flex justify-center items-center">{value?.work_hours || " "} </div>;
                       }
                     }}
                   />

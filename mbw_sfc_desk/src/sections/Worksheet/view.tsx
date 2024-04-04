@@ -7,35 +7,147 @@ import dayjs from "dayjs";
 import { DatePickerProps } from "antd/lib";
 import { AxiosService } from "../../services/server";
 import { getDaysAndWeekdays } from "../../util";
+import useDebounce from "../../hooks/useDebount";
 const { Column, ColumnGroup } = TableCustom;
-
-
 
 export default function Worksheet() {
   const [dataReort, setDataReport] = useState<any[]>([]);
-  const [year,setYear] = useState(dayjs().startOf("year"))
-  const [month,setMonth] = useState(dayjs().month() + 1)
-  const [clDate,setClDate] = useState<{date:number,dayOfWeek: string}[]>(getDaysAndWeekdays(month,2024))
-  const onChange: DatePickerProps["onChange"] = (date) => {
-    // setFYear(date?.["$y"].toString());
-    console.log(date);
-  };
-console.table({getDaysAndWeekdays: getDaysAndWeekdays(month,2024)});
+  const [year, setYear] = useState(dayjs().startOf("year"));
+  const [month, setMonth] = useState(dayjs().month() + 1);
+  const [page, setPage] = useState<number>(1);
+  const PAGE_SIZE = 20;
+  const [total, setTotal] = useState<number>(0);
+  const [employee, setEmployee] = useState("");
+  const [listEmployee, setListEmployee] = useState<any[]>([]);
+  const [keySEmployee, setKeySEmployee] = useState("");
+  let keySearchEmployee = useDebounce(keySEmployee, 500);
+  const [listCompany, setListCompany] = useState<any[]>([]);
+  const [company, setCompany] = useState("");
+  const [keySCompany, setKeySCompany] = useState("");
+  let keySearchCompany = useDebounce(keySCompany, 500);
+  const [listDepartment, setListDepartment] = useState<any[]>([]);
+  const [department, setDepartment] = useState("");
+  const [keySDepartment, setKeySDepartment] = useState("");
+  let keySearchDepartment = useDebounce(keySDepartment, 500);
+  const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
+    getDaysAndWeekdays(month, 2024)
+  );
+  
+  useEffect(() => {
+    (async () => {
+      let rsEmployee: any = await AxiosService.get(
+        "/api/method/frappe.desk.search.search_link",
+        {
+          params: {
+            txt: keySearchEmployee,
+            doctype: "Employee",
+            ignore_user_permissions: 0,
+            query: "",
+          },
+        }
+      );
+
+      let { message: results } = rsEmployee;
+
+      console.log("rsEmployee", results);
+
+      setListEmployee(
+        results.map((dtEmployee: any) => ({
+          value: dtEmployee.value,
+          label: dtEmployee.description,
+          des: dtEmployee.description
+        }))
+      );
+    })();
+  }, [keySearchEmployee]);
 
   useEffect(() => {
     (async () => {
+      let rsCompany: any = await AxiosService.get(
+        "/api/method/frappe.desk.search.search_link",
+        {
+          params: {
+            txt: keySearchCompany,
+            doctype: "Company",
+            ignore_user_permissions: 0,
+            query: "",
+          },
+        }
+      );
+
+      let { message: results } = rsCompany;
+
+      setListCompany(
+        results.map((dtCompany: any) => ({
+          value: dtCompany.value,
+          label: dtCompany.value,
+        }))
+      );
+    })();
+  }, [keySearchCompany]);
+
+  useEffect(() => {
+    (async () => {
+      let rsDepartment: any = await AxiosService.get(
+        "/api/method/frappe.desk.search.search_link",
+        {
+          params: {
+            txt: keySearchDepartment,
+            doctype: "Department",
+            ignore_user_permissions: 0,
+            query: "",
+          },
+        }
+      );
+
+      let { message: results } = rsDepartment;
+
+      setListDepartment(
+        results.map((dtDepartment: any) => ({
+          value: dtDepartment.value.trim(),
+          label: dtDepartment.value.trim(),
+        }))
+      );
+    })();
+  }, [keySearchDepartment]);
+
+
+  useEffect(() => {
+    (async () => {
+      let columnDayWeek = getDaysAndWeekdays(month, year["$y"]);
       const rsData = await AxiosService.get(
-        "/api/method/mbw_sfc_integrations.sfc_integrations.attendance.get_attendance"
+        "/api/method/mbw_sfc_integrations.sfc_integrations.attendance.get_attendance",
+        {
+          params: {
+            page_size: PAGE_SIZE,
+            page_number: page,
+            month: month,
+            year: year["$y"],
+            employee: employee,
+            department: department,
+          },
+        }
       );
 
       let { result: results } = rsData;
       console.log("data:", results);
-      setDataReport(results);
+      setDataReport({
+        ...results,
+        data: results?.data.map((dt: any) => {
+          columnDayWeek.forEach((at: any) => {
+            let dateW = dt.attendance_daily.find(
+              (atdate: any) =>
+                Number.parseInt(atdate.att_day.split("-")[2]) == at.date
+            );
+            dt[at.date] = { ...dateW, ...at };
+          });
+          return dt;
+        }),
+      });
+      setClDate(getDaysAndWeekdays(month, year["$y"]));
+      setTotal(results.totals);
     })();
-  }, []);
-  useEffect(() => {
-    setClDate(getDaysAndWeekdays(month,year))
-  },[month,year])
+  }, [month, year, page, employee, department]);
 
   return (
     <>
@@ -52,6 +164,28 @@ console.table({getDaysAndWeekdays: getDaysAndWeekdays(month,2024)});
         ]}
       />
       <div className="bg-white rounded-md py-7  border-[#DFE3E8] border-[0.2px] border-solid">
+      <div className="flex justify-start items-center px-4">
+          <FormItemCustom
+            className="w-[200px] border-none mr-2"
+            label={"Tháng"}
+          ></FormItemCustom>
+          <FormItemCustom
+            className="w-[200px] border-none mr-2"
+            label={"Năm"}
+          ></FormItemCustom>
+          <FormItemCustom
+            className="w-[200px] border-none mr-2"
+            label={"Công ty"}
+          ></FormItemCustom>
+          <FormItemCustom
+            className="w-[200px] border-none mr-2"
+            label={"Phòng ban"}
+          ></FormItemCustom>
+          <FormItemCustom
+            className="w-[200px] border-none mr-2"
+            label={"Nhân viên"}
+          ></FormItemCustom>
+        </div>
         <div className="px-4 flex justify-start items-center">
           <FormItemCustom className="w-[200px] border-none mr-2">
             <Select
@@ -59,8 +193,7 @@ console.table({getDaysAndWeekdays: getDaysAndWeekdays(month,2024)});
               defaultValue={month.toString()}
               options={monthAll}
               onChange={(value) => {
-                setMonth(Number.parseInt(value))
-                
+                setMonth(Number.parseInt(value));
               }}
               showSearch
             />
@@ -68,11 +201,80 @@ console.table({getDaysAndWeekdays: getDaysAndWeekdays(month,2024)});
           <FormItemCustom className="w-[200px] border-none mr-2">
             <DatePicker
               className="!bg-[#F4F6F8] !h-8"
-              onChange={(value:any) => {
-                setYear(value['$y'])
+              onChange={(value: any) => {
+                setYear(value);
               }}
               picker="year"
               defaultValue={dayjs().startOf("year")}
+            />
+          </FormItemCustom>
+
+          <FormItemCustom className="w-[200px] border-none mr-2">
+            <Select
+              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
+              options={listCompany}
+              onSelect={(value) => {
+                setCompany(value);
+              }}
+              onSearch={(value: string) => {
+                setKeySCompany(value);
+              }}
+              onClear={() => setCompany("")}
+              filterOption={false}
+              allowClear
+              showSearch
+            />
+          </FormItemCustom>
+
+          <FormItemCustom className="w-[200px] border-none mr-2">
+            <Select
+              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
+              options={listDepartment}
+              onSelect={(value) => {
+                setDepartment(value);
+              }}
+              onSearch={(value: string) => {
+                setKeySDepartment(value);
+              }}
+              onClear={() => setDepartment("")}
+              filterOption={false}
+              allowClear
+              showSearch
+            />
+          </FormItemCustom>
+
+          <FormItemCustom className="w-[200px] border-none mr-2">
+            <Select
+              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
+              options={listEmployee}
+              onSelect={(value) => {
+                setEmployee(value);
+              }}
+              onSearch={(value: string) => {
+                setKeySEmployee(value);
+              }}
+              onClear={() => setEmployee("")}
+              filterOption={false}
+              allowClear
+              showSearch
+              optionRender={(option) => {
+                return (
+                  <>
+                    <div className="text-sm">
+                      <p
+                        role="img"
+                        aria-label={option.data.label}
+                        className="my-1"
+                      >
+                        {option.data.value}
+                      </p>
+                      <span className="text-xs !font-semibold">
+                        {option.data.des}
+                      </span>
+                    </div>
+                  </>
+                );
+              }}
             />
           </FormItemCustom>
         </div>
@@ -84,6 +286,13 @@ console.table({getDaysAndWeekdays: getDaysAndWeekdays(month,2024)});
               ...report,
             }))}
             bordered
+            pagination={{
+              defaultPageSize: PAGE_SIZE,
+              total,
+              onChange(page) {
+                setPage(page);
+              },
+            }}
             scroll={{ x: true }}
           >
             <ColumnGroup title="Thông tin nhân viên" className="!min-w-[670px]">
@@ -135,31 +344,108 @@ console.table({getDaysAndWeekdays: getDaysAndWeekdays(month,2024)});
             </ColumnGroup>
 
             {/* cái này để map */}
-            {clDate.length > 0 && clDate.map(date => <ColumnGroup title={date.dayOfWeek} className="!min-w-[100px] !text-center">
-              <Column
-                className="!text-center"
-                title={date.date}
-                dataIndex={date.date}
-                key="f7"
-              />
-            </ColumnGroup>)}
-            
+            {clDate.length > 0 &&
+              clDate.map((date) => (
+                <ColumnGroup
+                  key={date.dayOfWeek}
+                  title={date.dayOfWeek}
+                  className="!min-w-[100px] !text-center"
+                >
+                  <Column
+                    className="!text-center !p-0"
+                    title={date.date}
+                    dataIndex={date.date}
+                    key={date.date}
+                    render={(value: any) => {
+                      if (
+                        value?.dayOfWeek === "Thứ 7" ||
+                        value?.dayOfWeek === "Chủ nhật"
+                      ) {
+                        return (
+                          <div className="bg-gray-300 !h-14 !text-center flex justify-center items-center">
+                            OFF
+                          </div>
+                        );
+                      }
+                      if (value.work_hours !== 0 && !value.work_hours) {
+                        switch (value?.sign) {
+                          case "HE":
+                            return (
+                              <div className="text-red-700">
+                                {value?.work_hours}
+                              </div>
+                            );
+                            break;
+                          case "FID":
+                            return (
+                              <div className="border-solid border-[red]">
+                                {value?.work_hours}
+                              </div>
+                            );
+                            break;
+                          case "ON":
+                            return (
+                              <div className="text-yellow-500">
+                                {value?.work_hours}
+                              </div>
+                            );
+                            break;
+                          case "EA":
+                            return <div className="text-green-500">v</div>;
+                            break;
+                          default:
+                            return <div>x</div>;
+                        }
+                      }
 
-            {/* {dateColumn.map((dColumn) => (
-              <ColumnGroup
-                key={dColumn.date}
-                className="!whitespace-normal"
-                width={180}
-                title={`Ngày ${dayjs(dColumn.date, "DD/MM/YYYY").date()}`}
-              >
-                <Column
-                  className="!text-center"
-                  title={dColumn.dayOfWeek}
-                  dataIndex="f7"
-                  key="f7"
-                />
-              </ColumnGroup>
-            ))} */}
+                      switch (value?.sign) {
+                        case "HE":
+                          return (
+                            <div className="text-red-700">
+                              {value?.work_hours}
+                            </div>
+                          );
+                          break;
+                        case "FID":
+                          return (
+                            <div className="border-solid border-[red]">
+                              {value?.work_hours}
+                            </div>
+                          );
+                          break;
+                        case "ON":
+                          return (
+                            <div className="text-yellow-500">
+                              {value?.work_hours}
+                            </div>
+                          );
+                          break;
+                        case "EA":
+                          return <div className="text-green-500">v</div>;
+                          break;
+                        case "+":
+                        case "P":
+                        case "KL":
+                        case "VM":
+                        case "OT":
+                        case "CT":
+                        case "CD":
+                        case "DC":
+                        case "GT":
+                          return (
+                            <div>
+                              {value?.work_hours}
+                              <sup>{value?.sign}</sup>
+                            </div>
+                          );
+                          break;
+                        default:
+                          return <div>{value?.work_hours || " "} </div>;
+                      }
+                    }}
+                  />
+                </ColumnGroup>
+              ))}
 
             <ColumnGroup title="Tổng hợp đi muộn" className="!min-w-[320px]">
               <Column

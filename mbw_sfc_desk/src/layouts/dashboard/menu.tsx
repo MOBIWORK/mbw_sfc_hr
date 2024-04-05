@@ -40,7 +40,7 @@ export default function MenuLeft({
         </Col>
       </Row>
       <div className="font-semibold text-lg text-[#919EAB] leading-[22px] pl-[8px] mx-2 pb-4">
-        <Link className="font-semibold text-lg !text-[#919EAB] leading-[22px]" to="/">DMS</Link>
+        <Link className="font-semibold text-lg !text-[#919EAB] leading-[22px]" to="/">SFC</Link>
       </div>
       <MenuCustom
         theme="light"

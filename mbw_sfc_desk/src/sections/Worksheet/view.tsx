@@ -1,10 +1,9 @@
 import { VerticalAlignBottomOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
-import { DatePicker, Select } from "antd";
+import { DatePicker, Modal, Select } from "antd";
 import { monthAll } from "../ReportKPI/data";
 import dayjs from "dayjs";
-import { DatePickerProps } from "antd/lib";
 import { AxiosService } from "../../services/server";
 import { getDaysAndWeekdays } from "../../util";
 import useDebounce from "../../hooks/useDebount";
@@ -32,7 +31,21 @@ export default function Worksheet() {
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
-  
+  const [modal, setModal] = useState<{
+    open: boolean;
+    id: any;
+  }>({
+    open: false,
+    id: null,
+  });
+
+  const closeModal = () => {
+    setModal({
+      open: false,
+      id: null,
+    });
+  };
+
   useEffect(() => {
     (async () => {
       let rsEmployee: any = await AxiosService.get(
@@ -49,13 +62,11 @@ export default function Worksheet() {
 
       let { message: results } = rsEmployee;
 
-      console.log("rsEmployee", results);
-
       setListEmployee(
         results.map((dtEmployee: any) => ({
           value: dtEmployee.value,
           label: dtEmployee.description,
-          des: dtEmployee.description
+          des: dtEmployee.description,
         }))
       );
     })();
@@ -111,7 +122,6 @@ export default function Worksheet() {
     })();
   }, [keySearchDepartment]);
 
-
   useEffect(() => {
     (async () => {
       let columnDayWeek = getDaysAndWeekdays(month, year["$y"]);
@@ -130,7 +140,6 @@ export default function Worksheet() {
       );
 
       let { result: results } = rsData;
-      console.log("data:", results);
       setDataReport({
         ...results,
         data: results?.data.map((dt: any) => {
@@ -164,7 +173,7 @@ export default function Worksheet() {
         ]}
       />
       <div className="bg-white rounded-md py-7  border-[#DFE3E8] border-[0.2px] border-solid">
-      <div className="flex justify-start items-center px-4">
+        <div className="flex justify-start items-center px-4">
           <FormItemCustom
             className="w-[200px] border-none mr-2"
             label={"Tháng"}
@@ -361,7 +370,7 @@ export default function Worksheet() {
                     title={date.date}
                     dataIndex={date.date}
                     key={date.date}
-                    render={(value: any) => {
+                    render={(value: any, record: any) => {
                       if (
                         value?.dayOfWeek === "Thứ 7" ||
                         value?.dayOfWeek === "Chủ nhật"
@@ -376,27 +385,79 @@ export default function Worksheet() {
                         switch (value?.sign) {
                           case "HE":
                             return (
-                              <div className="text-red-700 !h-14 flex justify-center items-center">
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                    },
+                                  });
+                                }}
+                                className="text-red-700 !h-14 flex justify-center items-center"
+                              >
                                 {value?.work_hours}
                               </div>
                             );
                             break;
                           case "FID":
                             return (
-                              <div className="border-solid border-[red] !h-14 flex justify-center items-center">
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                    },
+                                  });
+                                }}
+                                className="border-solid border-[red] !h-14 flex justify-center items-center"
+                              >
                                 {value?.work_hours}
                               </div>
                             );
                             break;
                           case "ON":
                             return (
-                              <div className="text-yellow-500 !h-14 flex justify-center items-center">
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                    },
+                                  });
+                                }}
+                                className="text-yellow-500 !h-14 flex justify-center items-center"
+                              >
                                 {value?.work_hours}
                               </div>
                             );
                             break;
                           case "EA":
-                            return <div className="text-green-500 !h-14 flex justify-center items-center">v</div>;
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                    },
+                                  });
+                                }}
+                                className="text-green-500 !h-14 flex justify-center items-center"
+                              >
+                                v
+                              </div>
+                            );
                             break;
                           default:
                             return <div>x</div>;
@@ -406,27 +467,87 @@ export default function Worksheet() {
                       switch (value?.sign) {
                         case "HE":
                           return (
-                            <div className="text-red-700 !h-14 flex justify-center items-center">
+                            <div
+                              onClick={() => {
+                                // console.log(record.employee, value.att_day);
+                                setModal({
+                                  open: true,
+                                  id: {
+                                    employee: record.employee,
+                                    att_day: value.att_day,
+                                    employee_name: record.employee_name,
+                                    day: value.dayOfWeek
+                                  },
+                                });
+                              }}
+                              className="text-red-700 !h-14 flex justify-center items-center"
+                            >
                               {value?.work_hours}
                             </div>
                           );
                           break;
                         case "FID":
                           return (
-                            <div className="border-solid border-[red] !h-14 flex justify-center items-center">
+                            <div
+                              onClick={() => {
+                                // console.log(record.employee, value.att_day);
+                                setModal({
+                                  open: true,
+                                  id: {
+                                    employee: record.employee,
+                                    att_day: value.att_day,
+                                    employee_name: record.employee_name,
+                                    day: value.dayOfWeek
+                                  },
+                                });
+                              }}
+                              className="border-solid border-[red] !h-14 flex justify-center items-center"
+                            >
                               {value?.work_hours}
                             </div>
                           );
                           break;
                         case "ON":
                           return (
-                            <div className="text-yellow-500 !h-14 flex justify-center items-center">
+                            <div
+                              onClick={() => {
+                                // console.log(record.employee, value.att_day);
+                                setModal({
+                                  open: true,
+                                  id: {
+                                    employee: record.employee,
+                                    att_day: value.att_day,
+                                    employee_name: record.employee_name,
+                                    day: value.dayOfWeek
+                                  },
+                                });
+                              }}
+                              className="text-yellow-500 !h-14 flex justify-center items-center"
+                            >
                               {value?.work_hours}
                             </div>
                           );
                           break;
                         case "EA":
-                          return <div className="text-green-500 !h-14 flex justify-center items-center">v</div>;
+                          return (
+                            <div
+                              onClick={() => {
+                                // console.log(record.employee, value.att_day);
+                                setModal({
+                                  open: true,
+                                  id: {
+                                    employee: record.employee,
+                                    att_day: value.att_day,
+                                    employee_name: record.employee_name,
+                                    day: value.dayOfWeek
+                                  },
+                                });
+                              }}
+                              className="text-green-500 !h-14 flex justify-center items-center"
+                            >
+                              v
+                            </div>
+                          );
                           break;
                         case "+":
                         case "P":
@@ -438,14 +559,45 @@ export default function Worksheet() {
                         case "DC":
                         case "GT":
                           return (
-                            <div>
+                            <div
+                              onClick={() => {
+                                // console.log(record.employee, value.att_day);
+                                setModal({
+                                  open: true,
+                                  id: {
+                                    employee: record.employee,
+                                    att_day: value.att_day,
+                                    employee_name: record.employee_name,
+                                    day: value.dayOfWeek
+                                  },
+                                });
+                              }}
+                            >
                               {value?.work_hours}
                               <sup>{value?.sign}</sup>
                             </div>
                           );
                           break;
                         default:
-                          return <div className="!h-14 flex justify-center items-center">{value?.work_hours || " "} </div>;
+                          return (
+                            <div
+                              onClick={() => {
+                                // console.log(record.employee, value.att_day);
+                                setModal({
+                                  open: true,
+                                  id: {
+                                    employee: record.employee,
+                                    att_day: value.att_day,
+                                    employee_name: record.employee_name,
+                                    day: value.dayOfWeek
+                                  },
+                                });
+                              }}
+                              className="!h-14 flex justify-center items-center"
+                            >
+                              {value?.work_hours || " "}{" "}
+                            </div>
+                          );
                       }
                     }}
                   />
@@ -803,6 +955,17 @@ export default function Worksheet() {
               />
             </ColumnGroup>
           </TableCustom>
+
+          {/* modal */}
+          <Modal
+            width={1064}
+            title={<>{modal.id?.employee_name} - {modal.id?.day}, ngày {(modal.id?.att_day)?.split("-")?.reverse()?.toString()?.replaceAll(',',"-")}</>}
+            open={modal.open}
+            onCancel={closeModal}
+            footer={null}
+          >
+            <div>{JSON.stringify(modal.id)}</div>
+          </Modal>
         </div>
       </div>
     </>

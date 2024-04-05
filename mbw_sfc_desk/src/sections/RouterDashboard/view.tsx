@@ -17,14 +17,14 @@ import { MapEkgisRealTime } from "../../components/mapEkgis";
 export default function RouterDashboard() {
   const [report, setReport] = useState<ResultType>()
   const [isLoading, setLoading] = useState<boolean>(false)
-  useEffect(() => {
-    (async()=> {
-      setLoading(true)
-      let rsReport:rsData<ResultType> = await AxiosService.get('/api/method/mbw_dms.api.report.synthesis_report')
-      setReport(rsReport.result)
-      setLoading(false)
-    })()
-  }, [])
+  // useEffect(() => {
+  //   (async()=> {
+  //     setLoading(true)
+  //     let rsReport:rsData<ResultType> = await AxiosService.get('/api/method/mbw_dms.api.report.synthesis_report')
+  //     setReport(rsReport.result)
+  //     setLoading(false)
+  //   })()
+  // }, [])
   return (
     isLoading ? <>Loading ...</> :
     <>

@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { AxiosService } from "../../services/server";
 import { getDaysAndWeekdays } from "../../util";
 import useDebounce from "../../hooks/useDebount";
+import DetailModal from "./modal/detail";
 const { Column, ColumnGroup } = TableCustom;
 
 export default function Worksheet() {
@@ -476,7 +477,7 @@ export default function Worksheet() {
                                     employee: record.employee,
                                     att_day: value.att_day,
                                     employee_name: record.employee_name,
-                                    day: value.dayOfWeek
+                                    day: value.dayOfWeek,
                                   },
                                 });
                               }}
@@ -497,7 +498,7 @@ export default function Worksheet() {
                                     employee: record.employee,
                                     att_day: value.att_day,
                                     employee_name: record.employee_name,
-                                    day: value.dayOfWeek
+                                    day: value.dayOfWeek,
                                   },
                                 });
                               }}
@@ -518,7 +519,7 @@ export default function Worksheet() {
                                     employee: record.employee,
                                     att_day: value.att_day,
                                     employee_name: record.employee_name,
-                                    day: value.dayOfWeek
+                                    day: value.dayOfWeek,
                                   },
                                 });
                               }}
@@ -539,7 +540,7 @@ export default function Worksheet() {
                                     employee: record.employee,
                                     att_day: value.att_day,
                                     employee_name: record.employee_name,
-                                    day: value.dayOfWeek
+                                    day: value.dayOfWeek,
                                   },
                                 });
                               }}
@@ -568,7 +569,7 @@ export default function Worksheet() {
                                     employee: record.employee,
                                     att_day: value.att_day,
                                     employee_name: record.employee_name,
-                                    day: value.dayOfWeek
+                                    day: value.dayOfWeek,
                                   },
                                 });
                               }}
@@ -589,7 +590,7 @@ export default function Worksheet() {
                                     employee: record.employee,
                                     att_day: value.att_day,
                                     employee_name: record.employee_name,
-                                    day: value.dayOfWeek
+                                    day: value.dayOfWeek,
                                   },
                                 });
                               }}
@@ -958,13 +959,23 @@ export default function Worksheet() {
 
           {/* modal */}
           <Modal
+            className="top-6"
             width={1064}
-            title={<>{modal.id?.employee_name} - {modal.id?.day}, ngày {(modal.id?.att_day)?.split("-")?.reverse()?.toString()?.replaceAll(',',"-")}</>}
+            title={
+              <>
+                {modal.id?.employee_name} - {modal.id?.day}, ngày{" "}
+                {modal.id?.att_day
+                  ?.split("-")
+                  ?.reverse()
+                  ?.toString()
+                  ?.replaceAll(",", "-")}
+              </>
+            }
             open={modal.open}
             onCancel={closeModal}
             footer={null}
           >
-            <div>{JSON.stringify(modal.id)}</div>
+            <DetailModal />
           </Modal>
         </div>
       </div>

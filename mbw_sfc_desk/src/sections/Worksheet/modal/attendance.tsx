@@ -84,7 +84,7 @@ const data: DataAttendance[] = [
 export default function Attendance() {
   return (
     <div className="pt-3">
-      <TableCustom dataSource={data} bordered columns={columns} pagination={false}/>
+      <TableCustom dataSource={data} columns={columns} pagination={false}/>
     </div>
   );
 }

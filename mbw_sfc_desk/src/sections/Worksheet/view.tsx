@@ -1,18 +1,23 @@
-import { DownOutlined, VerticalAlignBottomOutlined } from "@ant-design/icons";
+import {  VerticalAlignBottomOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
-import { Button, Checkbox, DatePicker, Modal, Select, Tree } from "antd";
+import { Button, DatePicker, Modal, Select, Tree } from "antd";
 import { monthAll } from "../ReportKPI/data";
 import dayjs from "dayjs";
 import { AxiosService } from "../../services/server";
-import { getDaysAndWeekdays } from "../../util";
+import { getDaysAndWeekdays, treeArray } from "../../util";
 import useDebounce from "../../hooks/useDebount";
 import DetailModal from "./modal/detail";
-const { Column, ColumnGroup } = TableCustom;
+import TreeColumn from "./modal/tree-column";
+import { defaultColumn, fixedLeft, treeAtt, treeEmployee } from "./data";
+import { column, renderColumn } from "./component/renderColumn";
 
 export default function Worksheet() {
-  const [dataReort, setDataReport] = useState<any[]>([]);
-  const [year, setYear] = useState(dayjs().startOf("year"));
+  console.log(treeArray({data: [... treeAtt,... treeEmployee],keyValue: "key",parentField:"parent_key"}));
+  // console.log(tree1.map(tb => tb.key));
+  
+  const [dataReort, setDataReport] = useState<{data: any[]}>({data:[]});
+  const [year, setYear] = useState<any>(dayjs().startOf("year"));
   const [month, setMonth] = useState(dayjs().month() + 1);
   const [page, setPage] = useState<number>(1);
   const PAGE_SIZE = 20;
@@ -29,6 +34,10 @@ export default function Worksheet() {
   const [department, setDepartment] = useState("");
   const [keySDepartment, setKeySDepartment] = useState("");
   let keySearchDepartment = useDebounce(keySDepartment, 500);
+  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(defaultColumn);
+  const [columns, setColumns] = useState<column[]>(treeArray({data: [...treeEmployee,...treeAtt].filter(cl => {
+    return checkedKeys.includes(cl.key)
+  }),keyValue: "key",parentField:"parent_key"}));
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
@@ -112,188 +121,33 @@ export default function Worksheet() {
     number_of_day_work: true,
   });
 
-  const treeData = [
-    {
-      title: "Mã nhân viên",
-      key: "employee",
-    },
-    {
-      title: "Nhân viên",
-      key: "employee_name",
-    },
-    {
-      title: "Chức danh",
-      key: "job_title",
-    },
-    {
-      title: "Phòng ban",
-      key: "department",
-    },
-    {
-      title: "Công tổng",
-      key: "cong_tong",
-      children: [
-        { title: "Số giờ", key: "number_of_hours_monthly" },
-        { title: "Số công", key: "work_hours_monthly" },
-      ],
-    },
-    {
-      title: "Tổng hợp đi muộn",
-      key: "tong_hop_di_muon",
-      children: [
-        { title: "Số phút", key: "late_arrival_time_monthly" },
-        { title: "Số lần", key: "number_of_late_arrival" },
-        { title: "Công muộn", key: "late_arrival_work_monthly" },
-      ],
-    },
-    {
-      title: "Tổng hợp về sớm",
-      key: "tong_hop_ve_som",
-      children: [
-        { title: "Số phút", key: "early_arrival_time_monthly" },
-        { title: "Số lần", key: "number_of_early_arrival" },
-        { title: "Công muộn", key: "early_arrival_work_monthly" },
-      ],
-    },
-    {
-      title: "Tổng hợp vắng mặt",
-      key: "tong_hop_vang_mat",
-      children: [
-        { title: "Số phút", key: "number_hour_absent_monthly" },
-        { title: "Số lần", key: "number_absent" },
-        { title: "Công sớm", key: "number_work_absent_monthly" },
-        { title: "Quên chốt", key: "number_of_breaktime" },
-      ],
-    },
-    {
-      title: "Tổng hợp nghỉ không lý do",
-      key: "tong_hop_nghi_khong_ly_do",
-      children: [
-        { title: "Số công", key: "number_work_unexplain_absence_monthly" },
-      ],
-    },
-    {
-      title: "Tổng hợp nghỉ lý do",
-      key: "tong_hop_nghi_ly_do",
-      children: [
-        {
-          title: "Tổng công (P-Công,KL-Công,...)",
-          key: "number_work_explain_absence_monthly",
-        },
-        {
-          title: "Tổng giờ (P-Giờ, KL-Giờ,...)",
-          key: "number_hour_explain_absence_monthly",
-        },
-      ],
-    },
-    {
-      title: "Tổng hợp Công chính",
-      key: "tong_hop_nghi_cong_chinh",
-      children: [
-        {
-          title: "Công ca (Tổng hợp Công chuẩn-Công chuẩn)",
-          key: "number_work_shift_monthly",
-        },
-        { title: "Công lễ", key: "number_of_holiday_monthly" },
-        { title: "Công tác", key: "work_of_mission_monthly" },
-      ],
-    },
-    {
-      title: "Tổng hợp làm thêm",
-      key: "tong_hop_lam_them",
-      children: [
-        { title: "Giờ nghỉ", key: "extra_hour_off_monthly" },
-        { title: "Nghỉ ngày", key: "extra_hour_off_day_monthly" },
-        { title: "Nghỉ đêm", key: "extra_hour_off_night_monthly" },
-        { title: "Giờ lễ", key: "extra_hour_holiday_monthly" },
-        { title: "Lễ ngày", key: "extra_hour_holiday_day_monthly" },
-        { title: "Lễ đêm", key: "extra_hour_holiday_night_monthly" },
-        { title: "Giờ ngày", key: "extra_hour_monthly" },
-        { title: "Ngày", key: "extra_hour_day_monthly" },
-        { title: "Đêm", key: "extra_hour_night_monthly" },
-        { title: "Tổng giờ	", key: "extra_hours_monthly" },
-        { title: "Số lần	", key: "number_of_extra_hour" },
-      ],
-    },
-    {
-      title: "Tổng hợp tăng ca",
-      key: "tong_hop_tang_ca",
-      children: [
-        { title: "Giờ nghỉ", key: "overtime_hour_off_monthly" },
-        { title: "Giờ lễ", key: "overtime_hour_holiday_monthly" },
-        { title: "Giờ ngày", key: "overtime_hours_monthly" },
-        { title: "Tổng giờ", key: "overtime_hour_total" },
-        { title: "Công nghỉ", key: "overtime_work_off_monthly" },
-        { title: "Công lễ", key: "overtime_work_holiday_monthly" },
-        { title: "Công ngày", key: "overtime_works_monthly" },
-        { title: "Số công", key: "overtime_works_total" },
-        { title: "Công chuẩn", key: "overtime_works_extract" },
-        { title: "Số lần", key: "number_of_overtime" },
-      ],
-    },
-    {
-      title: "Tổng hợp qua ngày",
-      key: "tong_hop_qua_ngay",
-      children: [
-        { title: "Số giờ", key: "throughout_hour_monthly" },
-        { title: "Số công", key: "throughout_work_monthly" },
-        { title: "Công thực tế", key: "throughout_work_extract_monthly" },
-        { title: "Giờ thực tế", key: "throughout_hour_extract_monthly" },
-        { title: "Số lần", key: "throughout_number" },
-      ],
-    },
-    {
-      title: "Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)",
-      key: "tong_hop_HC,CS",
-      children: [
-        { title: "Số công", key: "hc_work_monthly" },
-        { title: "Số giờ", key: "hc_hour_monthly" },
-        { title: "Công thực tế", key: "hc_work_extract_monthly" },
-        { title: "Giờ thực tế", key: "hc_hour_extract_monthly" },
-        { title: "Số lần", key: "hc_number" },
-      ],
-    },
-    {
-      title: "Tổng hợp làm việc ngày lễ",
-      key: "tong_hop_lam_viec_ngay_le",
-      children: [
-        { title: "Số công", key: "number_work_holiday_monthly" },
-        { title: "Số giờ", key: "number_hour_holiday_monthly" },
-      ],
-    },
-    {
-      title: "Tổng hợp ngày chấm công",
-      key: "tong_hop_ngay_cham_cong",
-      children: [{ title: "Số ngày", key: "number_of_day_work" }],
-    },
-  ];
 
   const handleShowColumnModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleColumnModalOk = () => {
-    setIsModalVisible(false);
-  };
 
   const handleColumnModalCancel = () => {
     setIsModalVisible(false);
   };
 
-  const handleTreeSelect = (selectedKeys: any) => {
-    const selectedColumns: any = {};
+  //xử lý thêm cột
+  const handleChangeColumn = () => {
+    setColumns(treeArray({data: [...treeEmployee,...clDate.map((date_column):column => ({
+      parent_key: null,
+      key:`${date_column.date}`,
+      title: `${date_column.date}`,
+      children: [{
+        parent_key: null,
+        key:`${date_column.dayOfWeek}`,
+        children: [],
+        title: `${date_column.date}`
+      }]      
+    })),...treeAtt].filter(cl => {
+      return checkedKeys.includes(cl.key)
+    }),keyValue: "key",parentField:"parent_key"}))
+    setIsModalVisible(false);
 
-    // Reset all columns to false
-    Object.keys(showColumns).forEach((columnName: any) => {
-      selectedColumns[columnName] = false;
-    });
-
-    // Set selected columns to true based on selected keys
-    selectedKeys.forEach((key: any) => {
-      selectedColumns[key] = true;
-    });
-
-    setShowColumns(selectedColumns);
   };
 
   const closeModal = () => {
@@ -382,6 +236,8 @@ export default function Worksheet() {
   useEffect(() => {
     (async () => {
       let columnDayWeek = getDaysAndWeekdays(month, year["$y"]);
+      setClDate(getDaysAndWeekdays(month, year["$y"]));
+
       const rsData = await AxiosService.get(
         "/api/method/mbw_sfc_integrations.sfc_integrations.attendance.get_attendance",
         {
@@ -410,11 +266,9 @@ export default function Worksheet() {
           return dt;
         }),
       });
-      setClDate(getDaysAndWeekdays(month, year["$y"]));
       setTotal(results.totals);
     })();
   }, [month, year, page, employee, department]);
-  console.log("show", showColumns);
 
   return (
     <>
@@ -550,23 +404,7 @@ export default function Worksheet() {
             <Button type="primary" onClick={handleShowColumnModal}>
               Cấu hình
             </Button>
-            <Modal
-              title="Cấu hình cột"
-              visible={isModalVisible}
-              onOk={handleColumnModalOk}
-              onCancel={handleColumnModalCancel}
-              okText="Lưu"
-              cancelText="Hủy"
-
-            >
-              <Tree
-                className="pt-3"
-                checkable
-                treeData={treeData}
-                defaultExpandAll
-                onSelect={handleTreeSelect}
-              />
-            </Modal>
+            
           </div>
         </div>
 
@@ -586,7 +424,8 @@ export default function Worksheet() {
             }}
             scroll={{ x: true }}
           >
-            <ColumnGroup title="Thông tin nhân viên" className="!min-w-[670px]">
+            {/* old cl */}
+            {/* <ColumnGroup title="Thông tin nhân viên" className="!min-w-[670px]">
               <Column
                 className="!text-center"
                 title="STT"
@@ -643,10 +482,10 @@ export default function Worksheet() {
                 dataIndex="work_hours_monthly"
                 key="work_hours_monthly"
               />
-            </ColumnGroup>
+            </ColumnGroup> */}
 
             {/* cái này để map */}
-            {clDate.length > 0 &&
+            {/* {clDate.length > 0 &&
               clDate.map((date) => (
                 <ColumnGroup
                   key={date.dayOfWeek}
@@ -1243,7 +1082,15 @@ export default function Worksheet() {
                 dataIndex="number_work_shift_monthly"
                 key="number_work_shift_monthly"
               />
-            </ColumnGroup>
+            </ColumnGroup> */}
+
+            {/* end cl */}
+            {/* new cl */}
+            {/* {renderColumn2({data_column:columns,fix_left_column:fixedLeft,fix_right_column:[]})} */}
+            {columns.map(dataCl => {        
+              return renderColumn({data_column:dataCl,fix_left_column:fixedLeft,fix_right_column:[]})
+            })}
+            {/* end new cl */}
           </TableCustom>
 
           {/* modal */}
@@ -1268,6 +1115,17 @@ export default function Worksheet() {
           </Modal>
         </div>
       </div>
+      <Modal
+              title="Cấu hình cột"
+              visible={isModalVisible}
+              onOk={handleChangeColumn}
+              onCancel={handleColumnModalCancel}
+              okText="Lưu"
+              cancelText="Hủy"
+
+            >
+              <TreeColumn  select={checkedKeys} handleSelect={setCheckedKeys}/>
+            </Modal>
     </>
   );
 }

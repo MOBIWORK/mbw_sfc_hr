@@ -85,6 +85,30 @@ export const treeArray = ({
   },
 ];
  */
+
+interface feProps {data : any, fielNameChild: string,fielNameUpdate: string,valueUpdate:boolean,fiel_compare: string,values_compare : string[]}
+export const forEachTreeCb =({data, fielNameChild="",fielNameUpdate="",valueUpdate=false,fiel_compare="",values_compare = []}:feProps) => {
+
+  if(data[fielNameChild].length > 0) {
+    data[fielNameChild] = data[fielNameChild].map((dt:any) => forEachTreeCb({
+      data: dt,
+      fielNameChild
+      ,fielNameUpdate
+      ,valueUpdate
+      ,fiel_compare
+      ,values_compare
+    }))
+  }
+  if(values_compare.includes(data[fiel_compare])) {
+    data[fielNameUpdate] = valueUpdate
+  }
+
+  return data
+}
+
+
+
+
 dayjs.locale("vi");
 export const arrayDays = (startTime, endTime) => {
   const dateObjects = [];

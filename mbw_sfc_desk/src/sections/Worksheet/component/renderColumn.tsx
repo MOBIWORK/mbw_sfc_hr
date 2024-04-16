@@ -17,7 +17,7 @@ interface renderProps {
 const { Column, ColumnGroup } = TableCustom;
 export function renderColumn({ data_column, fix_left_column = [], fix_right_column = [],cb }: renderProps) {
     if (data_column.children?.length > 0) {
-        return <ColumnGroup title={data_column.title} {...fix_left_column.includes(data_column.key) && { fixed: "left" }}
+        return <ColumnGroup className="!text-center !min-w-[200px]" title={data_column.title} {...fix_left_column.includes(data_column.key) && { fixed: "left" }}
             {...fix_right_column.includes(data_column.key) && { fixed: "right" }}>
             {
                 data_column.children?.map(dt => renderColumn({ data_column: dt, fix_left_column, fix_right_column }))
@@ -28,7 +28,7 @@ export function renderColumn({ data_column, fix_left_column = [], fix_right_colu
         return <Column
         {...fix_left_column.includes(data_column.key) && { fixed: "left" }}
         {...fix_right_column.includes(data_column.key) && { fixed: "right" }}
-        className="!text-center"
+        className="!text-center !min-w-[150px]"
         title={data_column.title}
         dataIndex={data_column.key}
         key={data_column.key}
@@ -41,7 +41,7 @@ export function renderColumn({ data_column, fix_left_column = [], fix_right_colu
         return <Column
             {...fix_left_column.includes(data_column.key) && { fixed: "left" }}
             {...fix_right_column.includes(data_column.key) && { fixed: "right" }}
-            className="!text-center"
+            className="!text-center !min-w-[150px]"
             title={data_column.title}
             dataIndex={data_column.key}
             key={data_column.key}

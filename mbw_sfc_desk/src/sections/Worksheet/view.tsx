@@ -1,4 +1,4 @@
-import {  VerticalAlignBottomOutlined } from "@ant-design/icons";
+import { VerticalAlignBottomOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
 import { Button, DatePicker, Modal, Select, Tree } from "antd";
@@ -13,10 +13,16 @@ import { defaultColumn, fixedLeft, treeAtt, treeEmployee } from "./data";
 import { column, renderColumn } from "./component/renderColumn";
 
 export default function Worksheet() {
-  console.log(treeArray({data: [... treeAtt,... treeEmployee],keyValue: "key",parentField:"parent_key"}));
+  console.log(
+    treeArray({
+      data: [...treeAtt, ...treeEmployee],
+      keyValue: "key",
+      parentField: "parent_key",
+    })
+  );
   // console.log(tree1.map(tb => tb.key));
-  
-  const [dataReort, setDataReport] = useState<{data: any[]}>({data:[]});
+
+  const [dataReort, setDataReport] = useState<{ data: any[] }>({ data: [] });
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
   const [month, setMonth] = useState(dayjs().month() + 1);
   const [page, setPage] = useState<number>(1);
@@ -35,9 +41,15 @@ export default function Worksheet() {
   const [keySDepartment, setKeySDepartment] = useState("");
   let keySearchDepartment = useDebounce(keySDepartment, 500);
   const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(defaultColumn);
-  const [columns, setColumns] = useState<column[]>(treeArray({data: [...treeEmployee,...treeAtt].filter(cl => {
-    return checkedKeys.includes(cl.key)
-  }),keyValue: "key",parentField:"parent_key"}));
+  const [columns, setColumns] = useState<column[]>(
+    treeArray({
+      data: [...treeEmployee, ...treeAtt].filter((cl) => {
+        return checkedKeys.includes(cl.key);
+      }),
+      keyValue: "key",
+      parentField: "parent_key",
+    })
+  );
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
@@ -121,11 +133,9 @@ export default function Worksheet() {
     number_of_day_work: true,
   });
 
-
   const handleShowColumnModal = () => {
     setIsModalVisible(true);
   };
-
 
   const handleColumnModalCancel = () => {
     setIsModalVisible(false);
@@ -133,42 +143,43 @@ export default function Worksheet() {
 
   //xử lý thêm cột
   const handleChangeColumn = () => {
-    console.log("clDate",clDate);
-    
+    console.log("clDate", clDate);
+
     setColumns([
       ...treeArray({
-        data: treeEmployee.filter(cl => {
-              return checkedKeys.includes(cl.key)
-            }),
+        data: treeEmployee.filter((cl) => {
+          return checkedKeys.includes(cl.key);
+        }),
         keyValue: "key",
-        parentField:"parent_key"}),
-      ...clDate.map((date_column):column => ({
-        parent_key: null,
-        key:`${date_column.date}`,
-        title: `${date_column.date}`,
-        type_column: "date",
-        children: [{
-          parent_key: `${date_column.date}`,
-          key:`${date_column.date}`,
-          title: `${date_column.dayOfWeek}`,
+        parentField: "parent_key",
+      }),
+      ...clDate.map(
+        (date_column): column => ({
+          parent_key: null,
+          key: `${date_column.date}`,
+          title: `${date_column.date}`,
           type_column: "date",
-          children: []
-        }]      
-      })),
-      
-      ...treeArray({
-        data: treeAtt.filter(cl => {
-              return checkedKeys.includes(cl.key)
-            }),
-        keyValue: "key",
-        parentField:"parent_key"})
-  
-  ]
-    
-    
-    )
-    setIsModalVisible(false);
+          children: [
+            {
+              parent_key: `${date_column.date}`,
+              key: `${date_column.date}`,
+              title: `${date_column.dayOfWeek}`,
+              type_column: "date",
+              children: [],
+            },
+          ],
+        })
+      ),
 
+      ...treeArray({
+        data: treeAtt.filter((cl) => {
+          return checkedKeys.includes(cl.key);
+        }),
+        keyValue: "key",
+        parentField: "parent_key",
+      }),
+    ]);
+    setIsModalVisible(false);
   };
 
   const closeModal = () => {
@@ -291,13 +302,12 @@ export default function Worksheet() {
     })();
   }, [month, year, page, employee, department]);
 
-
   useEffect(() => {
-    handleChangeColumn()
-  },[clDate])
+    handleChangeColumn();
+  }, [clDate]);
 
-  console.log({columns});
-  
+  console.log({ columns });
+
   return (
     <>
       <HeaderPage
@@ -432,15 +442,14 @@ export default function Worksheet() {
             <Button type="primary" onClick={handleShowColumnModal}>
               Cấu hình
             </Button>
-            
           </div>
         </div>
 
         <div className="pt-5">
           <TableCustom
-            dataSource={dataReort?.data?.map((report: any,index:number) => ({
+            dataSource={dataReort?.data?.map((report: any, index: number) => ({
               key: report.name,
-              stt:index+1,
+              stt: index + 1,
               ...report,
             }))}
             bordered
@@ -454,8 +463,13 @@ export default function Worksheet() {
             scroll={{ x: true }}
           >
             {/* new cl */}
-            {columns.map(dataCl => {        
-              return renderColumn({data_column:dataCl,fix_left_column:fixedLeft,fix_right_column:[],cb:setModal})
+            {columns.map((dataCl) => {
+              return renderColumn({
+                data_column: dataCl,
+                fix_left_column: fixedLeft,
+                fix_right_column: [],
+                cb:(pr)=> setModal(pr),
+              });
             })}
             {/* end new cl */}
           </TableCustom>
@@ -483,16 +497,15 @@ export default function Worksheet() {
         </div>
       </div>
       <Modal
-              title="Cấu hình cột"
-              visible={isModalVisible}
-              onOk={handleChangeColumn}
-              onCancel={handleColumnModalCancel}
-              okText="Lưu"
-              cancelText="Hủy"
-
-            >
-              <TreeColumn  select={checkedKeys} handleSelect={setCheckedKeys}/>
-            </Modal>
+        title="Cấu hình cột"
+        visible={isModalVisible}
+        onOk={handleChangeColumn}
+        onCancel={handleColumnModalCancel}
+        okText="Lưu"
+        cancelText="Hủy"
+      >
+        <TreeColumn select={checkedKeys} handleSelect={setCheckedKeys} />
+      </Modal>
     </>
   );
 }

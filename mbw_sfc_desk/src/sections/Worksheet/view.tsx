@@ -133,6 +133,8 @@ export default function Worksheet() {
     number_of_day_work: true,
   });
 
+  console.log(modal,'hello modal')
+
   const handleShowColumnModal = () => {
     setIsModalVisible(true);
   };
@@ -468,7 +470,7 @@ export default function Worksheet() {
                 data_column: dataCl,
                 fix_left_column: fixedLeft,
                 fix_right_column: [],
-                cb:(pr)=> setModal(pr),
+                cb:setModal,
               });
             })}
             {/* end new cl */}

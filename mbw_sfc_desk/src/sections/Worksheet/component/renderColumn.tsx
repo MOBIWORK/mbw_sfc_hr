@@ -11,7 +11,7 @@ interface renderProps {
   data_column: column;
   fix_left_column: string[];
   fix_right_column: string[];
-  cb?: any;
+  cb?: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const { Column, ColumnGroup } = TableCustom;
@@ -26,13 +26,18 @@ export function renderColumn({
   if (data_column.children?.length > 0) {
     return (
       <ColumnGroup
-        className="!text-center !min-w-[200px] !h-7"
+        className="!text-center !min-w-[90px] !h-8 !p-0"
         title={data_column.title}
         {...(fix_left_column.includes(data_column.key) && { fixed: "left" })}
         {...(fix_right_column.includes(data_column.key) && { fixed: "right" })}
       >
         {data_column.children?.map((dt) =>
-          renderColumn({ data_column: dt, fix_left_column, fix_right_column })
+          renderColumn({
+            data_column: dt,
+            fix_left_column,
+            fix_right_column,
+            cb,
+          })
         )}
       </ColumnGroup>
     );
@@ -42,31 +47,30 @@ export function renderColumn({
       <Column
         {...(fix_left_column.includes(data_column.key) && { fixed: "left" })}
         {...(fix_right_column.includes(data_column.key) && { fixed: "right" })}
-        className="!text-center !min-w-[150px] !h-14 !p-0"
+        className="!text-center !min-w-[70px] !h-8 !p-0"
         title={data_column.title}
         dataIndex={data_column.key}
         key={data_column.key}
         render={(value, record) => renderDateColumn(value, record, cb)}
       />
     );
-  } else if(data_column.key == "stt") {
+  } else if (data_column.key == "stt") {
     return (
       <Column
         {...(fix_left_column.includes(data_column.key) && { fixed: "left" })}
         {...(fix_right_column.includes(data_column.key) && { fixed: "right" })}
-        className="!text-center !min-w-[60px] !h-14 !p-0"
+        className="!text-center !min-w-[60px] !h-8 !p-0"
         title={data_column.title}
         dataIndex={data_column.key}
         key={data_column.key}
       />
     );
-  }
-   else {
+  } else {
     return (
       <Column
         {...(fix_left_column.includes(data_column.key) && { fixed: "left" })}
         {...(fix_right_column.includes(data_column.key) && { fixed: "right" })}
-        className="!text-center !min-w-[170px] !h-7 !p-0"
+        className="!text-center !min-w-[170px] !min-h-8 !h-8 !p-0"
         title={data_column.title}
         dataIndex={data_column.key}
         key={data_column.key}
@@ -75,10 +79,16 @@ export function renderColumn({
   }
 }
 
-function renderDateColumn(value: any, record: any, cb: any) {
+function renderDateColumn(
+  value: any,
+  record: any,
+  cb?: React.Dispatch<React.SetStateAction<any>>
+) {
+  console.log(cb, "cb date");
+
   if (value?.dayOfWeek === "Thứ 7" || value?.dayOfWeek === "Chủ nhật") {
     return (
-      <div className="bg-gray-300 !h-14 !text-center flex justify-center items-center ">
+      <div className="bg-gray-300 !h-10 !text-center flex justify-center items-center ">
         OFF
       </div>
     );
@@ -90,7 +100,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
           <div
             onClick={() => {
               // console.log(record.employee, value.att_day);
-              cb({
+              cb?.({
                 open: true,
                 id: {
                   employee: record.employee,
@@ -98,7 +108,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
                 },
               });
             }}
-            className="text-red-700 !h-14 flex justify-center items-center"
+            className="text-red-700 !h-10 flex justify-center items-center"
           >
             {value?.work_hours}
           </div>
@@ -109,7 +119,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
           <div
             onClick={() => {
               // console.log(record.employee, value.att_day);
-              cb({
+              cb?.({
                 open: true,
                 id: {
                   employee: record.employee,
@@ -117,7 +127,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
                 },
               });
             }}
-            className="border-solid border-[red] !h-14 flex justify-center items-center"
+            className="border-solid border-[red] !h-10 flex justify-center items-center"
           >
             {value?.work_hours}
           </div>
@@ -128,7 +138,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
           <div
             onClick={() => {
               // console.log(record.employee, value.att_day);
-              cb({
+              cb?.({
                 open: true,
                 id: {
                   employee: record.employee,
@@ -136,7 +146,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
                 },
               });
             }}
-            className="text-yellow-500 !h-14 flex justify-center items-center"
+            className="text-yellow-500 !h-10 flex justify-center items-center"
           >
             {value?.work_hours}
           </div>
@@ -147,7 +157,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
           <div
             onClick={() => {
               // console.log(record.employee, value.att_day);
-              cb({
+              cb?.({
                 open: true,
                 id: {
                   employee: record.employee,
@@ -155,7 +165,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
                 },
               });
             }}
-            className="text-green-500 !h-14 flex justify-center items-center"
+            className="text-green-500 !h-10 flex justify-center items-center"
           >
             v
           </div>
@@ -172,7 +182,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
         <div
           onClick={() => {
             // console.log(record.employee, value.att_day);
-            cb({
+            cb?.({
               open: true,
               id: {
                 employee: record.employee,
@@ -182,7 +192,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
               },
             });
           }}
-          className="text-red-700 !h-14 flex justify-center items-center"
+          className="text-red-700 !h-10 flex justify-center items-center"
         >
           {value?.work_hours}
         </div>
@@ -193,7 +203,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
         <div
           onClick={() => {
             // console.log(record.employee, value.att_day);
-            cb({
+            cb?.({
               open: true,
               id: {
                 employee: record.employee,
@@ -203,7 +213,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
               },
             });
           }}
-          className="border-solid border-[red] !h-14 flex justify-center items-center"
+          className="border-solid border-[red] !h-10 flex justify-center items-center"
         >
           {value?.work_hours}
         </div>
@@ -214,7 +224,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
         <div
           onClick={() => {
             // console.log(record.employee, value.att_day);
-            cb({
+            cb?.({
               open: true,
               id: {
                 employee: record.employee,
@@ -224,7 +234,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
               },
             });
           }}
-          className="text-yellow-500 !h-14 flex justify-center items-center"
+          className="text-yellow-500 !h-10 flex justify-center items-center"
         >
           {value?.work_hours}
         </div>
@@ -235,7 +245,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
         <div
           onClick={() => {
             // console.log(record.employee, value.att_day);
-            cb({
+            cb?.({
               open: true,
               id: {
                 employee: record.employee,
@@ -245,7 +255,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
               },
             });
           }}
-          className="text-green-500 !h-14 flex justify-center items-center"
+          className="text-green-500 !h-10 flex justify-center items-center"
         >
           v
         </div>
@@ -264,7 +274,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
         <div
           onClick={() => {
             // console.log(record.employee, value.att_day);
-            cb({
+            cb?.({
               open: true,
               id: {
                 employee: record.employee,
@@ -285,7 +295,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
         <div
           onClick={() => {
             // console.log(record.employee, value.att_day);
-            cb({
+            cb?.({
               open: true,
               id: {
                 employee: record.employee,
@@ -295,7 +305,7 @@ function renderDateColumn(value: any, record: any, cb: any) {
               },
             });
           }}
-          className="!h-14 flex justify-center items-center"
+          className="!h-10 flex justify-center items-center"
         >
           {value?.work_hours || " "}{" "}
         </div>

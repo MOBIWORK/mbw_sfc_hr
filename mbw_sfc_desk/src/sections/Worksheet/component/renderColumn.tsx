@@ -26,7 +26,7 @@ export function renderColumn({
   if (data_column.children?.length > 0) {
     return (
       <ColumnGroup
-        className="!text-center !min-w-[90px] !h-8 !p-0"
+        className="!text-center !min-w-[90px] !h-8 !p-2 whitespace-nowrap"
         title={data_column.title}
         {...(fix_left_column.includes(data_column.key) && { fixed: "left" })}
         {...(fix_right_column.includes(data_column.key) && { fixed: "right" })}
@@ -70,7 +70,7 @@ export function renderColumn({
       <Column
         {...(fix_left_column.includes(data_column.key) && { fixed: "left" })}
         {...(fix_right_column.includes(data_column.key) && { fixed: "right" })}
-        className="!text-center !min-w-[170px] !min-h-8 !h-8 !p-0"
+        className="!text-center !min-w-[100px] !min-h-8 !h-8 !p-2 whitespace-nowrap"
         title={data_column.title}
         dataIndex={data_column.key}
         key={data_column.key}

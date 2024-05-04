@@ -129,13 +129,14 @@ website_route_rules = [
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	# "DMS Summary KPI Monthly": {
+	# 	"on_update": "mbw_sfc_hr.controllers.salary_kpi.kpi_monthly_for_salary"
+	# },
+    "Salary Slip": {
+        "after_insert": "mbw_sfc_hr.controllers.salary_slip.salary_slip_update"
+    },
+}
 
 # Scheduled Tasks
 # ---------------

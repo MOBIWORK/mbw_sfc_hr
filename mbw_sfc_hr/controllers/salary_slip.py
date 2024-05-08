@@ -17,7 +17,7 @@ def salary_slip_update(doc, method):
             if salary_components:
                 value = frappe.get_value(salary_components.custom_doctype , {'employee': employee, 'month': month, 'year': year}, salary_components.field_name)
                 for k in doc.earnings:
-                    if k.salary_component == salary_components:
+                    if k.salary_component == i.salary_component:
                         k.amount = value
     
     if deductions:
@@ -26,5 +26,5 @@ def salary_slip_update(doc, method):
             if salary_components:
                 value = frappe.get_value(salary_components.custom_doctype , {'employee': employee, 'month': month, 'year': year}, salary_components.field_name)
                 for j in doc.deductions:
-                    if j.salary_component == salary_components:
+                    if j.salary_component == a.salary_component:
                         j.amount = value

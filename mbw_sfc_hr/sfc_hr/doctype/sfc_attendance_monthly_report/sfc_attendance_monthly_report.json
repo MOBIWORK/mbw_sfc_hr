@@ -67,7 +67,11 @@
   "throughout_work_monthly",
   "throughout_work_extract_monthly",
   "throughout_hour_extract_monthly",
-  "number_hour_explain_absence_monthly"
+  "number_hour_explain_absence_monthly",
+  "work_hours_straight_holidays_monthly",
+  "work_hours_broken_holidays_monthly",
+  "straight_shift_hours_monthly",
+  "broken_shift_hours_monthly"
  ],
  "fields": [
   {
@@ -389,11 +393,31 @@
    "fieldname": "number_hour_explain_absence_monthly",
    "fieldtype": "Float",
    "label": "Number hour explained absence monthly"
+  },
+  {
+   "fieldname": "work_hours_straight_holidays_monthly",
+   "fieldtype": "Float",
+   "label": "Work hours straight holidays monthly"
+  },
+  {
+   "fieldname": "work_hours_broken_holidays_monthly",
+   "fieldtype": "Float",
+   "label": "Work hours broken holidays"
+  },
+  {
+   "fieldname": "straight_shift_hours_monthly",
+   "fieldtype": "Float",
+   "label": "Straight shift hours"
+  },
+  {
+   "fieldname": "broken_shift_hours_monthly",
+   "fieldtype": "Float",
+   "label": "Broken shift hours"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-03-19 12:00:33.035966",
+ "modified": "2024-05-22 14:05:56.572377",
  "modified_by": "Administrator",
  "module": "SFC HR",
  "name": "SFC Attendance Monthly Report",

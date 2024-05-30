@@ -13,7 +13,6 @@ import { TabsCustom } from "../../components/tabs/tabs";
 import useDebounce from "../../hooks/useDebount";
 import { getDaysAndWeekdays } from "../../util";
 import { AxiosService } from "../../services/server";
-import { column } from "./components/renderColumn";
 
 const { TabPane } = TabsCustom;
 const { Column, ColumnGroup } = TableCustom;
@@ -47,7 +46,6 @@ export default function Worksheet() {
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
-  const [columns, setColumns] = useState<column[]>();
   const [modal, setModal] = useState<{
     open: boolean;
     id: any;
@@ -107,9 +105,6 @@ export default function Worksheet() {
       );
 
       let { message: results } = rsEmployee;
-
-      console.log("e", results);
-      
 
       setListEmployee(
         results.map((dtEmployee: any) => ({
@@ -324,6 +319,7 @@ export default function Worksheet() {
                       dataIndex={date.date}
                       key={date.dayOfWeek}
                       render={(value: any, record: any) => {
+                        console.log("value?", value);
                         if (
                           value?.dayOfWeek === "Thứ 7" ||
                           value?.dayOfWeek === "Chủ nhật"
@@ -334,7 +330,7 @@ export default function Worksheet() {
                             </div>
                           );
                         }
-                        if (value.work_hours !== 0 && !value.work_hours) {
+                        if (value?.work_hours !== 0 && !!!value?.work_hours) {
                           switch (value?.sign) {
                             case "HE":
                               return (
@@ -351,7 +347,7 @@ export default function Worksheet() {
                                   }}
                                   className="text-red-700 !h-14 flex justify-center items-center"
                                 >
-                                  {value?.work_hours}
+                                  {value?.sign}
                                 </div>
                               );
                               break;
@@ -370,7 +366,7 @@ export default function Worksheet() {
                                   }}
                                   className="border-solid border-[red] !h-14 flex justify-center items-center"
                                 >
-                                  {value?.work_hours}
+                                  {value?.sign}
                                 </div>
                               );
                               break;
@@ -389,7 +385,7 @@ export default function Worksheet() {
                                   }}
                                   className="text-yellow-500 !h-14 flex justify-center items-center"
                                 >
-                                  {value?.work_hours}
+                                  {value?.sign}
                                 </div>
                               );
                               break;
@@ -548,7 +544,7 @@ export default function Worksheet() {
                                 }}
                                 className=" flex justify-center items-center"
                               >
-                                {value?.work_hours || " "}{" "}
+                                {value?.work_hours || " "}
                               </div>
                             );
                         }

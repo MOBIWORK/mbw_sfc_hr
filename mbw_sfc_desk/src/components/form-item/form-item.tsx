@@ -1,6 +1,6 @@
-import { Form } from 'antd'
-import React from 'react'
-import styled from 'styled-components'
+import { Form } from "antd";
+import React from "react";
+import styled from "styled-components";
 
 export const FormItemCustom = styled(Form.Item)<{ disabled?: boolean }>`
 &.ant-form-item {
@@ -32,6 +32,11 @@ export const FormItemCustom = styled(Form.Item)<{ disabled?: boolean }>`
       order: 2;
     }
   }
+}
+
+.ant-select-selector {
+  border-radius: 8px;
+  height: 28px!important;
 }
 
 & input:empty, & .ant-select-selector {

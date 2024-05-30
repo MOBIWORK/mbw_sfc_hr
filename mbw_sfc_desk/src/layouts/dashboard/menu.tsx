@@ -31,7 +31,14 @@ export default function MenuLeft({
     <div>
       <Row className="justify-between items-center py-4 pl-4">
         <Col>
-          <Link to="/app/home" className="w-[32px] h-[32px]">
+          <Link
+            to=""
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.href = "/app";
+            }}
+            className="w-[32px] h-[32px]"
+          >
             <img src={logo} className="object-contain w-[32px] h-[32px]" />
           </Link>
         </Col>
@@ -40,16 +47,23 @@ export default function MenuLeft({
         </Col>
       </Row>
       <div className="font-semibold text-lg text-[#919EAB] leading-[22px] pl-[8px] mx-2 pb-4">
-        <Link className="font-semibold text-lg !text-[#919EAB] leading-[22px]" to="/">SFC</Link>
+        <Link
+          className="font-semibold text-lg !text-[#919EAB] leading-[22px]"
+          to="/"
+        >
+          Báo cáo
+        </Link>
       </div>
-      <MenuCustom
-        theme="light"
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="inline"
-        items={listMenu}
-        // inlineCollapsed={collapsed}
-      />
+      <div className="flex-1 !max-h-[70vh] invisible-scrollbar ">
+        <MenuCustom
+          theme="light"
+          onClick={onClick}
+          selectedKeys={[current]}
+          mode="inline"
+          items={listMenu}
+          // inlineCollapsed={collapsed}
+        />
+      </div>
     </div>
   );
 }

@@ -13,15 +13,23 @@ type button = {
 type Props = {
   title: string | ReactNode;
   buttons?: button[];
-  customButton ?: ReactNode
+  customButton?: ReactNode;
+  customSlect?: ReactNode;
 };
 
-export function HeaderPage({ title, buttons ,customButton}: Props) {
+export function HeaderPage({
+  title,
+  buttons,
+  customButton,
+  customSlect,
+}: Props) {
   return (
     <>
-      <Row className="flex flex-wrap justify-between items-center px-0 py-5 flex-nowrap">
+      <Row className="flex justify-between items-center px-7 py-5 flex-nowrap bg-white">
         <div className="flex justify-center items-center">
-          <span className="text-2xl font-semibold leading-[21px] ml-2">{title}</span>
+          <span className="text-2xl font-semibold leading-[21px] ml-2">
+            {title}
+          </span>
         </div>
         <div className="flex mb-2 flex-nowrap">
           {buttons &&
@@ -37,7 +45,8 @@ export function HeaderPage({ title, buttons ,customButton}: Props) {
                 {button.label}
               </Button>
             ))}
-            {customButton}
+          {customSlect}
+          {customButton}
         </div>
       </Row>
     </>

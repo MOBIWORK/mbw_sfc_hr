@@ -96,3 +96,15 @@ p {
   border-radius: 50%;
   margin-right: 5px;
 }
+
+body, * {
+  font-family: "Inter" ,sans-serif;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none!important;
+}
+
+:where(.css-dev-only-do-not-override-1jlkgmc).ant-form-item .ant-form-item-label >label::after {
+  display: none
+}

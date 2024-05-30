@@ -3,6 +3,7 @@ import Header from "./header";
 import MenuLeft from "./menu";
 import { Layout } from "antd";
 import styled from "styled-components";
+import AvatarComponent from "./avatar-component";
 
 type Props = {
   children: React.ReactNode;
@@ -12,37 +13,34 @@ const { Content, Sider } = Layout;
 
 const SiderCustome = styled(Sider)` 
 & .ant-layout-sider-trigger {
-  display: none;
+  width:100%;
+  height: fit-content;
 }
 `
 export default function DashboardLayout({ children }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   return (
-    <Layout>
-        <SiderCustome style={{ background: "#fff" }} width={!collapsed ? 250 : 78} collapsible collapsed={collapsed} >            
-            <MenuLeft handleCollapsed = {setCollapsed} collapsed={collapsed}/>
-          </SiderCustome>
-      <Layout >
-        <Content style={{ padding: "0 0px"}} className="!bg-[#fff] min-h-screen">
-          <Header />
-          <Layout
-            style={{
-              padding: "24px 0",
-              background: "#fff",
-              borderRadius: "8px",
-              margin: "0 auto"
-            }}
-          >
-          
-            <Content
-              className="round"
-              style={{ padding: "0 24px", minHeight: "90vh" ,background:"#F4F6F8" }}
-            >
-              <div>{children}</div>
-            </Content>
-          </Layout>
-        </Content>
-      </Layout>
+    <Layout className="overflow-hidden h-screen">
+      <SiderCustome
+        className="!bg-[#fff]"
+        width={!collapsed ? 280 : 78}
+        collapsible
+        collapsed={collapsed}
+        trigger={<AvatarComponent />}
+      >
+        <MenuLeft handleCollapsed={setCollapsed} collapsed={collapsed} />
+      </SiderCustome>
+      <Content
+        className="round !overflow-y-scroll"
+        style={{
+          padding: "0",
+          maxHeight: "calc(100vh-46px)",
+          overflow: "auto",
+          background: "#F4F6F8",
+        }}
+      >
+        <div className="h-fit">{children}</div>
+      </Content>
     </Layout>
   );
 }

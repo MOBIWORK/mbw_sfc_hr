@@ -1,58 +1,53 @@
 import { VerticalAlignBottomOutlined } from "@ant-design/icons";
+import { Avatar, Col, DatePicker, Form, Row, Select } from "antd";
 import React, { useEffect, useState } from "react";
-import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
-import { Button, DatePicker, Modal, Select, Tree } from "antd";
-import { monthAll } from "../ReportKPI/data";
+import Detailmodal from "./modal/detailmodal";
+import { ModalDetail } from "./components/modal";
 import dayjs from "dayjs";
-import { AxiosService } from "../../services/server";
-import { getDaysAndWeekdays, treeArray } from "../../util";
+import { DatePickerProps } from "antd/lib";
+import { monthAll } from "./modal/data";
+
+import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
+import { ContentPage } from "../../components/content-page";
+import { TabsCustom } from "../../components/tabs/tabs";
 import useDebounce from "../../hooks/useDebount";
-import DetailModal from "./modal/detail";
-import TreeColumn from "./modal/tree-column";
-import { defaultColumn, fixedLeft, treeAtt, treeEmployee } from "./data";
-import { column, renderColumn } from "./component/renderColumn";
+import { getDaysAndWeekdays } from "../../util";
+import { AxiosService } from "../../services/server";
+import { column } from "./components/renderColumn";
+
+const { TabPane } = TabsCustom;
+const { Column, ColumnGroup } = TableCustom;
+
+const data = [
+  {
+    key: "1",
+    employee: "Helllo",
+    tgc: "tgc",
+    depart: "Phòng Số 1",
+    t2: "1",
+  },
+];
 
 export default function Worksheet() {
-  console.log(
-    treeArray({
-      data: [...treeAtt, ...treeEmployee],
-      keyValue: "key",
-      parentField: "parent_key",
-    })
-  );
-  // console.log(tree1.map(tb => tb.key));
 
-  const [dataReort, setDataReport] = useState<{ data: any[] }>({ data: [] });
+  const [total, setTotal] = useState<number>(0);
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
   const [month, setMonth] = useState(dayjs().month() + 1);
-  const [page, setPage] = useState<number>(1);
-  const PAGE_SIZE = 20;
-  const [total, setTotal] = useState<number>(0);
-  const [employee, setEmployee] = useState("");
-  const [listEmployee, setListEmployee] = useState<any[]>([]);
-  const [keySEmployee, setKeySEmployee] = useState("");
-  let keySearchEmployee = useDebounce(keySEmployee, 500);
-  const [listCompany, setListCompany] = useState<any[]>([]);
-  const [company, setCompany] = useState("");
-  const [keySCompany, setKeySCompany] = useState("");
-  let keySearchCompany = useDebounce(keySCompany, 500);
   const [listDepartment, setListDepartment] = useState<any[]>([]);
   const [department, setDepartment] = useState("");
   const [keySDepartment, setKeySDepartment] = useState("");
   let keySearchDepartment = useDebounce(keySDepartment, 500);
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>(defaultColumn);
-  const [columns, setColumns] = useState<column[]>(
-    treeArray({
-      data: [...treeEmployee, ...treeAtt].filter((cl) => {
-        return checkedKeys.includes(cl.key);
-      }),
-      keyValue: "key",
-      parentField: "parent_key",
-    })
-  );
+  const [employee, setEmployee] = useState("");
+  const PAGE_SIZE = 20;
+  const [page, setPage] = useState<number>(1);
+  const [listEmployee, setListEmployee] = useState<any[]>([]);
+  const [keySEmployee, setKeySEmployee] = useState("");
+  let keySearchEmployee = useDebounce(keySEmployee, 500);
+  const [dataReort, setDataReport] = useState<{ data: any[] }>({ data: [] });
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
+  const [columns, setColumns] = useState<column[]>();
   const [modal, setModal] = useState<{
     open: boolean;
     id: any;
@@ -60,129 +55,6 @@ export default function Worksheet() {
     open: false,
     id: null,
   });
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [showColumns, setShowColumns] = useState<any>({
-    employee: true,
-    employee_name: true,
-    job_title: true,
-    department: true,
-    // cong_tong: true,
-    number_of_hours_monthly: true,
-    work_hours_monthly: true,
-    //Tổng hợp đi muộn
-    late_arrival_time_monthly: true,
-    number_of_late_arrival: true,
-    late_arrival_work_monthly: true,
-    //Tổng hợp về sớm
-    early_arrival_time_monthly: true,
-    number_of_early_arrival: true,
-    early_arrival_work_monthly: true,
-    //Tổng hợp vắng mặt
-    number_hour_absent_monthly: true,
-    number_absent: true,
-    number_work_absent_monthly: true,
-    number_of_breaktime: true,
-    //Tổng hợp nghỉ không lý do
-    number_work_unexplain_absence_monthly: true,
-    //Tổng hợp nghỉ lý do
-    number_work_explain_absence_monthly: true,
-    number_hour_explain_absence_monthly: true,
-    //Tổng hợp Công chính
-    number_work_shift_monthly: true,
-    number_of_holiday_monthly: true,
-    work_of_mission_monthly: true,
-    //Tổng hợp làm thêm
-    extra_hour_off_monthly: true,
-    extra_hour_off_day_monthly: true,
-    extra_hour_off_night_monthly: true,
-    extra_hour_holiday_monthly: true,
-    extra_hour_holiday_day_monthly: true,
-    extra_hour_holiday_night_monthly: true,
-    extra_hour_monthly: true,
-    extra_hour_day_monthly: true,
-    extra_hour_night_monthly: true,
-    extra_hours_monthly: true,
-    number_of_extra_hour: true,
-    //Tổng hợp tăng ca
-    overtime_hour_off_monthly: true,
-    overtime_hour_holiday_monthly: true,
-    overtime_hours_monthly: true,
-    overtime_hour_total: true,
-    overtime_work_off_monthly: true,
-    overtime_work_holiday_monthly: true,
-    overtime_works_monthly: true,
-    overtime_works_total: true,
-    overtime_works_extract: true,
-    number_of_overtime: true,
-    //Tổng hợp qua ngày
-    throughout_hour_monthly: true,
-    throughout_work_monthly: true,
-    throughout_work_extract_monthly: true,
-    throughout_hour_extract_monthly: true,
-    throughout_number: true,
-    //Tổng hợp HC, CS,...(Dữ liệu chấm công theo từng ca làm việc)
-    hc_work_monthly: true,
-    hc_hour_monthly: true,
-    hc_work_extract_monthly: true,
-    hc_hour_extract_monthly: true,
-    hc_number: true,
-    //Tổng hợp làm việc ngày lễ
-    number_work_holiday_monthly: true,
-    number_hour_holiday_monthly: true,
-    //Tổng hợp ngày chấm công
-    number_of_day_work: true,
-  });
-
-  console.log(modal,'hello modal')
-
-  const handleShowColumnModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleColumnModalCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  //xử lý thêm cột
-  const handleChangeColumn = () => {
-    console.log("clDate", clDate);
-
-    setColumns([
-      ...treeArray({
-        data: treeEmployee.filter((cl) => {
-          return checkedKeys.includes(cl.key);
-        }),
-        keyValue: "key",
-        parentField: "parent_key",
-      }),
-      ...clDate.map(
-        (date_column): column => ({
-          parent_key: null,
-          key: `${date_column.date}`,
-          title: `${date_column.date}`,
-          type_column: "date",
-          children: [
-            {
-              parent_key: `${date_column.date}`,
-              key: `${date_column.date}`,
-              title: `${date_column.dayOfWeek}`,
-              type_column: "date",
-              children: [],
-            },
-          ],
-        })
-      ),
-
-      ...treeArray({
-        data: treeAtt.filter((cl) => {
-          return checkedKeys.includes(cl.key);
-        }),
-        keyValue: "key",
-        parentField: "parent_key",
-      }),
-    ]);
-    setIsModalVisible(false);
-  };
 
   const closeModal = () => {
     setModal({
@@ -192,55 +64,8 @@ export default function Worksheet() {
   };
 
   useEffect(() => {
-    (async () => {
-      let rsEmployee: any = await AxiosService.get(
-        "/api/method/frappe.desk.search.search_link",
-        {
-          params: {
-            txt: keySearchEmployee,
-            doctype: "Employee",
-            ignore_user_permissions: 0,
-            query: "",
-          },
-        }
-      );
-
-      let { message: results } = rsEmployee;
-
-      setListEmployee(
-        results.map((dtEmployee: any) => ({
-          value: dtEmployee.value,
-          label: dtEmployee.description,
-          des: dtEmployee.description,
-        }))
-      );
-    })();
-  }, [keySearchEmployee]);
-
-  useEffect(() => {
-    (async () => {
-      let rsCompany: any = await AxiosService.get(
-        "/api/method/frappe.desk.search.search_link",
-        {
-          params: {
-            txt: keySearchCompany,
-            doctype: "Company",
-            ignore_user_permissions: 0,
-            query: "",
-          },
-        }
-      );
-
-      let { message: results } = rsCompany;
-
-      setListCompany(
-        results.map((dtCompany: any) => ({
-          value: dtCompany.value,
-          label: dtCompany.value,
-        }))
-      );
-    })();
-  }, [keySearchCompany]);
+    setClDate(getDaysAndWeekdays(month, year));
+  }, [month, year]);
 
   useEffect(() => {
     (async () => {
@@ -269,6 +94,34 @@ export default function Worksheet() {
 
   useEffect(() => {
     (async () => {
+      let rsEmployee: any = await AxiosService.get(
+        "/api/method/frappe.desk.search.search_link",
+        {
+          params: {
+            txt: keySearchEmployee,
+            doctype: "Employee",
+            ignore_user_permissions: 0,
+            query: "",
+          },
+        }
+      );
+
+      let { message: results } = rsEmployee;
+
+      console.log("e", results);
+      
+
+      setListEmployee(
+        results.map((dtEmployee: any) => ({
+          value: dtEmployee.value.trim(),
+          label: dtEmployee.description.trim(),
+        }))
+      );
+    })();
+  }, [keySearchEmployee]);
+
+  useEffect(() => {
+    (async () => {
       let columnDayWeek = getDaysAndWeekdays(month, year["$y"]);
       setClDate(getDaysAndWeekdays(month, year["$y"]));
 
@@ -287,6 +140,7 @@ export default function Worksheet() {
       );
 
       let { result: results } = rsData;
+
       setDataReport({
         ...results,
         data: results?.data.map((dt: any) => {
@@ -300,20 +154,13 @@ export default function Worksheet() {
           return dt;
         }),
       });
-      setTotal(results.totals);
     })();
   }, [month, year, page, employee, department]);
-
-  useEffect(() => {
-    handleChangeColumn();
-  }, [clDate]);
-
-  console.log({ columns });
 
   return (
     <>
       <HeaderPage
-        title="Bảng công"
+        title="Bảng chấm công"
         buttons={[
           {
             label: "Xuất dữ liệu",
@@ -324,190 +171,695 @@ export default function Worksheet() {
           },
         ]}
       />
-      <div className="bg-white rounded-md py-7  border-[#DFE3E8] border-[0.2px] border-solid">
-        <div className="flex justify-start items-center px-4">
-          <FormItemCustom
-            className="w-[200px] border-none mr-2"
-            label={"Tháng"}
-          ></FormItemCustom>
-          <FormItemCustom
-            className="w-[200px] border-none mr-2"
-            label={"Năm"}
-          ></FormItemCustom>
-          <FormItemCustom
-            className="w-[200px] border-none mr-2"
-            label={"Công ty"}
-          ></FormItemCustom>
-          <FormItemCustom
-            className="w-[200px] border-none mr-2"
-            label={"Phòng ban"}
-          ></FormItemCustom>
-          <FormItemCustom
-            className="w-[200px] border-none mr-2"
-            label={"Nhân viên"}
-          ></FormItemCustom>
+
+      <ContentPage>
+        <div className="bg-white rounded-tl-2xl rounded-tr-2xl border-[#DFE3E8] border-[0.2px] border-solid justify-between items-end w-full p-4">
+          <Row gutter={[8, 8]}>
+            <Col className="pb-2" span={24}>
+              <Form
+                layout="vertical"
+                className="flex flex-wrap justify-start items-center"
+              >
+                <FormItemCustom
+                  label={"Tháng"}
+                  className="border-none mr-2 w-[200px]"
+                >
+                  <Select
+                    className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
+                    defaultValue={month.toString()}
+                    options={monthAll}
+                    onChange={(value) => {
+                      setMonth(Number.parseInt(value));
+                    }}
+                    showSearch
+                  />
+                </FormItemCustom>
+                <FormItemCustom
+                  label={"Năm"}
+                  className="border-none mr-2 w-[200px]"
+                >
+                  <DatePicker
+                    className="!bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
+                    onChange={(value: any) => {
+                      setYear(value);
+                    }}
+                    picker="year"
+                    defaultValue={dayjs().startOf("year")}
+                  />
+                </FormItemCustom>
+                <FormItemCustom
+                  label="Nhóm phòng ban"
+                  className="border-none mr-2 w-[200px]"
+                >
+                  <Select
+                    className="!bg-[#F4F6F8] options:bg-[#F4F6F8] rounded-lg"
+                    options={listDepartment}
+                    onSelect={(value) => {
+                      setDepartment(value);
+                    }}
+                    onSearch={(value: string) => {
+                      setKeySDepartment(value);
+                    }}
+                    onClear={() => setDepartment("")}
+                    filterOption={false}
+                    allowClear
+                    placeholder="Tất cả phòng ban"
+                  />
+                </FormItemCustom>
+                <FormItemCustom
+                  label="Nhân viên"
+                  className="border-none mr-2 w-[200px]"
+                >
+                  <Select
+                    className="!bg-[#F4F6F8] options:bg-[#F4F6F8] rounded-lg"
+                    options={listEmployee}
+                    onSelect={(value) => {
+                      setEmployee(value);
+                    }}
+                    onSearch={(value: string) => {
+                      setKeySEmployee(value);
+                    }}
+                    onClear={() => setEmployee("")}
+                    filterOption={false}
+                    allowClear
+                    placeholder="Tất cả nhân viên"
+                  />
+                </FormItemCustom>
+              </Form>
+            </Col>
+          </Row>
         </div>
-        <div className="px-4 flex justify-start items-center">
-          <FormItemCustom className="w-[200px] border-none mr-2">
-            <Select
-              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
-              defaultValue={month.toString()}
-              options={monthAll}
-              onChange={(value) => {
-                setMonth(Number.parseInt(value));
-              }}
-              showSearch
-            />
-          </FormItemCustom>
 
-          <FormItemCustom className="w-[200px] border-none mr-2">
-            <DatePicker
-              className="!bg-[#F4F6F8] !h-8"
-              onChange={(value: any) => {
-                setYear(value);
+        <TabsCustom defaultActiveKey="1">
+          <TabPane className="bg-white pb-3" tab="Bảng công" key="1">
+            <TableCustom
+              dataSource={dataReort?.data?.map(
+                (report: any) => ({
+                  key: report.name,
+                  ...report,
+                })
+              )}
+              pagination={{
+                defaultPageSize: PAGE_SIZE,
+                total,
+                showSizeChanger: false,
+                onChange(page) {
+                  setPage(page);
+                },
               }}
-              picker="year"
-              defaultValue={dayjs().startOf("year")}
-            />
-          </FormItemCustom>
-
-          <FormItemCustom className="w-[200px] border-none mr-2">
-            <Select
-              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
-              options={listCompany}
-              onSelect={(value) => {
-                setCompany(value);
-              }}
-              onSearch={(value: string) => {
-                setKeySCompany(value);
-              }}
-              onClear={() => setCompany("")}
-              filterOption={false}
-              allowClear
-              showSearch
-            />
-          </FormItemCustom>
-
-          <FormItemCustom className="w-[200px] border-none mr-2">
-            <Select
-              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
-              options={listDepartment}
-              onSelect={(value) => {
-                setDepartment(value);
-              }}
-              onSearch={(value: string) => {
-                setKeySDepartment(value);
-              }}
-              onClear={() => setDepartment("")}
-              filterOption={false}
-              allowClear
-              showSearch
-            />
-          </FormItemCustom>
-
-          <FormItemCustom className="w-[200px] border-none mr-2">
-            <Select
-              className="!bg-[#F4F6F8] options:bg-[#F4F6F8]"
-              options={listEmployee}
-              onSelect={(value) => {
-                setEmployee(value);
-              }}
-              onSearch={(value: string) => {
-                setKeySEmployee(value);
-              }}
-              onClear={() => setEmployee("")}
-              filterOption={false}
-              allowClear
-              showSearch
-              optionRender={(option) => {
-                return (
-                  <>
-                    <div className="text-sm">
-                      <p
-                        role="img"
-                        aria-label={option.data.label}
-                        className="my-1"
-                      >
-                        {option.data.value}
+              bordered
+              scroll={{ x: true }}
+            >
+              <Column
+                title="STT"
+                dataIndex="stt"
+                key="stt"
+                className="!text-center"
+                render={(_: any, record: any, index: number) => index + 1}
+              />
+              <Column
+                title="Nhân viên"
+                dataIndex="employee1"
+                key="employee1"
+                className="!text-left !p-2"
+                render={(_: any, record: any) => (
+                  <Row className="items-center flex-nowrap">
+                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                      {!record?.user_image &&
+                        record?.employee_name
+                          .split(" ")
+                          .reduce(
+                            (prev: string, now: string) =>
+                              `${prev[0] || ""}${now[0]}`,
+                            ""
+                          )}
+                    </Avatar>
+                    <p className="text-base font-medium  ml-[5px] text-left">
+                      <p className="truncate">{record.employee_name}</p>
+                      <p className="text-xs text-[#637381] font-normal">
+                        {record.employee}
                       </p>
-                      <span className="text-xs !font-semibold">
-                        {option.data.des}
-                      </span>
-                    </div>
+                    </p>
+                  </Row>
+                )}
+              />
+              <Column
+                title="Chức danh"
+                dataIndex="department"
+                key="department"
+                className="!text-left !p-2"
+                render={(_: any, record: any) => <>{record.department}</>}
+              />
+
+              {clDate.length > 0 &&
+                clDate.map((date) => (
+                  <ColumnGroup
+                    key={date.date}
+                    title={date.date}
+                    className="!min-w-[100px] !text-center !p-0"
+                  >
+                    <Column
+                      className="!text-center !p-0"
+                      title={date.dayOfWeek}
+                      dataIndex={date.date}
+                      key={date.dayOfWeek}
+                      render={(value: any, record: any) => {
+                        if (
+                          value?.dayOfWeek === "Thứ 7" ||
+                          value?.dayOfWeek === "Chủ nhật"
+                        ) {
+                          return (
+                            <div className="bg-gray-300 !h-14 !text-center flex justify-center items-center">
+                              OFF
+                            </div>
+                          );
+                        }
+                        if (value.work_hours !== 0 && !value.work_hours) {
+                          switch (value?.sign) {
+                            case "HE":
+                              return (
+                                <div
+                                  onClick={() => {
+                                    // console.log(record.employee, value.att_day);
+                                    setModal({
+                                      open: true,
+                                      id: {
+                                        employee: record.employee,
+                                        att_day: value.att_day,
+                                      },
+                                    });
+                                  }}
+                                  className="text-red-700 !h-14 flex justify-center items-center"
+                                >
+                                  {value?.work_hours}
+                                </div>
+                              );
+                              break;
+                            case "FID":
+                              return (
+                                <div
+                                  onClick={() => {
+                                    // console.log(record.employee, value.att_day);
+                                    setModal({
+                                      open: true,
+                                      id: {
+                                        employee: record.employee,
+                                        att_day: value.att_day,
+                                      },
+                                    });
+                                  }}
+                                  className="border-solid border-[red] !h-14 flex justify-center items-center"
+                                >
+                                  {value?.work_hours}
+                                </div>
+                              );
+                              break;
+                            case "ON":
+                              return (
+                                <div
+                                  onClick={() => {
+                                    // console.log(record.employee, value.att_day);
+                                    setModal({
+                                      open: true,
+                                      id: {
+                                        employee: record.employee,
+                                        att_day: value.att_day,
+                                      },
+                                    });
+                                  }}
+                                  className="text-yellow-500 !h-14 flex justify-center items-center"
+                                >
+                                  {value?.work_hours}
+                                </div>
+                              );
+                              break;
+                            case "EA":
+                              return (
+                                <div
+                                  onClick={() => {
+                                    // console.log(record.employee, value.att_day);
+                                    setModal({
+                                      open: true,
+                                      id: {
+                                        employee: record.employee,
+                                        att_day: value.att_day,
+                                      },
+                                    });
+                                  }}
+                                  className="text-green-500 !h-14 flex justify-center items-center"
+                                >
+                                  v
+                                </div>
+                              );
+                              break;
+                            default:
+                              return <div>x</div>;
+                          }
+                        }
+
+                        switch (value?.sign) {
+                          case "HE":
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                      employee_name: record.employee_name,
+                                      day: value.dayOfWeek,
+                                    },
+                                  });
+                                }}
+                                className="text-red-700 !h-14 flex justify-center items-center"
+                              >
+                                {value?.work_hours}
+                              </div>
+                            );
+                            break;
+                          case "FID":
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                      employee_name: record.employee_name,
+                                      day: value.dayOfWeek,
+                                    },
+                                  });
+                                }}
+                                className="border-solid border-[red] !h-14 flex justify-center items-center"
+                              >
+                                {value?.work_hours}
+                              </div>
+                            );
+                            break;
+                          case "ON":
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                      employee_name: record.employee_name,
+                                      day: value.dayOfWeek,
+                                    },
+                                  });
+                                }}
+                                className="text-yellow-500 !h-14 flex justify-center items-center"
+                              >
+                                {value?.work_hours}
+                              </div>
+                            );
+                            break;
+                          case "EA":
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                      employee_name: record.employee_name,
+                                      day: value.dayOfWeek,
+                                    },
+                                  });
+                                }}
+                                className="text-green-500 !h-14 flex justify-center items-center"
+                              >
+                                v
+                              </div>
+                            );
+                            break;
+                          case "+":
+                          case "P":
+                          case "KL":
+                          case "VM":
+                          case "OT":
+                          case "CT":
+                          case "CD":
+                          case "DC":
+                          case "GT":
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                      employee_name: record.employee_name,
+                                      day: value.dayOfWeek,
+                                    },
+                                  });
+                                }}
+                              >
+                                {value?.work_hours}
+                                <sup>{value?.sign}</sup>
+                              </div>
+                            );
+                            break;
+                          default:
+                            return (
+                              <div
+                                onClick={() => {
+                                  // console.log(record.employee, value.att_day);
+                                  setModal({
+                                    open: true,
+                                    id: {
+                                      employee: record.employee,
+                                      att_day: value.att_day,
+                                      employee_name: record.employee_name,
+                                      day: value.dayOfWeek,
+                                    },
+                                  });
+                                }}
+                                className=" flex justify-center items-center"
+                              >
+                                {value?.work_hours || " "}{" "}
+                              </div>
+                            );
+                        }
+                      }}
+                    />
+                  </ColumnGroup>
+                ))}
+            </TableCustom>
+          </TabPane>
+          <TabPane
+            className="bg-white pb-3"
+            tab="Thời gian tính lương theo giờ"
+            key="2"
+          >
+            <TableCustom bordered scroll={{ x: true }}>
+              <Column
+                title="STT"
+                dataIndex="stt"
+                key="stt"
+                className="!text-center"
+                render={(_: any, record: any, index: number) => index + 1}
+              />
+              <Column
+                title="Nhân viên"
+                dataIndex="employee"
+                key="employee"
+                className="!text-left"
+                render={(_: any, record: any) => (
+                  <>
+                    <Col>
+                      <Row className="items-center">
+                        <Avatar
+                          style={{ backgroundColor: "#f56a00" }}
+                          size={32}
+                        >
+                          H
+                        </Avatar>
+                        <p className="text-base font-medium  ml-[5px] text-left">
+                          <p>Quỳnh anh</p>
+                          <p className="text-xs text-[#637381] font-normal">
+                            NV-123
+                          </p>
+                        </p>
+                      </Row>
+                    </Col>
                   </>
-                );
-              }}
-            />
-          </FormItemCustom>
-
-          <div>
-            <Button type="primary" onClick={handleShowColumnModal}>
-              Cấu hình
-            </Button>
-          </div>
-        </div>
-
-        <div className="pt-5">
-          <TableCustom
-            dataSource={dataReort?.data?.map((report: any, index: number) => ({
-              key: report.name,
-              stt: index + 1,
-              ...report,
-            }))}
-            bordered
-            pagination={{
-              defaultPageSize: PAGE_SIZE,
-              total,
-              onChange(page) {
-                setPage(page);
-              },
-            }}
-            scroll={{ x: true }}
+                )}
+              />
+              <Column
+                title="Chức danh"
+                dataIndex="depart"
+                key="depart"
+                className="!text-left"
+                render={(_: any, record: any) => <>{record}</>}
+              />
+              <Column
+                title="Số phút đi muộn"
+                dataIndex="mm"
+                key="mm"
+                className="!text-center"
+                render={(_: any, record: any) => <>{record}</>}
+              />
+              <Column
+                title="Số phút về sớm"
+                dataIndex="mm1"
+                key="mm1"
+                className="!text-center"
+                render={(_: any, record: any) => <>{record}</>}
+              />
+              <ColumnGroup
+                className="!whitespace-normal !text-center"
+                title="Nghỉ hưởng nguyên lương"
+              >
+                <Column
+                  title="Phép năm"
+                  dataIndex="pn"
+                  key="pn"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Lễ, chế độ"
+                  dataIndex="lpd"
+                  key="lpd"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Nghỉ bù"
+                  dataIndex="nb"
+                  key="nb"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+              </ColumnGroup>
+              <ColumnGroup
+                className="!whitespace-normal !text-center"
+                title="Công thường"
+              >
+                <Column
+                  title="Ca gẫy"
+                  dataIndex="cg"
+                  key="cg"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Part time"
+                  dataIndex="pt"
+                  key="pt"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+              </ColumnGroup>
+              <ColumnGroup
+                className="!whitespace-normal !text-center"
+                title="Công lễ"
+              >
+                <Column
+                  title="Câ gẫy"
+                  dataIndex="cg1"
+                  key="cg1"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Part time"
+                  dataIndex="pt1"
+                  key="pt1"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+              </ColumnGroup>
+              <Column
+                title="Công đào tạo"
+                dataIndex="cđt"
+                key="cđt"
+                className="!text-center"
+                render={(value: any) => <>{value}</>}
+              />
+              <Column
+                title="Tổng giờ công"
+                dataIndex="tgc"
+                key="tgc"
+                className="!text-center"
+                render={(value: any) => <>{value}</>}
+              />
+            </TableCustom>
+          </TabPane>
+          <TabPane
+            className="bg-white pb-3"
+            tab="Thời gian tính lương theo ngày"
+            key="3"
           >
-            {/* new cl */}
-            {columns.map((dataCl) => {
-              return renderColumn({
-                data_column: dataCl,
-                fix_left_column: fixedLeft,
-                fix_right_column: [],
-                cb:setModal,
-              });
-            })}
-            {/* end new cl */}
-          </TableCustom>
+            <TableCustom bordered scroll={{ x: true }}>
+              <Column
+                title="STT"
+                dataIndex="stt"
+                key="stt"
+                className="!text-center"
+                render={(_: any, record: any, index: number) => index + 1}
+              />
+              <Column
+                title="Nhân viên"
+                dataIndex="employee"
+                key="employee"
+                className="!text-left"
+                render={(_: any, record: any) => (
+                  <>
+                    <Col>
+                      <Row className="items-center">
+                        <Avatar
+                          style={{ backgroundColor: "#f56a00" }}
+                          size={32}
+                        >
+                          H
+                        </Avatar>
+                        <p className="text-base font-medium  ml-[5px] text-left">
+                          <p>Quỳnh anh</p>
+                          <p className="text-xs text-[#637381] font-normal">
+                            NV-123
+                          </p>
+                        </p>
+                      </Row>
+                    </Col>
+                  </>
+                )}
+              />
+              <Column
+                title="Chức danh"
+                dataIndex="depart"
+                key="depart"
+                className="!text-left"
+                render={(_: any, record: any) => <>{record}</>}
+              />
+              <Column
+                title="Số phút đi muộn"
+                dataIndex="mm"
+                key="mm"
+                className="!text-center"
+                render={(_: any, record: any) => <>{record}</>}
+              />
+              <Column
+                title="Số phút về sớm"
+                dataIndex="mm1"
+                key="mm1"
+                className="!text-center"
+                render={(_: any, record: any) => <>{record}</>}
+              />
+              <ColumnGroup
+                className="!whitespace-normal !text-center"
+                title="Nghỉ hưởng nguyên lương"
+              >
+                <Column
+                  title="Phép năm"
+                  dataIndex="pn"
+                  key="pn"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Lễ, chế độ"
+                  dataIndex="lpd"
+                  key="lpd"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Nghỉ bù"
+                  dataIndex="nb"
+                  key="nb"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+              </ColumnGroup>
+              <ColumnGroup
+                className="!whitespace-normal !text-center"
+                title="Công thường"
+              >
+                <Column
+                  title="Ca gẫy"
+                  dataIndex="cg"
+                  key="cg"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Part time"
+                  dataIndex="pt"
+                  key="pt"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+              </ColumnGroup>
+              <ColumnGroup
+                className="!whitespace-normal !text-center"
+                title="Công lễ"
+              >
+                <Column
+                  title="Câ gẫy"
+                  dataIndex="cg1"
+                  key="cg1"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+                <Column
+                  title="Part time"
+                  dataIndex="pt1"
+                  key="pt1"
+                  className="!text-center"
+                  render={(value: any) => <>{value}</>}
+                />
+              </ColumnGroup>
+              <Column
+                title="Công đào tạo"
+                dataIndex="cđt"
+                key="cđt"
+                className="!text-center"
+                render={(value: any) => <>{value}</>}
+              />
+              <Column
+                title="Tổng giờ công"
+                dataIndex="tgc"
+                key="tgc"
+                className="!text-center"
+                render={(value: any) => <>{value}</>}
+              />
+            </TableCustom>
+          </TabPane>
+        </TabsCustom>
 
-          {/* modal */}
-          <Modal
-            className="top-6"
-            width={1064}
-            title={
-              <>
-                {modal.id?.employee_name} - {modal.id?.day}, ngày{" "}
-                {modal.id?.att_day
-                  ?.split("-")
-                  ?.reverse()
-                  ?.toString()
-                  ?.replaceAll(",", "-")}
-              </>
-            }
-            open={modal.open}
-            onCancel={closeModal}
-            footer={null}
-          >
-            <DetailModal />
-          </Modal>
-        </div>
-      </div>
-      <Modal
-        title="Cấu hình cột"
-        visible={isModalVisible}
-        onOk={handleChangeColumn}
-        onCancel={handleColumnModalCancel}
-        okText="Lưu"
-        cancelText="Hủy"
-      >
-        <TreeColumn select={checkedKeys} handleSelect={setCheckedKeys} />
-      </Modal>
+        <ModalDetail
+          className="top-6"
+          width={1000}
+          title={
+            <div className="font-semibold text-2xl leading-[22px] text-[#222222] p-5">
+              {modal.id?.employee_name} - {modal.id?.day}, ngày{" "}
+              {modal.id?.att_day
+                ?.split("-")
+                ?.reverse()
+                ?.toString()
+                ?.replaceAll(",", "-")}
+            </div>
+          }
+          open={modal.open}
+          onCancel={closeModal}
+          footer={null}
+        >
+          <Detailmodal />
+        </ModalDetail>
+      </ContentPage>
     </>
   );
 }

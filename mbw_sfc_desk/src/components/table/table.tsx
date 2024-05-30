@@ -1,18 +1,79 @@
 import { Table } from "antd";
 import styled from "styled-components";
 
+export const TableCustom = styled(Table)<{
+  $border?: boolean;
+  $wrap?: boolean;
+}>`
+& .ant-table-container .ant-table-tbody tr.ant-table-expanded-row:hover>td.ant-table-cell {
+  background: #F4F6F8!important;
+}
+& .ant-table-content>table {
+  border-left: ${(props) => (props.$border ? "" : "none")}!important;
+  border-right: ${(props) => (props.$border ? "" : "none")}!important;
 
-export const TableCustom = styled(Table)`
+  & tr.ant-table-expanded-row {
+    &>td {
+      background: #F4F6F8!important; 
+    }
+    & .ant-table-content {
+    background: #F4F6F8!important;
+    z-index:91!important;
+    }
 
+    &:hover td.ant-table-cell {
+      background: white!important;
+    }
+  & table {
+      border-left: 1px solid #f0f0f0!important;
+      border-right: 1px solid #f0f0f0!important;
+      background: transparent;
+      border-radius: 16px!important;
+      &>thead>tr>th {
+        background: #DFE3E8!important;
+        color: #637381!important;
+        &:first-child {
+          border-start-start-radius: 16px!important;
+          border-start-start: 1!important;
+        }
+      }
+      &>tbody>tr:last-child {
+        // background: red;
+        &>td:first-child {
+          border-end-start-radius: 16px!important;
+        }
+      
+        &>td:last-child {
+          border-end-end-radius: 16px!important;
+        }
+      }
+
+      & .ant-table-tbody tr>td.ant-table-cell {
+        background: white!important;
+      }
+      & .ant-table-tbody tr:hover>td.ant-table-cell-row-hover {
+        background: white!important;
+      }
+    }
+
+    }
+    
+
+  } 
+}
 & .ant-table-container .ant-table-cell{
   font-size: 14px!important;
   font-weight:500;
   letter-spacing: normal!important;
 }
-&.ant-table-wrapper table {
-  border-radius: 16px!important;
+
+& .ant-table-cell {
+  white-space: nowrap!important;
 }
 
+& tbody .ant-table-cell {
+  white-space: ${(props) => (props?.$wrap ? "wrap" : "nowrap")}!important;
+}
 &:not(:has(.ant-table-cell)) .ant-table-thead {
   &>tr {
     & .ant-table-cell {
@@ -21,18 +82,22 @@ export const TableCustom = styled(Table)`
       line-height: 21px;
       font-size: 14px;
       font-weight: 500!important;
+      border-radius: 0 !important;
+
     }
-    border-radius: 16px 16px 0 0 !important;
+    // border-radius: 16px 16px 0 0 !important;
+    border-radius: 0 !important;
     & th {
       white-space : nowrap;
       border-bottom: none
     }
     & th:first-child {
-      border-start-start-radius: 16px!important;
+      border-start-start-radius: 0!important;
+      border-start-start: 1!important;
     }
   
     & th:last-child {
-      border-start-end-radius: 16px!important;
+      border-start-end-radius: 0!important;
     }
   }
 }
@@ -40,11 +105,11 @@ export const TableCustom = styled(Table)`
 & .ant-table-tbody>tr:last-child {
   border-radius:  0 0 16px 16px!important;
   & td:first-child {
-    border-end-start-radius: 16px!important;
+    border-end-start-radius: 0!important;
   }
 
   & td:last-child {
-    border-end-end-radius: 16px!important;
+    border-end-end-radius: 0!important;
   }
 }
 & .ant-table-row-expand-icon-cell {
@@ -52,11 +117,13 @@ export const TableCustom = styled(Table)`
   border-inline-end: none!important;
 }
 
+.cl-c {
+  white-space: normal!important;
+}
 
 .ant-table-container {
     table {
       border: 1px solid #ebebeb;
-      border-radius: 4px;
     }
 
     .ant-table-thead {
@@ -164,9 +231,24 @@ export const TableCustom = styled(Table)`
 
   & .ant-table-cell {
     & .ant-table-content {
-      padding: 25px 0;
+      padding: 16px 0;
       padding-right: 25px;
-      margin-left: -18px;
+      // margin-left: -18px;
     }
   }
+
+  /* bang vuong */
+  &.ant-table-wrapper {
+    & table {
+      border-start-start-radius: 0px!important;
+      border-start-end-radius: 0px!important;
+    }
+    & .ant-table-container table>thead>tr:first-child >*:first-child {
+      border-start-start-radius: 0px!important;
+    }
+
+    & .ant-table-container table>thead>tr:first-child >*:last-child {
+      border-start-start-radius: 0px!important;
+    }
+  } 
 `;

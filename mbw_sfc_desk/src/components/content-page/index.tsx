@@ -6,7 +6,7 @@ export function ContentPage(props: Props) {
     const {children} = props
 
     return (
-        <div className="border-[#DFE3E8] p-[24px]">
+        <div className="border-[#EDEDED] bg-white">
         {children}
         </div>
     )

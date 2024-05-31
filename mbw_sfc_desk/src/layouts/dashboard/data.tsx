@@ -14,7 +14,7 @@ export const listMenu: MenuItem[] = [
   //bảng công
   {
     label: (
-      <Link className={"text-[#212B36] hover:text-[#212B36]"} to="/worksheet">
+      <Link className={"text-[#212B36] text-[13px] hover:text-[#212B36]"} to="/worksheet">
         Bảng công
       </Link>
     ),
@@ -23,7 +23,7 @@ export const listMenu: MenuItem[] = [
   },
   {
     label: (
-      <Link className={"text-[#212B36] hover:text-[#212B36]"} to="/salary">
+      <Link className={"text-[#212B36] text-[13px] hover:text-[#212B36]"} to="/salary">
         Bảng lương
       </Link>
     ),

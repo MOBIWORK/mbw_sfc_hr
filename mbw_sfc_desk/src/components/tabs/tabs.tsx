@@ -2,16 +2,28 @@ import { Tabs } from "antd";
 import styled from "styled-components";
 
 export const TabsCustom = styled(Tabs)`
+  .ant-tabs-nav-wrap {
+    background: #F4F6F8;
+    padding-bottom: 8px;
+    margin-bottom: -16px;
+  }
+  .ant-tabs-tab ant-tabs-tab-active {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .ant-tabs-tab-btn {
+    font-size: 12px;
+  }
   .ant-tabs-nav-list {
     padding-left: 16px;
     margin-bottom: -12px;
-    margin-top: 8px;
     font-weight: 600;
     font-size: 12px;
     line-height: 22px;
   }
   .ant-tabs-nav .ant-tabs-tab {
-    margin-right: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
     color: #919eab; /* Màu của các tab không được chọn */
     text-decoration: none; /* Loại bỏ gạch chân */
   }

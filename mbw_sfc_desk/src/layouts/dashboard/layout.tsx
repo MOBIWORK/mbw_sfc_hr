@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: Props) {
     <Layout className="overflow-hidden h-screen">
       <SiderCustome
         className="!bg-[#fff]"
-        width={!collapsed ? 280 : 78}
+        width={!collapsed ? 210 : 78}
         collapsible
         collapsed={collapsed}
         trigger={<AvatarComponent />}
@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }: Props) {
         <MenuLeft handleCollapsed={setCollapsed} collapsed={collapsed} />
       </SiderCustome>
       <Content
-        className="round !overflow-y-scroll"
+        className="round !overflow-y-scroll bg-white"
         style={{
           padding: "0",
           maxHeight: "calc(100vh-46px)",

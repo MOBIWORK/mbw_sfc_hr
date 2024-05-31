@@ -1,21 +1,39 @@
-
-import { VerticalAlignBottomOutlined } from "@ant-design/icons";
-import { Avatar, Col, DatePicker, Form, Row, Select } from "antd";
+import {
+  EllipsisOutlined,
+  VerticalAlignBottomOutlined,
+} from "@ant-design/icons";
+import {
+  Avatar,
+  Button,
+  Col,
+  DatePicker,
+  Dropdown,
+  Form,
+  Row,
+  Select,
+} from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { monthAll } from "../Worksheet/modal/data";
 import { DatePickerProps } from "antd/lib";
-import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
+import {
+  DropDownCustom,
+  FormItemCustom,
+  HeaderPage,
+  TableCustom,
+} from "../../components";
 import useDebounce from "../../hooks/useDebount";
 import { AxiosService } from "../../services/server";
 import { ContentPage } from "../../components/content-page";
-
+import { data } from "./data";
 
 const currentMonth = dayjs().month() + 1; // Lấy tháng hiện tại (đánh số từ 0)
 const month = currentMonth.toString();
 const year = dayjs().format("YYYY");
 
 const { Column, ColumnGroup } = TableCustom;
+
+
 
 export default function Salary() {
   const [fyear, setFYear] = useState("");
@@ -90,28 +108,41 @@ export default function Salary() {
     <>
       <HeaderPage
         title="Bảng lương"
-        buttons={[
-          {
-            label: "Xuất dữ liệu",
-            type: "primary",
-            icon: <VerticalAlignBottomOutlined className="text-xl" />,
-            size: "20px",
-            className: "flex items-center",
-          },
-        ]}
+        customButton={
+          <>
+            <Dropdown
+              trigger={["click"]}
+              placement="bottomRight"
+              dropdownRender={() => (
+                <DropDownCustom>
+                  <div className="-m-2">
+                    <div className="py-2 px-4 cursor-pointer hover:bg-[#f5f5f5] w-[168px]">
+                      Xuất Excel
+                    </div>
+                    <div className="py-2 px-4 cursor-pointer hover:bg-[#f5f5f5] w-[168px]">
+                      Đóng
+                    </div>
+                    <div className="py-2 px-4 cursor-pointer hover:bg-[#f5f5f5] w-[168px]">
+                      Mở
+                    </div>
+                  </div>
+                </DropDownCustom>
+              )}
+            >
+              <Button className="!w-11" icon={<EllipsisOutlined />}></Button>
+            </Dropdown>
+          </>
+        }
       />
       <ContentPage>
-        <div className="bg-white rounded-xl border-[#DFE3E8] border-[0.2px] border-solid justify-between items-end w-full">
+        <div className="bg-white border-[#EDEDED] border-x-[0.1px] border-[0.2px] border-solid justify-between items-end w-full">
           <Row className="p-4" gutter={[8, 8]}>
             <Col className="pb-2" span={24}>
               <Form
                 layout="vertical"
                 className="flex flex-wrap justify-start items-center"
               >
-                <FormItemCustom
-                  label={"Tháng"}
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
                     defaultValue={month}
@@ -122,10 +153,7 @@ export default function Salary() {
                     showSearch
                   />
                 </FormItemCustom>
-                <FormItemCustom
-                  label={"Năm"}
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <DatePicker
                     className="!bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
                     onChange={onChange}
@@ -134,10 +162,7 @@ export default function Salary() {
                     defaultValue={dayjs().startOf("year")}
                   />
                 </FormItemCustom>
-                <FormItemCustom
-                  label="Nhóm phòng ban"
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] rounded-lg"
                     options={listDepartment}
@@ -153,10 +178,7 @@ export default function Salary() {
                     placeholder="Tất cả phòng ban"
                   />
                 </FormItemCustom>
-                <FormItemCustom
-                  label="Nhân viên"
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] rounded-lg"
                     options={listEmployee}
@@ -176,7 +198,7 @@ export default function Salary() {
             </Col>
           </Row>
           <div>
-            <TableCustom bordered scroll={{ x: true }}>
+            <TableCustom dataSource={data} bordered scroll={{ x: true }}>
               <Column
                 title="STT"
                 dataIndex="stt"
@@ -187,35 +209,45 @@ export default function Salary() {
               <Column title="Mẫ BP cơ cấu" dataIndex="mabp" key="mabp" />
               <Column
                 title="Nhân viên"
-                dataIndex="employee"
-                key="employee"
-                className="!text-left !min-w-[175px]"
+                dataIndex="employee1"
+                key="employee1"
+                className="!text-left !p-2"
                 render={(_: any, record: any) => (
-                  <div>
-                    <Col>
-                      <Row className="items-center">
-                        <Avatar
-                          style={{ backgroundColor: "#f56a00" }}
-                          size={32}
-                        >
-                          H
-                        </Avatar>
-                        <p className="text-base font-medium  ml-[5px] text-left">
-                          <p>Quỳnh anh</p>
-                          <p className="text-xs text-[#637381] font-normal">
-                            NV-123
-                          </p>
-                        </p>
-                      </Row>
-                    </Col>
-                  </div>
+                  <Row className="items-center flex-nowrap">
+                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                      {!record?.user_image &&
+                        record?.employee_name
+                          .split(" ")
+                          .reduce(
+                            (prev: string, now: string) =>
+                              `${prev[0] || ""}${now[0]}`,
+                            ""
+                          )}
+                    </Avatar>
+                    <p className="text-base font-medium  ml-[5px] text-left">
+                      <p className="truncate">{record.employee_name}</p>
+                      <p className="text-xs text-[#637381] font-normal">
+                        {record.employee}
+                      </p>
+                    </p>
+                  </Row>
                 )}
               />
               <Column title="CTC" dataIndex="ctc" key="ctc" />
               <Column title="Chức danh" dataIndex="depa" key="depa" />
               <Column title="Phòng ban" dataIndex="pb" key="pb" />
-              <Column className="cl-c" title="Nhóm(1:QL 2:NV 3:SV)" dataIndex="f1" key="f1" />
-              <Column className="cl-c" title="Lương cơ bản(BHXH)" dataIndex="f2" key="f2" />
+              <Column
+                className="cl-c !text-right"
+                title="Nhóm(1:QL 2:NV 3:SV)"
+                dataIndex="f1"
+                key="f1"
+              />
+              <Column
+                className="cl-c !text-right"
+                title="Lương cơ bản(BHXH)"
+                dataIndex="f2"
+                key="f2"
+              />
               <ColumnGroup title="Mức lương">
                 <Column
                   className="!text-right"
@@ -302,34 +334,34 @@ export default function Salary() {
               <Column title="Ngày nhận việc" dataIndex="f22" key="f22" />
               <Column title="Ngày hết hạn thử việc" dataIndex="f23" key="f23" />
               <ColumnGroup title="Chi tiết ngày công">
-                <Column title="Tổng ngày công" dataIndex="f24" key="f24" />
+                <Column className="!text-center" title="Tổng ngày công" dataIndex="f24" key="f24" />
                 <ColumnGroup title="Ngày công - theo tháng">
-                  <Column title="Nghỉ PN" dataIndex="f25" key="f25" />
-                  <Column title="Lễ, CĐ" dataIndex="f26" key="f26" />
-                  <Column title="Ca thẳng" dataIndex="f27" key="f27" />
+                  <Column className="!text-right" title="Nghỉ PN" dataIndex="f25" key="f25" />
+                  <Column className="!text-right" title="Lễ, CĐ" dataIndex="f26" key="f26" />
+                  <Column className="!text-right" title="Ca thẳng" dataIndex="f27" key="f27" />
                 </ColumnGroup>
                 <ColumnGroup title="Công - theo giờ">
-                  <Column title="Nghỉ PN" dataIndex="f28" key="f28" />
-                  <Column title="Lễ, CĐ" dataIndex="f29" key="f29" />
-                  <Column title="Partime" dataIndex="f30" key="f30" />
-                  <Column title="Đào tạo" dataIndex="f31" key="f31" />
-                  <Column title="Ca gãy" dataIndex="f32" key="f32" />
+                  <Column className="!text-right" title="Nghỉ PN" dataIndex="f28" key="f28" />
+                  <Column className="!text-right" title="Lễ, CĐ" dataIndex="f29" key="f29" />
+                  <Column className="!text-right" title="Partime" dataIndex="f30" key="f30" />
+                  <Column className="!text-right" title="Đào tạo" dataIndex="f31" key="f31" />
+                  <Column className="!text-right" title="Ca gãy" dataIndex="f32" key="f32" />
                 </ColumnGroup>
                 <ColumnGroup title="Bù công">
-                  <Column title="Ngỳ nghỉ bù" dataIndex="f33" key="f33" />
-                  <Column title="Giờ nghỉ bù" dataIndex="f34" key="f34" />
+                  <Column className="!text-right" title="Ngỳ nghỉ bù" dataIndex="f33" key="f33" />
+                  <Column className="!text-right" title="Giờ nghỉ bù" dataIndex="f34" key="f34" />
                 </ColumnGroup>
                 <ColumnGroup title="Ngày lễ">
-                  <Column title="Công ca tháng" dataIndex="f35" key="f35" />
-                  <Column title="Công ca gãy" dataIndex="f36" key="f36" />
-                  <Column title="Giờ ca tháng" dataIndex="f37" key="f37" />
-                  <Column title="Giờ ca gãy" dataIndex="f38" key="f38" />
+                  <Column className="!text-center" title="Công ca tháng" dataIndex="f35" key="f35" />
+                  <Column className="!text-right" title="Công ca gãy" dataIndex="f36" key="f36" />
+                  <Column className="!text-right" title="Giờ ca tháng" dataIndex="f37" key="f37" />
+                  <Column className="!text-right" title="Giờ ca gãy" dataIndex="f38" key="f38" />
                 </ColumnGroup>
               </ColumnGroup>
               <ColumnGroup title="Thêm giờ">
-                <Column title="Hệ số 1" dataIndex="f39" key="f39" />
-                <Column title="Hệ số 1.5" dataIndex="f40" key="f40" />
-                <Column title="Hệ số 2" dataIndex="f41" key="f41" />
+                <Column className="!text-center" title="Hệ số 1" dataIndex="f39" key="f39" />
+                <Column className="!text-center" title="Hệ số 1.5" dataIndex="f40" key="f40" />
+                <Column className="!text-center" title="Hệ số 2" dataIndex="f41" key="f41" />
               </ColumnGroup>
               <Column
                 className="cl-c !text-right"
@@ -343,18 +375,19 @@ export default function Salary() {
                 dataIndex="f43"
                 key="f43"
               />
-              <Column title="Lương KPIs NH" dataIndex="f44" key="f44" />
-              <Column title="Làm đêm" dataIndex="f45" key="f45" />
+              <Column className="!text-right" title="Lương KPIs NH" dataIndex="f44" key="f44" />
+              <Column className="!text-right" title="Làm đêm" dataIndex="f45" key="f45" />
               <ColumnGroup title="Các khoản phải thu của người lao động">
-                <Column title="BHXH, BHYT, BHTN" dataIndex="f46" key="f46" />
-                <Column title="Kinh phí công đoàn" dataIndex="f47" key="f47" />
-                <Column title="Truy thu thẻ BHYT" dataIndex="f48" key="f48" />
-                <Column title="Lợn đất" dataIndex="f49" key="f49" />
-                <Column title="Đồng phục" dataIndex="f50" key="f50" />
+                <Column className="!text-right" title="BHXH, BHYT, BHTN" dataIndex="f46" key="f46" />
+                <Column className="!text-right" title="Kinh phí công đoàn" dataIndex="f47" key="f47" />
+                <Column className="!text-right" title="Truy thu thẻ BHYT" dataIndex="f48" key="f48" />
+                <Column className="!text-right" title="Lợn đất" dataIndex="f49" key="f49" />
+                <Column className="!text-right" title="Đồng phục" dataIndex="f50" key="f50" />
                 <ColumnGroup title="Thuế TNCN">
-                  <Column title="NPT" dataIndex="f51" key="f51" />
-                  <Column title="Ân ca" dataIndex="f52" key="f52" />
+                  <Column className="!text-right" title="NPT" dataIndex="f51" key="f51" />
+                  <Column className="!text-right" title="Ân ca" dataIndex="f52" key="f52" />
                   <Column
+                    className="!text-right"
                     title="Thu nhập tính thuế"
                     dataIndex="f53"
                     key="f53"
@@ -371,20 +404,20 @@ export default function Salary() {
                   <Column title="3%" dataIndex="f57" key="f57" />
                 </ColumnGroup>
                 <ColumnGroup title="BHTN">
-                  <Column title="1%" dataIndex="f58" key="f59" />
+                  <Column title="1%" dataIndex="f58" key="f58" />
                 </ColumnGroup>
                 <Column
                   className="cl-c !text-right"
                   title="Tổng BH phải trả cho người lao động"
-                  dataIndex="f60"
-                  key="f60"
+                  dataIndex="f59"
+                  key="f59"
                 />
               </ColumnGroup>
               <Column
                 className="cl-c !text-right"
                 title="Tổng BHXH, BHYT, BHTN phải nộp(32%)"
-                dataIndex="f61"
-                key="f61"
+                dataIndex="f60"
+                key="f60"
               />
             </TableCustom>
           </div>

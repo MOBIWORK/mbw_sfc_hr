@@ -1,18 +1,33 @@
-import { VerticalAlignBottomOutlined } from "@ant-design/icons";
-import { Avatar, Col, DatePicker, Form, Row, Select } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  DatePicker,
+  Dropdown,
+  Form,
+  Pagination,
+  Row,
+  Select,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import Detailmodal from "./modal/detailmodal";
 import { ModalDetail } from "./components/modal";
 import dayjs from "dayjs";
-import { DatePickerProps } from "antd/lib";
 import { monthAll } from "./modal/data";
 
-import { FormItemCustom, HeaderPage, TableCustom } from "../../components";
+import {
+  DropDownCustom,
+  FormItemCustom,
+  HeaderPage,
+  TableCustom,
+} from "../../components";
 import { ContentPage } from "../../components/content-page";
 import { TabsCustom } from "../../components/tabs/tabs";
 import useDebounce from "../../hooks/useDebount";
 import { getDaysAndWeekdays } from "../../util";
 import { AxiosService } from "../../services/server";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 const { TabPane } = TabsCustom;
 const { Column, ColumnGroup } = TableCustom;
@@ -28,7 +43,6 @@ const data = [
 ];
 
 export default function Worksheet() {
-
   const [total, setTotal] = useState<number>(0);
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
   const [month, setMonth] = useState(dayjs().month() + 1);
@@ -157,29 +171,51 @@ export default function Worksheet() {
     <>
       <HeaderPage
         title="Bảng chấm công"
-        buttons={[
-          {
-            label: "Xuất dữ liệu",
-            type: "primary",
-            icon: <VerticalAlignBottomOutlined className="text-xl" />,
-            size: "20px",
-            className: "flex items-center",
-          },
-        ]}
+        // buttons={[
+        //   {
+        //     label: "Xuất dữ liệu",
+        //     type: "primary",
+        //     icon: <VerticalAlignBottomOutlined className="text-xl" />,
+        //     size: "20px",
+        //     className: "flex items-center",
+        //   },
+        // ]}
+        customButton={
+          <>
+            <Dropdown
+              trigger={["click"]}
+              placement="bottomRight"
+              dropdownRender={() => (
+                <DropDownCustom>
+                  <div className="-m-2">
+                    <div className="py-2 px-4 cursor-pointer hover:bg-[#f5f5f5] w-[168px]">
+                      Xuất Excel
+                    </div>
+                    <div className="py-2 px-4 cursor-pointer hover:bg-[#f5f5f5] w-[168px]">
+                      Đóng
+                    </div>
+                    <div className="py-2 px-4 cursor-pointer hover:bg-[#f5f5f5] w-[168px]">
+                      Mở
+                    </div>
+                  </div>
+                </DropDownCustom>
+              )}
+            >
+              <Button className="!w-11" icon={<EllipsisOutlined />}></Button>
+            </Dropdown>
+          </>
+        }
       />
 
       <ContentPage>
-        <div className="bg-white rounded-tl-2xl rounded-tr-2xl border-[#DFE3E8] border-[0.2px] border-solid justify-between items-end w-full p-4">
+        <div className="bg-white border-[#EDEDED] border-x-[0.1px] border-[0.1px] border-solid justify-between items-end w-full p-4">
           <Row gutter={[8, 8]}>
             <Col className="pb-2" span={24}>
               <Form
                 layout="vertical"
                 className="flex flex-wrap justify-start items-center"
               >
-                <FormItemCustom
-                  label={"Tháng"}
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
                     defaultValue={month.toString()}
@@ -190,10 +226,7 @@ export default function Worksheet() {
                     showSearch
                   />
                 </FormItemCustom>
-                <FormItemCustom
-                  label={"Năm"}
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <DatePicker
                     className="!bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
                     onChange={(value: any) => {
@@ -203,10 +236,7 @@ export default function Worksheet() {
                     defaultValue={dayjs().startOf("year")}
                   />
                 </FormItemCustom>
-                <FormItemCustom
-                  label="Nhóm phòng ban"
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] rounded-lg"
                     options={listDepartment}
@@ -222,10 +252,7 @@ export default function Worksheet() {
                     placeholder="Tất cả phòng ban"
                   />
                 </FormItemCustom>
-                <FormItemCustom
-                  label="Nhân viên"
-                  className="border-none mr-2 w-[200px]"
-                >
+                <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] rounded-lg"
                     options={listEmployee}
@@ -247,22 +274,29 @@ export default function Worksheet() {
         </div>
 
         <TabsCustom defaultActiveKey="1">
-          <TabPane className="bg-white pb-3" tab="Bảng công" key="1">
+          <TabPane className="bg-white pb-3 h-screen" tab="Bảng công" key="1">
             <TableCustom
-              dataSource={dataReort?.data?.map(
-                (report: any) => ({
-                  key: report.name,
-                  ...report,
-                })
-              )}
-              pagination={{
-                defaultPageSize: PAGE_SIZE,
-                total,
-                showSizeChanger: false,
-                onChange(page) {
-                  setPage(page);
-                },
-              }}
+              dataSource={dataReort?.data?.map((report: any) => ({
+                key: report.name,
+                ...report,
+              }))}
+              // pagination={{
+              //   defaultPageSize: PAGE_SIZE,
+              //   total,
+              //   showSizeChanger: false,
+              //   onChange(page) {
+              //     setPage(page);
+              //   },
+              // }}
+              pagination={false}
+              {...(page > 1 && (
+                <Pagination
+                  defaultPageSize={PAGE_SIZE}
+                  total={total}
+                  showSizeChanger={false}
+                  onChange={(page) => setPage(page)}
+                />
+              ))}
               bordered
               scroll={{ x: true }}
             >
@@ -325,7 +359,7 @@ export default function Worksheet() {
                           value?.dayOfWeek === "Chủ nhật"
                         ) {
                           return (
-                            <div className="bg-gray-300 !h-14 !text-center flex justify-center items-center">
+                            <div className="bg-[#F4F6F8] !h-14 !text-center flex justify-center items-center">
                               OFF
                             </div>
                           );

@@ -149,6 +149,7 @@ export default function Worksheet() {
           return dt;
         }),
       });
+      setTotal(results?.totals);
     })();
   }, [month, year, page, employee, department]);
 
@@ -319,7 +320,6 @@ export default function Worksheet() {
                       dataIndex={date.date}
                       key={date.dayOfWeek}
                       render={(value: any, record: any) => {
-                        console.log("value?", value);
                         if (
                           value?.dayOfWeek === "Thứ 7" ||
                           value?.dayOfWeek === "Chủ nhật"

@@ -431,7 +431,7 @@ export default function Worksheet() {
                                 }}
                                 className="text-red-700 !h-14 flex justify-center items-center"
                               >
-                                {value?.work_hours}
+                                {parseFloat(value?.work_hours.toFixed(2))}
                               </div>
                             );
                             break;
@@ -452,7 +452,7 @@ export default function Worksheet() {
                                 }}
                                 className="border-solid border-[red] !h-14 flex justify-center items-center"
                               >
-                                {value?.work_hours}
+                                {parseFloat(value?.work_hours.toFixed(2))}
                               </div>
                             );
                             break;
@@ -473,7 +473,7 @@ export default function Worksheet() {
                                 }}
                                 className="text-yellow-500 !h-14 flex justify-center items-center"
                               >
-                                {value?.work_hours}
+                                {parseFloat(value?.work_hours.toFixed(2))}
                               </div>
                             );
                             break;
@@ -522,7 +522,7 @@ export default function Worksheet() {
                                   });
                                 }}
                               >
-                                {value?.work_hours}
+                                {parseFloat(value?.work_hours.toFixed(2))}
                                 <sup>{value?.sign}</sup>
                               </div>
                             );
@@ -544,7 +544,7 @@ export default function Worksheet() {
                                 }}
                                 className=" flex justify-center items-center"
                               >
-                                {value?.work_hours || " "}
+                                {parseFloat(value?.work_hours.toFixed(2))}
                               </div>
                             );
                         }

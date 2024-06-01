@@ -33,8 +33,6 @@ const year = dayjs().format("YYYY");
 
 const { Column, ColumnGroup } = TableCustom;
 
-
-
 export default function Salary() {
   const [fyear, setFYear] = useState("");
   const [fmonth, setFmonth] = useState(month);
@@ -46,6 +44,8 @@ export default function Salary() {
   const [employee, setEmployee] = useState("");
   const [listEmployee, setListEmployee] = useState<any[]>([]);
   const [keySEmployee, setKeySEmployee] = useState("");
+  const PAGE_SIZE = 10;
+  const [page, setPage] = useState<number>(1);
   let keySearchEmployee = useDebounce(keySEmployee, 500);
 
   const onChange: DatePickerProps["onChange"] = (date) => {
@@ -198,7 +198,11 @@ export default function Salary() {
             </Col>
           </Row>
           <div>
-            <TableCustom dataSource={data} bordered scroll={{ x: true }}>
+            <TableCustom
+              dataSource={data}
+              bordered
+              scroll={{ x: true }}
+            >
               <Column
                 title="STT"
                 dataIndex="stt"
@@ -325,43 +329,133 @@ export default function Salary() {
                 key="f14"
               />
               <Column title="MB" dataIndex="f15" key="f15" />
-              <Column title="Tỉ lệ đạt KPI" dataIndex="f16" key="f16" />
+              <Column className="!text-center" title="Tỉ lệ đạt KPI" dataIndex="f16" key="f16" />
               <Column title="Khu vực" dataIndex="f17" key="f17" />
               <Column title="Nghỉ việc" dataIndex="f18" key="f18" />
               <Column title="Ngày nghỉ" dataIndex="f19" key="f19" />
               <Column title="BBBG" dataIndex="f20" key="f20" />
               <Column title="Lý do tiền mặt" dataIndex="f21" key="f21" />
-              <Column title="Ngày nhận việc" dataIndex="f22" key="f22" />
-              <Column title="Ngày hết hạn thử việc" dataIndex="f23" key="f23" />
+              <Column className="!text-center" title="Ngày nhận việc" dataIndex="f22" key="f22" />
+              <Column className="!text-center" title="Ngày hết hạn thử việc" dataIndex="f23" key="f23" />
               <ColumnGroup title="Chi tiết ngày công">
-                <Column className="!text-center" title="Tổng ngày công" dataIndex="f24" key="f24" />
+                <Column
+                  className="!text-center"
+                  title="Tổng ngày công"
+                  dataIndex="f24"
+                  key="f24"
+                />
                 <ColumnGroup title="Ngày công - theo tháng">
-                  <Column className="!text-right" title="Nghỉ PN" dataIndex="f25" key="f25" />
-                  <Column className="!text-right" title="Lễ, CĐ" dataIndex="f26" key="f26" />
-                  <Column className="!text-right" title="Ca thẳng" dataIndex="f27" key="f27" />
+                  <Column
+                    className="!text-right"
+                    title="Nghỉ PN"
+                    dataIndex="f25"
+                    key="f25"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Lễ, CĐ"
+                    dataIndex="f26"
+                    key="f26"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Ca thẳng"
+                    dataIndex="f27"
+                    key="f27"
+                  />
                 </ColumnGroup>
                 <ColumnGroup title="Công - theo giờ">
-                  <Column className="!text-right" title="Nghỉ PN" dataIndex="f28" key="f28" />
-                  <Column className="!text-right" title="Lễ, CĐ" dataIndex="f29" key="f29" />
-                  <Column className="!text-right" title="Partime" dataIndex="f30" key="f30" />
-                  <Column className="!text-right" title="Đào tạo" dataIndex="f31" key="f31" />
-                  <Column className="!text-right" title="Ca gãy" dataIndex="f32" key="f32" />
+                  <Column
+                    className="!text-right"
+                    title="Nghỉ PN"
+                    dataIndex="f28"
+                    key="f28"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Lễ, CĐ"
+                    dataIndex="f29"
+                    key="f29"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Partime"
+                    dataIndex="f30"
+                    key="f30"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Đào tạo"
+                    dataIndex="f31"
+                    key="f31"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Ca gãy"
+                    dataIndex="f32"
+                    key="f32"
+                  />
                 </ColumnGroup>
                 <ColumnGroup title="Bù công">
-                  <Column className="!text-right" title="Ngỳ nghỉ bù" dataIndex="f33" key="f33" />
-                  <Column className="!text-right" title="Giờ nghỉ bù" dataIndex="f34" key="f34" />
+                  <Column
+                    className="!text-right"
+                    title="Ngỳ nghỉ bù"
+                    dataIndex="f33"
+                    key="f33"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Giờ nghỉ bù"
+                    dataIndex="f34"
+                    key="f34"
+                  />
                 </ColumnGroup>
                 <ColumnGroup title="Ngày lễ">
-                  <Column className="!text-center" title="Công ca tháng" dataIndex="f35" key="f35" />
-                  <Column className="!text-right" title="Công ca gãy" dataIndex="f36" key="f36" />
-                  <Column className="!text-right" title="Giờ ca tháng" dataIndex="f37" key="f37" />
-                  <Column className="!text-right" title="Giờ ca gãy" dataIndex="f38" key="f38" />
+                  <Column
+                    className="!text-center"
+                    title="Công ca tháng"
+                    dataIndex="f35"
+                    key="f35"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Công ca gãy"
+                    dataIndex="f36"
+                    key="f36"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Giờ ca tháng"
+                    dataIndex="f37"
+                    key="f37"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Giờ ca gãy"
+                    dataIndex="f38"
+                    key="f38"
+                  />
                 </ColumnGroup>
               </ColumnGroup>
               <ColumnGroup title="Thêm giờ">
-                <Column className="!text-center" title="Hệ số 1" dataIndex="f39" key="f39" />
-                <Column className="!text-center" title="Hệ số 1.5" dataIndex="f40" key="f40" />
-                <Column className="!text-center" title="Hệ số 2" dataIndex="f41" key="f41" />
+                <Column
+                  className="!text-center"
+                  title="Hệ số 1"
+                  dataIndex="f39"
+                  key="f39"
+                />
+                <Column
+                  className="!text-center"
+                  title="Hệ số 1.5"
+                  dataIndex="f40"
+                  key="f40"
+                />
+                <Column
+                  className="!text-center"
+                  title="Hệ số 2"
+                  dataIndex="f41"
+                  key="f41"
+                />
               </ColumnGroup>
               <Column
                 className="cl-c !text-right"
@@ -375,17 +469,62 @@ export default function Salary() {
                 dataIndex="f43"
                 key="f43"
               />
-              <Column className="!text-right" title="Lương KPIs NH" dataIndex="f44" key="f44" />
-              <Column className="!text-right" title="Làm đêm" dataIndex="f45" key="f45" />
+              <Column
+                className="!text-right"
+                title="Lương KPIs NH"
+                dataIndex="f44"
+                key="f44"
+              />
+              <Column
+                className="!text-right"
+                title="Làm đêm"
+                dataIndex="f45"
+                key="f45"
+              />
               <ColumnGroup title="Các khoản phải thu của người lao động">
-                <Column className="!text-right" title="BHXH, BHYT, BHTN" dataIndex="f46" key="f46" />
-                <Column className="!text-right" title="Kinh phí công đoàn" dataIndex="f47" key="f47" />
-                <Column className="!text-right" title="Truy thu thẻ BHYT" dataIndex="f48" key="f48" />
-                <Column className="!text-right" title="Lợn đất" dataIndex="f49" key="f49" />
-                <Column className="!text-right" title="Đồng phục" dataIndex="f50" key="f50" />
+                <Column
+                  className="!text-right"
+                  title="BHXH, BHYT, BHTN"
+                  dataIndex="f46"
+                  key="f46"
+                />
+                <Column
+                  className="!text-right"
+                  title="Kinh phí công đoàn"
+                  dataIndex="f47"
+                  key="f47"
+                />
+                <Column
+                  className="!text-right"
+                  title="Truy thu thẻ BHYT"
+                  dataIndex="f48"
+                  key="f48"
+                />
+                <Column
+                  className="!text-right"
+                  title="Lợn đất"
+                  dataIndex="f49"
+                  key="f49"
+                />
+                <Column
+                  className="!text-right"
+                  title="Đồng phục"
+                  dataIndex="f50"
+                  key="f50"
+                />
                 <ColumnGroup title="Thuế TNCN">
-                  <Column className="!text-right" title="NPT" dataIndex="f51" key="f51" />
-                  <Column className="!text-right" title="Ân ca" dataIndex="f52" key="f52" />
+                  <Column
+                    className="!text-right"
+                    title="NPT"
+                    dataIndex="f51"
+                    key="f51"
+                  />
+                  <Column
+                    className="!text-right"
+                    title="Ân ca"
+                    dataIndex="f52"
+                    key="f52"
+                  />
                   <Column
                     className="!text-right"
                     title="Thu nhập tính thuế"
@@ -394,7 +533,7 @@ export default function Salary() {
                   />
                   <Column title="Thuế TNCN" dataIndex="f54" key="f54" />
                 </ColumnGroup>
-                <Column title="Còn được lĩnh" dataIndex="f55" key="f55" />
+                <Column className="cl-c !text-right" title="Còn được lĩnh" dataIndex="f55" key="f55" />
               </ColumnGroup>
               <ColumnGroup title="Công ty trả BHXH, BHYT, BHTN cho người lao động">
                 <ColumnGroup title="BHXH">

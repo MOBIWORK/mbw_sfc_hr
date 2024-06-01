@@ -5,7 +5,6 @@ import {
   DatePicker,
   Dropdown,
   Form,
-  Pagination,
   Row,
   Select,
 } from "antd";
@@ -74,6 +73,13 @@ export default function Worksheet() {
       id: null,
     });
   };
+
+  // const paginationConfig = page > 1 ? {
+  //   defaultPageSize: PAGE_SIZE,
+  //   total,
+  //   showSizeChanger: false,
+  //   onChange: (page) => setPage(page),
+  // } : false;
 
   useEffect(() => {
     setClDate(getDaysAndWeekdays(month, year));
@@ -280,23 +286,14 @@ export default function Worksheet() {
                 key: report.name,
                 ...report,
               }))}
-              // pagination={{
-              //   defaultPageSize: PAGE_SIZE,
-              //   total,
-              //   showSizeChanger: false,
-              //   onChange(page) {
-              //     setPage(page);
-              //   },
-              // }}
-              pagination={false}
-              {...(page > 1 && (
-                <Pagination
-                  defaultPageSize={PAGE_SIZE}
-                  total={total}
-                  showSizeChanger={false}
-                  onChange={(page) => setPage(page)}
-                />
-              ))}
+              pagination={ total/PAGE_SIZE > 1 ? {
+                defaultPageSize: PAGE_SIZE,
+                total,
+                showSizeChanger: false,
+                onChange(page) {
+                  setPage(page);
+                },
+              } : false}
               bordered
               scroll={{ x: true }}
             >

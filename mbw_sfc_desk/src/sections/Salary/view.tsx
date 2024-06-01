@@ -104,6 +104,7 @@ export default function Salary() {
     })();
   }, [keySearchEmployee]);
 
+  
   return (
     <>
       <HeaderPage

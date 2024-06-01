@@ -8,7 +8,7 @@ import {
   Row,
   Select,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Detailmodal from "./modal/detailmodal";
 import { ModalDetail } from "./components/modal";
 import dayjs from "dayjs";
@@ -25,7 +25,6 @@ import { TabsCustom } from "../../components/tabs/tabs";
 import useDebounce from "../../hooks/useDebount";
 import { getDaysAndWeekdays } from "../../util";
 import { AxiosService } from "../../services/server";
-import { MdKeyboardArrowDown } from "react-icons/md";
 import { EllipsisOutlined } from "@ant-design/icons";
 
 const { TabPane } = TabsCustom;
@@ -286,14 +285,18 @@ export default function Worksheet() {
                 key: report.name,
                 ...report,
               }))}
-              pagination={ total/PAGE_SIZE > 1 ? {
-                defaultPageSize: PAGE_SIZE,
-                total,
-                showSizeChanger: false,
-                onChange(page) {
-                  setPage(page);
-                },
-              } : false}
+              pagination={
+                total && total > PAGE_SIZE
+                  ? {
+                      pageSize: PAGE_SIZE,
+                      showSizeChanger: false,
+                      total,
+                      onChange(page) {
+                        setPage(page);
+                      },
+                    }
+                  : false
+              }
               bordered
               scroll={{ x: true }}
             >

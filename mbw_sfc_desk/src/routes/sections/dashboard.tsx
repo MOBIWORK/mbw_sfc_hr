@@ -41,9 +41,9 @@ export const dashboardRoutes = [
             </DashboardLayout>
         ),
         children: [
-            {
-                index: true,element: <RouterDashboard/>
-            },
+            // {
+            //     index: true,element: <RouterDashboard/>
+            // },
             {
                 path: 'router-control',element: <RouterControl/>
             },
@@ -102,7 +102,7 @@ export const dashboardRoutes = [
                 path: 'worksheet1',element: <Worksheet1/>
             },
             {
-                path: 'worksheet',element: <Worksheet/>
+                index: true ,element: <Worksheet/>
             },
             {
                 path: 'salary',element: <Salary/>

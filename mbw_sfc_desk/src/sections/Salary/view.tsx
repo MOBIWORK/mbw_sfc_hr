@@ -274,7 +274,7 @@ export default function Salary() {
                 />
               </ColumnGroup>
               <Column
-                className="cl-c !text-right"
+                className="!text-center"
                 title="Tổng phụ cấp"
                 dataIndex="f6"
                 key="f6"
@@ -325,7 +325,7 @@ export default function Salary() {
               </ColumnGroup>
               <Column
                 className="cl-c !text-center"
-                title="Số người phụ thuộc"
+                title="NPT"
                 dataIndex="f14"
                 key="f14"
               />

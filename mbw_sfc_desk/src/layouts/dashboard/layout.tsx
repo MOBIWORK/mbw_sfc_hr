@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }: Props) {
         <MenuLeft handleCollapsed={setCollapsed} collapsed={collapsed} />
       </SiderCustome>
       <Content
-        className="round !overflow-y-scroll bg-white"
+        className="round bg-white"
         style={{
           padding: "0",
           maxHeight: "calc(100vh-46px)",

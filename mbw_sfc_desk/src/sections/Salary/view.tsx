@@ -146,7 +146,7 @@ export default function Salary() {
                 <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
-                    defaultValue={month}
+                    defaultValue={"2"}
                     options={monthAll}
                     onChange={(value: string) => {
                       setFmonth(value);
@@ -259,25 +259,29 @@ export default function Salary() {
                   title="Ca thẳng"
                   dataIndex="f3"
                   key="f3"
+                  render={(value) => <div className="!text-right">{value}</div>}
                 />
                 <Column
                   className="!text-right"
                   title="Ca gãy"
                   dataIndex="f4"
                   key="f4"
+                  render={(value) => <div className="!text-right">{value}</div>}
                 />
                 <Column
                   className="!text-right"
                   title="Theo giờ"
                   dataIndex="f5"
                   key="f5"
+                  render={(value) => <div className="!text-right">{value}</div>}
                 />
               </ColumnGroup>
               <Column
-                className="!text-center"
+                className="!text-center !p-3"
                 title="Tổng phụ cấp"
                 dataIndex="f6"
                 key="f6"
+                render={(value) => <div className="!text-right">{value}</div>}
               />
               <ColumnGroup title="Phụ cấp">
                 <Column
@@ -285,6 +289,7 @@ export default function Salary() {
                   title="Điện thoại"
                   dataIndex="f7"
                   key="f7"
+                  render={(value) => <div className="!text-right">{value}</div>}
                 />
                 <Column
                   className="!text-right"
@@ -311,7 +316,7 @@ export default function Salary() {
                   key="f11"
                 />
                 <Column
-                  className="cl-c !text-right"
+                  className="cl-c !text-right !min-w-[150px]"
                   title="Kiêm nhiệm/công tác phí/khác"
                   dataIndex="f12"
                   key="f12"
@@ -329,18 +334,18 @@ export default function Salary() {
                 dataIndex="f14"
                 key="f14"
               />
-              <Column title="MB" dataIndex="f15" key="f15" />
+              <Column className="cl-c !text-right" title="MB" dataIndex="f15" key="f15" />
               <Column className="!text-center" title="Tỉ lệ đạt KPI" dataIndex="f16" key="f16" />
               <Column title="Khu vực" dataIndex="f17" key="f17" />
               <Column title="Nghỉ việc" dataIndex="f18" key="f18" />
               <Column title="Ngày nghỉ" dataIndex="f19" key="f19" />
-              <Column title="BBBG" dataIndex="f20" key="f20" />
-              <Column title="Lý do tiền mặt" dataIndex="f21" key="f21" />
+              <Column className="cl-c !text-right" title="BBBG" dataIndex="f20" key="f20" />
+              <Column className="cl-c !min-w-[130px] !text-right" title="Lý do tiền mặt" dataIndex="f21" key="f21" />
               <Column className="!text-center" title="Ngày nhận việc" dataIndex="f22" key="f22" />
               <Column className="!text-center" title="Ngày hết hạn thử việc" dataIndex="f23" key="f23" />
               <ColumnGroup title="Chi tiết ngày công">
                 <Column
-                  className="!text-center"
+                  className="!text-center !p-3"
                   title="Tổng ngày công"
                   dataIndex="f24"
                   key="f24"
@@ -400,7 +405,7 @@ export default function Salary() {
                 <ColumnGroup title="Bù công">
                   <Column
                     className="!text-right"
-                    title="Ngỳ nghỉ bù"
+                    title="Ngày nghỉ bù"
                     dataIndex="f33"
                     key="f33"
                   />
@@ -438,7 +443,7 @@ export default function Salary() {
                   />
                 </ColumnGroup>
               </ColumnGroup>
-              <ColumnGroup title="Thêm giờ">
+              <ColumnGroup className="!p-3" title="Thêm giờ">
                 <Column
                   className="!text-center"
                   title="Hệ số 1"
@@ -459,13 +464,13 @@ export default function Salary() {
                 />
               </ColumnGroup>
               <Column
-                className="cl-c !text-right"
+                className="cl-c !text-right !min-w-[150px]"
                 title="Lương ngày công làm việc"
                 dataIndex="f42"
                 key="f42"
               />
               <Column
-                className="cl-c !text-right"
+                className="cl-c !text-right !min-w-[150px]"
                 title="Tiền lương ngày lễ / ngoài giờ"
                 dataIndex="f43"
                 key="f43"
@@ -508,21 +513,21 @@ export default function Salary() {
                   key="f49"
                 />
                 <Column
-                  className="!text-right"
+                  className="!text-right !p-3"
                   title="Đồng phục"
                   dataIndex="f50"
                   key="f50"
                 />
                 <ColumnGroup title="Thuế TNCN">
                   <Column
-                    className="!text-right"
+                    className="!text-right p-3"
                     title="NPT"
                     dataIndex="f51"
                     key="f51"
                   />
                   <Column
                     className="!text-right"
-                    title="Ân ca"
+                    title="Ăn ca"
                     dataIndex="f52"
                     key="f52"
                   />
@@ -532,33 +537,10 @@ export default function Salary() {
                     dataIndex="f53"
                     key="f53"
                   />
-                  <Column title="Thuế TNCN" dataIndex="f54" key="f54" />
+                  <Column title="Thuế TNCN" dataIndex="f54" key="f54" render={(value) => <div className="!text-right">{value}</div>} />
                 </ColumnGroup>
-                <Column className="cl-c !text-right" title="Còn được lĩnh" dataIndex="f55" key="f55" />
+                <Column className="!p-2" title="Còn được lĩnh" dataIndex="f55" key="f55" render={(value) => <div className="!text-right">{value}</div>} />
               </ColumnGroup>
-              <ColumnGroup title="Công ty trả BHXH, BHYT, BHTN cho người lao động">
-                <ColumnGroup title="BHXH">
-                  <Column title="17.5%" dataIndex="f56" key="f56" />
-                </ColumnGroup>
-                <ColumnGroup title="BHYT">
-                  <Column title="3%" dataIndex="f57" key="f57" />
-                </ColumnGroup>
-                <ColumnGroup title="BHTN">
-                  <Column title="1%" dataIndex="f58" key="f58" />
-                </ColumnGroup>
-                <Column
-                  className="cl-c !text-right"
-                  title="Tổng BH phải trả cho người lao động"
-                  dataIndex="f59"
-                  key="f59"
-                />
-              </ColumnGroup>
-              <Column
-                className="cl-c !text-right"
-                title="Tổng BHXH, BHYT, BHTN phải nộp(32%)"
-                dataIndex="f60"
-                key="f60"
-              />
             </TableCustom>
           </div>
         </div>

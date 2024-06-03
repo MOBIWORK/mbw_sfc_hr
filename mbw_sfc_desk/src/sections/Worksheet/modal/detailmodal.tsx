@@ -61,7 +61,7 @@ const data: any[] = [
     key: "AAAA",
     name: "1asd1sb",
     action: "Vào",
-    time: "08:00, 02/04/2024",
+    time: "08:00, 01-02-2024",
     shift: "Hành chính",
     area: "Văn phòng mobiwork MB",
     distance: 124,
@@ -73,7 +73,7 @@ const data: any[] = [
     key: "BBBBB",
     name: "255232",
     action: "Ra",
-    time: "12:00, 02/04/2024",
+    time: "12:00, 01-02-2024",
     shift: "Hành chính",
     area: "Văn phòng mobiwork MB",
     distance: 0,
@@ -161,7 +161,7 @@ export default function Detailmodal() {
                           Số phút đi muộn
                         </p>
                         <p className="text-[#212B36] font-semibold text-sm leading-[22px]">
-                          0
+                          12
                         </p>
                       </div>
                     </Col>
@@ -171,7 +171,7 @@ export default function Detailmodal() {
                           Số phút về sớm
                         </p>
                         <p className="text-[#212B36] font-semibold text-sm leading-[22px]">
-                          0
+                          3
                         </p>
                       </div>
                     </Col>
@@ -286,7 +286,7 @@ export default function Detailmodal() {
                           Thời gian tạo
                         </p>
                         <p className="text-[#212B36] font-semibold text-sm leading-[22px]">
-                          02/05/2024 10:05
+                          01-02-2024 08:05
                         </p>
                       </div>
                     </Col>
@@ -332,10 +332,10 @@ export default function Detailmodal() {
                 <Col className="pt-2">
                   <Row className="items-center">
                     <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
-                      H
+                      BP
                     </Avatar>
                     <p className="text-[#212B36] font-medium leading-[22px] text-sm ml-[5px] text-left">
-                      <p>Quỳnh anh</p>
+                      <p>Bùi Duy Phương</p>
                     </p>
                   </Row>
                 </Col>

@@ -279,7 +279,7 @@ export default function Worksheet() {
         </div>
 
         <TabsCustom defaultActiveKey="1">
-          <TabPane className="bg-white pb-3 h-screen" tab="Bảng công" key="1">
+          <TabPane className="bg-white pb-3" tab="Bảng công" key="1">
             <TableCustom
               dataSource={dataReort?.data?.map((report: any) => ({
                 key: report.name,
@@ -298,7 +298,7 @@ export default function Worksheet() {
                   : false
               }
               bordered
-              scroll={{ x: true }}
+              scroll={{x:true}}
             >
               <Column
                 title="STT"

@@ -26,7 +26,7 @@ import useDebounce from "../../hooks/useDebount";
 import { getDaysAndWeekdays } from "../../util";
 import { AxiosService } from "../../services/server";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { data1, data2 } from "../Salary/data";
+import { data1, data2, data3 } from "../Salary/data";
 
 const { TabPane } = TabsCustom;
 const { Column, ColumnGroup } = TableCustom;
@@ -590,11 +590,7 @@ export default function Worksheet() {
                 ))}
             </TableCustom>
           </TabPane>
-          <TabPane
-            className="bg-white pb-3"
-            tab="Thời gian tính lương theo giờ"
-            key="2"
-          >
+          <TabPane className="bg-white pb-3" tab="Tổng công" key="2">
             <TableCustom dataSource={data1} bordered scroll={{ x: true }}>
               <Column
                 title="STT"
@@ -737,10 +733,123 @@ export default function Worksheet() {
               />
             </TableCustom>
           </TabPane>
+
+          <TabPane className="bg-white pb-3" tab="Bảng ca" key="3">
+            <TableCustom dataSource={data3} bordered scroll={{ x: true }}>
+              <Column
+                title="STT"
+                dataIndex="stt"
+                key="stt"
+                className="!text-center"
+                render={(_: any, record: any, index: number) => index + 1}
+              />
+              <Column
+                title="Nhân viên"
+                dataIndex="employee1"
+                key="employee1"
+                className="!text-left !p-2"
+                render={(_: any, record: any) => (
+                  <Row className="items-center flex-nowrap">
+                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                      {!record?.user_image &&
+                        record?.employee_name
+                          .split(" ")
+                          .reduce(
+                            (prev: string, now: string) =>
+                              `${prev[0] || ""}${now[0]}`,
+                            ""
+                          )}
+                    </Avatar>
+                    <p className="text-base font-medium  ml-[5px] text-left">
+                      <p className="truncate">{record.employee_name}</p>
+                      <p className="text-xs text-[#637381] font-normal">
+                        {record.employee}
+                      </p>
+                    </p>
+                  </Row>
+                )}
+              />
+              <Column
+                title="Chức danh"
+                dataIndex="cd11"
+                key="cd11"
+                className="!text-left"
+                render={(value: any, record: any) => <>{value}</>}
+              />
+              <Column
+                title="Phòng ban"
+                dataIndex="depart"
+                key="depart"
+                className="!text-left"
+                render={(value: any, record: any) => <>{value}</>}
+              />
+              <ColumnGroup className="!text-center" title="1">
+                <Column title="Thứ 5" key="f1" dataIndex="f1"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="2">
+                <Column title="Thứ 6" key="f2" dataIndex="f2"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="3">
+                <Column title="Thứ 7" key="f2" dataIndex="f3"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="4">
+                <Column title="Chủ Nhật" key="f3" dataIndex="f3"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="5">
+                <Column title="Thứ 2" key="f5" dataIndex="f5"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="6">
+                <Column title="Thứ 3" key="f6" dataIndex="f6"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="7">
+                <Column title="Thứ 4" key="f7" dataIndex="f7"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="8">
+                <Column title="Thứ 5" key="f8" dataIndex="f8"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="9">
+                <Column title="Thứ 6" key="f9" dataIndex="f9"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="10">
+                <Column title="Thứ 7" key="f10" dataIndex="f10"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="11">
+                <Column title="Chủ nhật" key="f11" dataIndex="f11"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="12">
+                <Column title="Thứ 2" key="f12" dataIndex="f12"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="13">
+                <Column title="Thứ 3" key="f13" dataIndex="f13"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="14">
+                <Column title="Thứ 4" key="f14" dataIndex="f14"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="15">
+                <Column title="Thứ 5" key="f15" dataIndex="f15"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="16">
+                <Column title="Thứ 6" key="f16" dataIndex="f16"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="17">
+                <Column title="Thứ 7" key="f17" dataIndex="f17"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="18">
+                <Column title="Chủ nhật" key="f18" dataIndex="f18"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="19">
+                <Column title="Thứ 2" key="f19" dataIndex="f19"/>
+              </ColumnGroup>
+              <ColumnGroup className="!text-center" title="20">
+                <Column title="Thứ 3" key="f20" dataIndex="f20"/>
+              </ColumnGroup>
+            </TableCustom>
+          </TabPane>
+
           <TabPane
             className="bg-white pb-3"
             tab="Thời gian tính lương theo ngày"
-            key="3"
+            key="4"
           >
             <TableCustom dataSource={data2} bordered scroll={{ x: true }}>
               <Column
@@ -884,6 +993,7 @@ export default function Worksheet() {
               />
             </TableCustom>
           </TabPane>
+          
         </TabsCustom>
 
         <ModalDetail

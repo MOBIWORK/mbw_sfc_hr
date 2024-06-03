@@ -26,6 +26,7 @@ import useDebounce from "../../hooks/useDebount";
 import { getDaysAndWeekdays } from "../../util";
 import { AxiosService } from "../../services/server";
 import { EllipsisOutlined } from "@ant-design/icons";
+import { data1, data2 } from "../Salary/data";
 
 const { TabPane } = TabsCustom;
 const { Column, ColumnGroup } = TableCustom;
@@ -43,7 +44,8 @@ const data = [
 export default function Worksheet() {
   const [total, setTotal] = useState<number>(0);
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
-  const [month, setMonth] = useState(dayjs().month() + 1);
+  const [month, setMonth] = useState("2");
+  // dayjs().month() + 1
   const [listDepartment, setListDepartment] = useState<any[]>([]);
   const [department, setDepartment] = useState("");
   const [keySDepartment, setKeySDepartment] = useState("");
@@ -223,7 +225,7 @@ export default function Worksheet() {
                 <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
-                    defaultValue={month.toString()}
+                    defaultValue={"2"}
                     options={monthAll}
                     onChange={(value) => {
                       setMonth(Number.parseInt(value));
@@ -298,7 +300,7 @@ export default function Worksheet() {
                   : false
               }
               bordered
-              scroll={{x:true}}
+              scroll={{ x: true }}
             >
               <Column
                 title="STT"
@@ -593,7 +595,7 @@ export default function Worksheet() {
             tab="Thời gian tính lương theo giờ"
             key="2"
           >
-            <TableCustom bordered scroll={{ x: true }}>
+            <TableCustom dataSource={data1} bordered scroll={{ x: true }}>
               <Column
                 title="STT"
                 dataIndex="stt"
@@ -603,50 +605,57 @@ export default function Worksheet() {
               />
               <Column
                 title="Nhân viên"
-                dataIndex="employee"
-                key="employee"
-                className="!text-left"
+                dataIndex="employee1"
+                key="employee1"
+                className="!text-left !p-2"
                 render={(_: any, record: any) => (
-                  <>
-                    <Col>
-                      <Row className="items-center">
-                        <Avatar
-                          style={{ backgroundColor: "#f56a00" }}
-                          size={32}
-                        >
-                          H
-                        </Avatar>
-                        <p className="text-base font-medium  ml-[5px] text-left">
-                          <p>Quỳnh anh</p>
-                          <p className="text-xs text-[#637381] font-normal">
-                            NV-123
-                          </p>
-                        </p>
-                      </Row>
-                    </Col>
-                  </>
+                  <Row className="items-center flex-nowrap">
+                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                      {!record?.user_image &&
+                        record?.employee_name
+                          .split(" ")
+                          .reduce(
+                            (prev: string, now: string) =>
+                              `${prev[0] || ""}${now[0]}`,
+                            ""
+                          )}
+                    </Avatar>
+                    <p className="text-base font-medium  ml-[5px] text-left">
+                      <p className="truncate">{record.employee_name}</p>
+                      <p className="text-xs text-[#637381] font-normal">
+                        {record.employee}
+                      </p>
+                    </p>
+                  </Row>
                 )}
               />
               <Column
                 title="Chức danh"
+                dataIndex="cd11"
+                key="cd11"
+                className="!text-left"
+                render={(value: any, record: any) => <>{value}</>}
+              />
+              <Column
+                title="Phòng ban"
                 dataIndex="depart"
                 key="depart"
                 className="!text-left"
-                render={(_: any, record: any) => <>{record}</>}
+                render={(value: any, record: any) => <>{value}</>}
               />
               <Column
                 title="Số phút đi muộn"
                 dataIndex="mm"
                 key="mm"
                 className="!text-center"
-                render={(_: any, record: any) => <>{record}</>}
+                render={(value: any, record: any) => <>{value}</>}
               />
               <Column
                 title="Số phút về sớm"
                 dataIndex="mm1"
                 key="mm1"
                 className="!text-center"
-                render={(_: any, record: any) => <>{record}</>}
+                render={(value: any, record: any) => <>{value}</>}
               />
               <ColumnGroup
                 className="!whitespace-normal !text-center"
@@ -733,7 +742,7 @@ export default function Worksheet() {
             tab="Thời gian tính lương theo ngày"
             key="3"
           >
-            <TableCustom bordered scroll={{ x: true }}>
+            <TableCustom dataSource={data2} bordered scroll={{ x: true }}>
               <Column
                 title="STT"
                 dataIndex="stt"
@@ -743,50 +752,57 @@ export default function Worksheet() {
               />
               <Column
                 title="Nhân viên"
-                dataIndex="employee"
-                key="employee"
-                className="!text-left"
+                dataIndex="employee1"
+                key="employee1"
+                className="!text-left !p-2"
                 render={(_: any, record: any) => (
-                  <>
-                    <Col>
-                      <Row className="items-center">
-                        <Avatar
-                          style={{ backgroundColor: "#f56a00" }}
-                          size={32}
-                        >
-                          H
-                        </Avatar>
-                        <p className="text-base font-medium  ml-[5px] text-left">
-                          <p>Quỳnh anh</p>
-                          <p className="text-xs text-[#637381] font-normal">
-                            NV-123
-                          </p>
-                        </p>
-                      </Row>
-                    </Col>
-                  </>
+                  <Row className="items-center flex-nowrap">
+                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                      {!record?.user_image &&
+                        record?.employee_name
+                          .split(" ")
+                          .reduce(
+                            (prev: string, now: string) =>
+                              `${prev[0] || ""}${now[0]}`,
+                            ""
+                          )}
+                    </Avatar>
+                    <p className="text-base font-medium  ml-[5px] text-left">
+                      <p className="truncate">{record.employee_name}</p>
+                      <p className="text-xs text-[#637381] font-normal">
+                        {record.employee}
+                      </p>
+                    </p>
+                  </Row>
                 )}
               />
               <Column
                 title="Chức danh"
+                dataIndex="cd11"
+                key="cd11"
+                className="!text-left"
+                render={(value: any, record: any) => <>{value}</>}
+              />
+              <Column
+                title="Phòng ban"
                 dataIndex="depart"
                 key="depart"
                 className="!text-left"
-                render={(_: any, record: any) => <>{record}</>}
+                render={(value: any, record: any) => <>{value}</>}
               />
               <Column
                 title="Số phút đi muộn"
                 dataIndex="mm"
                 key="mm"
                 className="!text-center"
-                render={(_: any, record: any) => <>{record}</>}
+                render={(value: any, record: any) => <>{value}</>}
               />
               <Column
                 title="Số phút về sớm"
                 dataIndex="mm1"
                 key="mm1"
                 className="!text-center"
-                render={(_: any, record: any) => <>{record}</>}
+                render={(value: any, record: any) => <>{value}</>}
               />
               <ColumnGroup
                 className="!whitespace-normal !text-center"

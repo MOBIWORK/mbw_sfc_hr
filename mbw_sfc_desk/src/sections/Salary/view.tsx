@@ -26,6 +26,7 @@ import useDebounce from "../../hooks/useDebount";
 import { AxiosService } from "../../services/server";
 import { ContentPage } from "../../components/content-page";
 import { data } from "./data";
+import { useResize } from "../../hooks";
 
 const currentMonth = dayjs().month() + 1; // Lấy tháng hiện tại (đánh số từ 0)
 const month = currentMonth.toString();
@@ -47,6 +48,8 @@ export default function Salary() {
   const PAGE_SIZE = 10;
   const [page, setPage] = useState<number>(1);
   let keySearchEmployee = useDebounce(keySEmployee, 500);
+  const size = useResize();
+  const [scrollYTable, setScrollYTable] = useState<number>(size?.h * 0.68);
 
   const onChange: DatePickerProps["onChange"] = (date) => {
     setFYear(date?.["$y"].toString());
@@ -104,7 +107,10 @@ export default function Salary() {
     })();
   }, [keySearchEmployee]);
 
-  
+  useEffect(() => {
+    setScrollYTable(size.h * 0.6);
+  }, [size]);
+
   return (
     <>
       <HeaderPage
@@ -198,11 +204,13 @@ export default function Salary() {
               </Form>
             </Col>
           </Row>
-          <div>
+          <div className="w-full max-h-[72vh]">
             <TableCustom
               dataSource={data}
               bordered
-              scroll={{ x: true }}
+              scroll={{
+                x: true,
+              }}
             >
               <Column
                 title="STT"
@@ -334,15 +342,45 @@ export default function Salary() {
                 dataIndex="f14"
                 key="f14"
               />
-              <Column className="cl-c !text-right" title="MB" dataIndex="f15" key="f15" />
-              <Column className="!text-center" title="Tỉ lệ đạt KPI" dataIndex="f16" key="f16" />
+              <Column
+                className="cl-c !text-right"
+                title="MB"
+                dataIndex="f15"
+                key="f15"
+              />
+              <Column
+                className="!text-center"
+                title="Tỉ lệ đạt KPI"
+                dataIndex="f16"
+                key="f16"
+              />
               <Column title="Khu vực" dataIndex="f17" key="f17" />
               <Column title="Nghỉ việc" dataIndex="f18" key="f18" />
               <Column title="Ngày nghỉ" dataIndex="f19" key="f19" />
-              <Column className="cl-c !text-right" title="BBBG" dataIndex="f20" key="f20" />
-              <Column className="cl-c !min-w-[130px] !text-right" title="Lý do tiền mặt" dataIndex="f21" key="f21" />
-              <Column className="!text-center" title="Ngày nhận việc" dataIndex="f22" key="f22" />
-              <Column className="!text-center" title="Ngày hết hạn thử việc" dataIndex="f23" key="f23" />
+              <Column
+                className="cl-c !text-right"
+                title="BBBG"
+                dataIndex="f20"
+                key="f20"
+              />
+              <Column
+                className="cl-c !min-w-[130px] !text-right"
+                title="Lý do tiền mặt"
+                dataIndex="f21"
+                key="f21"
+              />
+              <Column
+                className="!text-center"
+                title="Ngày nhận việc"
+                dataIndex="f22"
+                key="f22"
+              />
+              <Column
+                className="!text-center"
+                title="Ngày hết hạn thử việc"
+                dataIndex="f23"
+                key="f23"
+              />
               <ColumnGroup title="Chi tiết ngày công">
                 <Column
                   className="!text-center !p-3"
@@ -537,9 +575,22 @@ export default function Salary() {
                     dataIndex="f53"
                     key="f53"
                   />
-                  <Column title="Thuế TNCN" dataIndex="f54" key="f54" render={(value) => <div className="!text-right">{value}</div>} />
+                  <Column
+                    title="Thuế TNCN"
+                    dataIndex="f54"
+                    key="f54"
+                    render={(value) => (
+                      <div className="!text-right">{value}</div>
+                    )}
+                  />
                 </ColumnGroup>
-                <Column className="!p-2" title="Còn được lĩnh" dataIndex="f55" key="f55" render={(value) => <div className="!text-right">{value}</div>} />
+                <Column
+                  className="!p-2"
+                  title="Còn được lĩnh"
+                  dataIndex="f55"
+                  key="f55"
+                  render={(value) => <div className="!text-right">{value}</div>}
+                />
               </ColumnGroup>
             </TableCustom>
           </div>

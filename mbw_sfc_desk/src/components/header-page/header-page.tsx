@@ -25,7 +25,7 @@ export function HeaderPage({
 }: Props) {
   return (
     <>
-      <Row className="flex justify-between items-center px-5  py-5 flex-nowrap bg-white h-12">
+      <Row className="flex justify-between items-center px-5 border-[#EDEDED] border-x-[0.1px] border-y-0 border-[0.1px] border-solid py-5 flex-nowrap bg-white h-12">
         <div className="flex justify-center items-center">
           <span className="text-base font-semibold leading-[21px] ml-2">
             {title}

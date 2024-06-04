@@ -117,11 +117,11 @@ export const TableCustom = styled(Table)<{
   border-inline-end: none!important;
 }
 
-.cl-c {
-  white-space: normal!important;
-}
 
 .ant-table-container {
+  // border-radius: 0px!important;
+  border-start-start-radius: 0px!important;
+  border-start-end-radius: 0px!important;
     table {
       border: 1px solid #ebebeb;
     }
@@ -251,4 +251,9 @@ export const TableCustom = styled(Table)<{
       border-start-start-radius: 0px!important;
     }
   } 
+
+
+
+    background: #fff!important;
+  
 `;

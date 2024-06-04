@@ -8,7 +8,7 @@ import {
   Row,
   Select,
 } from "antd";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Detailmodal from "./modal/detailmodal";
 import { ModalDetail } from "./components/modal";
 import dayjs from "dayjs";
@@ -27,6 +27,7 @@ import { getDaysAndWeekdays } from "../../util";
 import { AxiosService } from "../../services/server";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { data1, data2, data3 } from "../Salary/data";
+import { useResize } from "../../hooks";
 
 const { TabPane } = TabsCustom;
 const { Column, ColumnGroup } = TableCustom;
@@ -44,7 +45,7 @@ const data = [
 export default function Worksheet() {
   const [total, setTotal] = useState<number>(0);
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
-  const [month, setMonth] = useState("2");
+  const [month, setMonth] = useState(dayjs().month() + 1);
   // dayjs().month() + 1
   const [listDepartment, setListDepartment] = useState<any[]>([]);
   const [department, setDepartment] = useState("");
@@ -56,6 +57,10 @@ export default function Worksheet() {
   const [listEmployee, setListEmployee] = useState<any[]>([]);
   const [keySEmployee, setKeySEmployee] = useState("");
   let keySearchEmployee = useDebounce(keySEmployee, 500);
+  const size = useResize();
+  const [scrollYTable, setScrollYTable] = useState<number>(size?.h * 0.68);
+  const containerRef = useRef(null);
+  const [containerHeight, setContainerHeight] = useState<any>(0);
   const [dataReort, setDataReport] = useState<{ data: any[] }>({ data: [] });
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
@@ -74,13 +79,6 @@ export default function Worksheet() {
       id: null,
     });
   };
-
-  // const paginationConfig = page > 1 ? {
-  //   defaultPageSize: PAGE_SIZE,
-  //   total,
-  //   showSizeChanger: false,
-  //   onChange: (page) => setPage(page),
-  // } : false;
 
   useEffect(() => {
     setClDate(getDaysAndWeekdays(month, year));
@@ -174,19 +172,27 @@ export default function Worksheet() {
     })();
   }, [month, year, page, employee, department]);
 
+  useEffect(() => {
+    setScrollYTable(size.h * 0.6);
+  }, [size]);
+
+  useEffect(() => {
+    const containerElement = containerRef.current;
+    if (containerElement) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          setContainerHeight(entry.contentRect.height);
+        }
+      });
+      resizeObserver.observe(containerElement);
+      return () => resizeObserver.disconnect();
+    }
+  }, [containerRef]);
+
   return (
     <>
       <HeaderPage
         title="Bảng chấm công"
-        // buttons={[
-        //   {
-        //     label: "Xuất dữ liệu",
-        //     type: "primary",
-        //     icon: <VerticalAlignBottomOutlined className="text-xl" />,
-        //     size: "20px",
-        //     className: "flex items-center",
-        //   },
-        // ]}
         customButton={
           <>
             <Dropdown
@@ -225,7 +231,7 @@ export default function Worksheet() {
                 <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
-                    defaultValue={"2"}
+                    defaultValue={month.toString()}
                     options={monthAll}
                     onChange={(value) => {
                       setMonth(Number.parseInt(value));
@@ -281,92 +287,178 @@ export default function Worksheet() {
         </div>
 
         <TabsCustom defaultActiveKey="1">
-          <TabPane className="bg-white pb-3" tab="Bảng công" key="1">
-            <TableCustom
-              dataSource={dataReort?.data?.map((report: any) => ({
-                key: report.name,
-                ...report,
-              }))}
-              pagination={
-                total && total > PAGE_SIZE
-                  ? {
-                      pageSize: PAGE_SIZE,
-                      showSizeChanger: false,
-                      total,
-                      onChange(page) {
-                        setPage(page);
-                      },
-                    }
-                  : false
-              }
-              bordered
-              scroll={{ x: true }}
-            >
-              <Column
-                title="STT"
-                dataIndex="stt"
-                key="stt"
-                className="!text-center"
-                render={(_: any, record: any, index: number) => index + 1}
-              />
-              <Column
-                title="Nhân viên"
-                dataIndex="employee1"
-                key="employee1"
-                className="!text-left !p-2"
-                render={(_: any, record: any) => (
-                  <Row className="items-center flex-nowrap">
-                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
-                      {!record?.user_image &&
-                        record?.employee_name
-                          .split(" ")
-                          .reduce(
-                            (prev: string, now: string) =>
-                              `${prev[0] || ""}${now[0]}`,
-                            ""
-                          )}
-                    </Avatar>
-                    <p className="text-base font-medium  ml-[5px] text-left">
-                      <p className="truncate">{record.employee_name}</p>
-                      <p className="text-xs text-[#637381] font-normal">
-                        {record.employee}
+          <TabPane  className="bg-white pb-3" tab="Bảng công" key="1">
+            <div ref={containerRef}  className="w-full h-auto">
+              <TableCustom
+                dataSource={dataReort?.data?.map((report: any) => ({
+                  key: report.name,
+                  ...report,
+                }))}
+                pagination={
+                  total && total > PAGE_SIZE
+                    ? {
+                        pageSize: PAGE_SIZE,
+                        showSizeChanger: false,
+                        total,
+                        onChange(page) {
+                          setPage(page);
+                        },
+                      }
+                    : false
+                }
+                bordered
+                scroll={{
+                  x: true,
+                  y: containerHeight < 300 ? undefined : scrollYTable,
+                }}
+              >
+                <Column
+                  title="STT"
+                  dataIndex="stt"
+                  key="stt"
+                  className="!text-center !min-w-[60px]"
+                  render={(_: any, record: any, index: number) => index + 1}
+                />
+                <Column
+                  title="Nhân viên"
+                  dataIndex="employee1"
+                  key="employee1"
+                  className="!text-left !p-2"
+                  render={(_: any, record: any) => (
+                    <Row className="items-center flex-nowrap">
+                      <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                        {!record?.user_image &&
+                          record?.employee_name
+                            .split(" ")
+                            .reduce(
+                              (prev: string, now: string) =>
+                                `${prev[0] || ""}${now[0]}`,
+                              ""
+                            )}
+                      </Avatar>
+                      <p className="text-base font-medium  ml-[5px] text-left">
+                        <p className="truncate">{record.employee_name}</p>
+                        <p className="text-xs text-[#637381] font-normal">
+                          {record.employee}
+                        </p>
                       </p>
-                    </p>
-                  </Row>
-                )}
-              />
-              <Column
-                title="Chức danh"
-                dataIndex="department"
-                key="department"
-                className="!text-left !p-2"
-                render={(_: any, record: any) => <>{record.department}</>}
-              />
+                    </Row>
+                  )}
+                />
+                <Column
+                  title="Chức danh"
+                  dataIndex="department"
+                  key="department"
+                  className="!text-left !p-2"
+                  render={(_: any, record: any) => <>{record.department}</>}
+                />
 
-              {clDate.length > 0 &&
-                clDate.map((date) => (
-                  <ColumnGroup
-                    key={date.date}
-                    title={date.date}
-                    className="!min-w-[100px] !text-center !p-0"
-                  >
-                    <Column
-                      className="!text-center !p-0"
-                      title={date.dayOfWeek}
-                      dataIndex={date.date}
-                      key={date.dayOfWeek}
-                      render={(value: any, record: any) => {
-                        if (
-                          value?.dayOfWeek === "Thứ 7" ||
-                          value?.dayOfWeek === "Chủ nhật"
-                        ) {
-                          return (
-                            <div className="bg-[#F4F6F8] !h-14 !text-center flex justify-center items-center">
-                              OFF
-                            </div>
-                          );
-                        }
-                        if (value?.work_hours !== 0 && !!!value?.work_hours) {
+                {clDate.length > 0 &&
+                  clDate.map((date) => (
+                    <ColumnGroup
+                      key={date.date}
+                      title={date.date}
+                      className="!w-full !text-center !p-2"
+                    >
+                      <Column
+                        className="!text-center !whitespace-nowrap !min-w-[100px] !p-0"
+                        title={date.dayOfWeek}
+                        dataIndex={date.date}
+                        key={date.dayOfWeek}
+                        render={(value: any, record: any) => {
+                          if (
+                            value?.dayOfWeek === "Thứ 7" ||
+                            value?.dayOfWeek === "Chủ nhật"
+                          ) {
+                            return (
+                              <div className="bg-[#F4F6F8] !h-14 !text-center flex justify-center items-center">
+                                OFF
+                              </div>
+                            );
+                          }
+                          if (value?.work_hours !== 0 && !!!value?.work_hours) {
+                            switch (value?.sign) {
+                              case "HE":
+                                return (
+                                  <div
+                                    onClick={() => {
+                                      // console.log(record.employee, value.att_day);
+                                      setModal({
+                                        open: true,
+                                        id: {
+                                          employee: record.employee,
+                                          att_day: value.att_day,
+                                        },
+                                      });
+                                    }}
+                                    className="text-red-700 !h-14 flex justify-center items-center"
+                                  >
+                                    {value?.sign}
+                                  </div>
+                                );
+                                break;
+                              case "FID":
+                                return (
+                                  <div
+                                    onClick={() => {
+                                      // console.log(record.employee, value.att_day);
+                                      setModal({
+                                        open: true,
+                                        id: {
+                                          employee: record.employee,
+                                          att_day: value.att_day,
+                                        },
+                                      });
+                                    }}
+                                    className="border-solid border-[red] !h-14 flex justify-center items-center"
+                                  >
+                                    {value?.sign}
+                                  </div>
+                                );
+                                break;
+                              case "ON":
+                                return (
+                                  <div
+                                    onClick={() => {
+                                      // console.log(record.employee, value.att_day);
+                                      setModal({
+                                        open: true,
+                                        id: {
+                                          employee: record.employee,
+                                          att_day: value.att_day,
+                                        },
+                                      });
+                                    }}
+                                    className="text-yellow-500 !h-14 flex justify-center items-center"
+                                  >
+                                    {value?.sign}
+                                  </div>
+                                );
+                                break;
+                              case "EA":
+                                return (
+                                  <div
+                                    onClick={() => {
+                                      // console.log(record.employee, value.att_day);
+                                      setModal({
+                                        open: true,
+                                        id: {
+                                          employee: record.employee,
+                                          att_day: value.att_day,
+                                        },
+                                      });
+                                    }}
+                                    className="text-green-500 !h-14 flex justify-center items-center"
+                                  >
+                                    v
+                                  </div>
+                                );
+                                break;
+                              default:
+                                return <div>x</div>;
+                            }
+                          }
+
                           switch (value?.sign) {
                             case "HE":
                               return (
@@ -378,12 +470,14 @@ export default function Worksheet() {
                                       id: {
                                         employee: record.employee,
                                         att_day: value.att_day,
+                                        employee_name: record.employee_name,
+                                        day: value.dayOfWeek,
                                       },
                                     });
                                   }}
                                   className="text-red-700 !h-14 flex justify-center items-center"
                                 >
-                                  {value?.sign}
+                                  {parseFloat(value?.work_hours.toFixed(2))}
                                 </div>
                               );
                               break;
@@ -397,12 +491,14 @@ export default function Worksheet() {
                                       id: {
                                         employee: record.employee,
                                         att_day: value.att_day,
+                                        employee_name: record.employee_name,
+                                        day: value.dayOfWeek,
                                       },
                                     });
                                   }}
                                   className="border-solid border-[red] !h-14 flex justify-center items-center"
                                 >
-                                  {value?.sign}
+                                  {parseFloat(value?.work_hours.toFixed(2))}
                                 </div>
                               );
                               break;
@@ -416,12 +512,14 @@ export default function Worksheet() {
                                       id: {
                                         employee: record.employee,
                                         att_day: value.att_day,
+                                        employee_name: record.employee_name,
+                                        day: value.dayOfWeek,
                                       },
                                     });
                                   }}
                                   className="text-yellow-500 !h-14 flex justify-center items-center"
                                 >
-                                  {value?.sign}
+                                  {parseFloat(value?.work_hours.toFixed(2))}
                                 </div>
                               );
                               break;
@@ -435,6 +533,8 @@ export default function Worksheet() {
                                       id: {
                                         employee: record.employee,
                                         att_day: value.att_day,
+                                        employee_name: record.employee_name,
+                                        day: value.dayOfWeek,
                                       },
                                     });
                                   }}
@@ -444,151 +544,62 @@ export default function Worksheet() {
                                 </div>
                               );
                               break;
+                            case "+":
+                            case "P":
+                            case "KL":
+                            case "VM":
+                            case "OT":
+                            case "CT":
+                            case "CD":
+                            case "DC":
+                            case "GT":
+                              return (
+                                <div
+                                  onClick={() => {
+                                    // console.log(record.employee, value.att_day);
+                                    setModal({
+                                      open: true,
+                                      id: {
+                                        employee: record.employee,
+                                        att_day: value.att_day,
+                                        employee_name: record.employee_name,
+                                        day: value.dayOfWeek,
+                                      },
+                                    });
+                                  }}
+                                >
+                                  {parseFloat(value?.work_hours.toFixed(2))}
+                                  <sup>{value?.sign}</sup>
+                                </div>
+                              );
+                              break;
                             default:
-                              return <div>x</div>;
+                              return (
+                                <div
+                                  onClick={() => {
+                                    // console.log(record.employee, value.att_day);
+                                    setModal({
+                                      open: true,
+                                      id: {
+                                        employee: record.employee,
+                                        att_day: value.att_day,
+                                        employee_name: record.employee_name,
+                                        day: value.dayOfWeek,
+                                      },
+                                    });
+                                  }}
+                                  className=" flex justify-center items-center"
+                                >
+                                  {parseFloat(value?.work_hours.toFixed(2))}
+                                </div>
+                              );
                           }
-                        }
-
-                        switch (value?.sign) {
-                          case "HE":
-                            return (
-                              <div
-                                onClick={() => {
-                                  // console.log(record.employee, value.att_day);
-                                  setModal({
-                                    open: true,
-                                    id: {
-                                      employee: record.employee,
-                                      att_day: value.att_day,
-                                      employee_name: record.employee_name,
-                                      day: value.dayOfWeek,
-                                    },
-                                  });
-                                }}
-                                className="text-red-700 !h-14 flex justify-center items-center"
-                              >
-                                {parseFloat(value?.work_hours.toFixed(2))}
-                              </div>
-                            );
-                            break;
-                          case "FID":
-                            return (
-                              <div
-                                onClick={() => {
-                                  // console.log(record.employee, value.att_day);
-                                  setModal({
-                                    open: true,
-                                    id: {
-                                      employee: record.employee,
-                                      att_day: value.att_day,
-                                      employee_name: record.employee_name,
-                                      day: value.dayOfWeek,
-                                    },
-                                  });
-                                }}
-                                className="border-solid border-[red] !h-14 flex justify-center items-center"
-                              >
-                                {parseFloat(value?.work_hours.toFixed(2))}
-                              </div>
-                            );
-                            break;
-                          case "ON":
-                            return (
-                              <div
-                                onClick={() => {
-                                  // console.log(record.employee, value.att_day);
-                                  setModal({
-                                    open: true,
-                                    id: {
-                                      employee: record.employee,
-                                      att_day: value.att_day,
-                                      employee_name: record.employee_name,
-                                      day: value.dayOfWeek,
-                                    },
-                                  });
-                                }}
-                                className="text-yellow-500 !h-14 flex justify-center items-center"
-                              >
-                                {parseFloat(value?.work_hours.toFixed(2))}
-                              </div>
-                            );
-                            break;
-                          case "EA":
-                            return (
-                              <div
-                                onClick={() => {
-                                  // console.log(record.employee, value.att_day);
-                                  setModal({
-                                    open: true,
-                                    id: {
-                                      employee: record.employee,
-                                      att_day: value.att_day,
-                                      employee_name: record.employee_name,
-                                      day: value.dayOfWeek,
-                                    },
-                                  });
-                                }}
-                                className="text-green-500 !h-14 flex justify-center items-center"
-                              >
-                                v
-                              </div>
-                            );
-                            break;
-                          case "+":
-                          case "P":
-                          case "KL":
-                          case "VM":
-                          case "OT":
-                          case "CT":
-                          case "CD":
-                          case "DC":
-                          case "GT":
-                            return (
-                              <div
-                                onClick={() => {
-                                  // console.log(record.employee, value.att_day);
-                                  setModal({
-                                    open: true,
-                                    id: {
-                                      employee: record.employee,
-                                      att_day: value.att_day,
-                                      employee_name: record.employee_name,
-                                      day: value.dayOfWeek,
-                                    },
-                                  });
-                                }}
-                              >
-                                {parseFloat(value?.work_hours.toFixed(2))}
-                                <sup>{value?.sign}</sup>
-                              </div>
-                            );
-                            break;
-                          default:
-                            return (
-                              <div
-                                onClick={() => {
-                                  // console.log(record.employee, value.att_day);
-                                  setModal({
-                                    open: true,
-                                    id: {
-                                      employee: record.employee,
-                                      att_day: value.att_day,
-                                      employee_name: record.employee_name,
-                                      day: value.dayOfWeek,
-                                    },
-                                  });
-                                }}
-                                className=" flex justify-center items-center"
-                              >
-                                {parseFloat(value?.work_hours.toFixed(2))}
-                              </div>
-                            );
-                        }
-                      }}
-                    />
-                  </ColumnGroup>
-                ))}
-            </TableCustom>
+                        }}
+                      />
+                    </ColumnGroup>
+                  ))}
+              </TableCustom>
+            </div>
           </TabPane>
           <TabPane className="bg-white pb-3" tab="Tổng công" key="2">
             <TableCustom dataSource={data1} bordered scroll={{ x: true }}>
@@ -784,73 +795,69 @@ export default function Worksheet() {
                 render={(value: any, record: any) => <>{value}</>}
               />
               <ColumnGroup className="!text-center" title="1">
-                <Column title="Thứ 5" key="f1" dataIndex="f1"/>
+                <Column title="Thứ 5" key="f1" dataIndex="f1" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="2">
-                <Column title="Thứ 6" key="f2" dataIndex="f2"/>
+                <Column title="Thứ 6" key="f2" dataIndex="f2" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="3">
-                <Column title="Thứ 7" key="f2" dataIndex="f3"/>
+                <Column title="Thứ 7" key="f2" dataIndex="f3" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="4">
-                <Column title="Chủ Nhật" key="f3" dataIndex="f3"/>
+                <Column title="Chủ Nhật" key="f3" dataIndex="f3" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="5">
-                <Column title="Thứ 2" key="f5" dataIndex="f5"/>
+                <Column title="Thứ 2" key="f5" dataIndex="f5" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="6">
-                <Column title="Thứ 3" key="f6" dataIndex="f6"/>
+                <Column title="Thứ 3" key="f6" dataIndex="f6" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="7">
-                <Column title="Thứ 4" key="f7" dataIndex="f7"/>
+                <Column title="Thứ 4" key="f7" dataIndex="f7" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="8">
-                <Column title="Thứ 5" key="f8" dataIndex="f8"/>
+                <Column title="Thứ 5" key="f8" dataIndex="f8" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="9">
-                <Column title="Thứ 6" key="f9" dataIndex="f9"/>
+                <Column title="Thứ 6" key="f9" dataIndex="f9" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="10">
-                <Column title="Thứ 7" key="f10" dataIndex="f10"/>
+                <Column title="Thứ 7" key="f10" dataIndex="f10" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="11">
-                <Column title="Chủ nhật" key="f11" dataIndex="f11"/>
+                <Column title="Chủ nhật" key="f11" dataIndex="f11" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="12">
-                <Column title="Thứ 2" key="f12" dataIndex="f12"/>
+                <Column title="Thứ 2" key="f12" dataIndex="f12" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="13">
-                <Column title="Thứ 3" key="f13" dataIndex="f13"/>
+                <Column title="Thứ 3" key="f13" dataIndex="f13" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="14">
-                <Column title="Thứ 4" key="f14" dataIndex="f14"/>
+                <Column title="Thứ 4" key="f14" dataIndex="f14" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="15">
-                <Column title="Thứ 5" key="f15" dataIndex="f15"/>
+                <Column title="Thứ 5" key="f15" dataIndex="f15" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="16">
-                <Column title="Thứ 6" key="f16" dataIndex="f16"/>
+                <Column title="Thứ 6" key="f16" dataIndex="f16" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="17">
-                <Column title="Thứ 7" key="f17" dataIndex="f17"/>
+                <Column title="Thứ 7" key="f17" dataIndex="f17" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="18">
-                <Column title="Chủ nhật" key="f18" dataIndex="f18"/>
+                <Column title="Chủ nhật" key="f18" dataIndex="f18" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="19">
-                <Column title="Thứ 2" key="f19" dataIndex="f19"/>
+                <Column title="Thứ 2" key="f19" dataIndex="f19" />
               </ColumnGroup>
               <ColumnGroup className="!text-center" title="20">
-                <Column title="Thứ 3" key="f20" dataIndex="f20"/>
+                <Column title="Thứ 3" key="f20" dataIndex="f20" />
               </ColumnGroup>
             </TableCustom>
           </TabPane>
 
-          <TabPane
-            className="bg-white pb-3"
-            tab="Thời gian tính lương theo ngày"
-            key="4"
-          >
+          <TabPane className="bg-white pb-3" tab="Bảng giờ" key="4">
             <TableCustom dataSource={data2} bordered scroll={{ x: true }}>
               <Column
                 title="STT"
@@ -993,7 +1000,6 @@ export default function Worksheet() {
               />
             </TableCustom>
           </TabPane>
-          
         </TabsCustom>
 
         <ModalDetail

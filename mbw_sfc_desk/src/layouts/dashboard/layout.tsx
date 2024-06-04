@@ -10,13 +10,12 @@ type Props = {
 };
 const { Content, Sider } = Layout;
 
-
-const SiderCustome = styled(Sider)` 
-& .ant-layout-sider-trigger {
-  width:100%;
-  height: fit-content;
-}
-`
+const SiderCustome = styled(Sider)`
+  & .ant-layout-sider-trigger {
+    width: 100%;
+    height: fit-content;
+  }
+`;
 export default function DashboardLayout({ children }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   return (
@@ -31,12 +30,12 @@ export default function DashboardLayout({ children }: Props) {
         <MenuLeft handleCollapsed={setCollapsed} collapsed={collapsed} />
       </SiderCustome>
       <Content
-        className="round bg-white"
+        className="round !overflow-y-hidden"
         style={{
           padding: "0",
           maxHeight: "calc(100vh-46px)",
           overflow: "auto",
-          background: "#F4F6F8",
+          background: "#fff",
         }}
       >
         <div className="h-fit">{children}</div>

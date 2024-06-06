@@ -45,7 +45,6 @@ const { Column, ColumnGroup } = TableCustom;
 
 export default function Worksheet() {
   const [total, setTotal] = useState<number>(0);
-  const [total1, setTotal1] = useState<number>(0);
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
   const [month, setMonth] = useState(dayjs().month() + 1);
   // dayjs().month() + 1
@@ -56,18 +55,14 @@ export default function Worksheet() {
   const [employee, setEmployee] = useState("");
   const PAGE_SIZE = 20;
   const [page, setPage] = useState<number>(1);
-  const [page1, setPage1] = useState<number>(1);
   const [listEmployee, setListEmployee] = useState<any[]>([]);
   const [keySEmployee, setKeySEmployee] = useState("");
   let keySearchEmployee = useDebounce(keySEmployee, 500);
   const size = useResize();
   const [scrollYTable, setScrollYTable] = useState<number>(size?.h * 0.68);
   const containerRef = useRef(null);
-  const [scrollYTable1, setScrollYTable1] = useState<number>(size?.h * 0.68);
-  const containerRef1 = useRef(null);
   const [containerHeight, setContainerHeight] = useState<any>(0);
   const [dataReort, setDataReport] = useState<{ data: any[] }>({ data: [] });
-  const [dataReort1, setDataReport1] = useState<{ data: any[] }>({ data: [] });
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
@@ -178,33 +173,11 @@ export default function Worksheet() {
     })();
   }, [month, year, page, employee, department]);
 
-  useEffect(() => {
-    (async () => {
-      const rsData = await AxiosService.get(
-        "/api/method/mbw_sfc_integrations.sfc_integrations.attendance.get_attendance",
-        {
-          params: {
-            page_size: PAGE_SIZE,
-            page_number: page1,
-            month: month,
-            year: year["$y"],
-            employee: employee,
-            department: department,
-          },
-        }
-      );
-
-      let { result: results } = rsData;
-
-      setDataReport1(results);
-      setTotal1(results?.totals);
-    })();
-  }, [month, year, page1]);
 
   useEffect(() => {
     setScrollYTable(size.h * 0.52);
-    setScrollYTable1(size.h * 0.52);
   }, [size]);
+
 
   useEffect(() => {
     const containerElement = containerRef.current;
@@ -218,19 +191,6 @@ export default function Worksheet() {
       return () => resizeObserver.disconnect();
     }
   }, [containerRef]);
-
-  useEffect(() => {
-    const containerElement = containerRef1.current;
-    if (containerElement) {
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          setContainerHeight(entry.contentRect.height);
-        }
-      });
-      resizeObserver.observe(containerElement);
-      return () => resizeObserver.disconnect();
-    }
-  }, [containerRef1]);
 
   console.log("abc", containerHeight);
   
@@ -656,8 +616,8 @@ export default function Worksheet() {
             </div>
           </TabPane>
           <TabPane className="bg-white pb-3" tab="Tổng công" key="2">
-            <div ref={containerRef1} className="w-full h-auto">
-              <TableCustom
+            {/* <div ref={containerRef1} className="w-full h-auto"> */}
+              {/* <TableCustom
                 dataSource={dataReort1?.data?.map((report: any) => ({
                   key: report.name,
                   ...report,
@@ -749,21 +709,21 @@ export default function Worksheet() {
                 >
                   <Column
                     title="Phép năm"
-                    dataIndex="pn"
+                    // dataIndex="pn"
                     key="pn"
                     className="!text-center"
                     render={(value: any) => <>-</>}
                   />
                   <Column
                     title="Lễ, chế độ"
-                    dataIndex="lpd"
+                    // dataIndex="lpd"
                     key="lpd"
                     className="!text-center"
                     render={(value: any) => <>-</>}
                   />
                   <Column
                     title="Nghỉ bù"
-                    dataIndex="nb"
+                    // dataIndex="nb"
                     key="nb"
                     className="!text-center"
                     render={(value: any) => <>-</>}
@@ -775,14 +735,14 @@ export default function Worksheet() {
                 >
                   <Column
                     title="Ca gẫy"
-                    dataIndex="cg"
+                    // dataIndex="cg"
                     key="cg"
                     className="!text-center"
                     render={(value: any) => <>-</>}
                   />
                   <Column
                     title="Part time"
-                    dataIndex="pt"
+                    // dataIndex="pt"
                     key="pt"
                     className="!text-center"
                     render={(value: any) => <>-</>}
@@ -794,14 +754,14 @@ export default function Worksheet() {
                 >
                   <Column
                     title="Câ gẫy"
-                    dataIndex="cg1"
+                    // dataIndex="cg1"
                     key="cg1"
                     className="!text-center"
                     render={(value: any) => <>-</>}
                   />
                   <Column
                     title="Part time"
-                    dataIndex="pt1"
+                    // dataIndex="pt1"
                     key="pt1"
                     className="!text-center"
                     render={(value: any) => <>-</>}
@@ -809,7 +769,7 @@ export default function Worksheet() {
                 </ColumnGroup>
                 <Column
                   title="Công đào tạo"
-                  dataIndex="cđt"
+                  // dataIndex="cđt"
                   key="cđt"
                   className="!text-center"
                   render={(value: any) => <>-</>}
@@ -821,9 +781,9 @@ export default function Worksheet() {
                   className="!text-center"
                   render={(value: any, record: any) => <>{value}</>}
                 />
-              </TableCustom>
-            </div>
-            {/* <Tab2 data={dataReort1}/> */}
+              </TableCustom> */}
+            {/* </div> */}
+            <Tab2 data={dataReort} page={page} total={total}  setPage={setPage}/>
           </TabPane>
 
           <TabPane className="bg-white pb-3" tab="Bảng ca" key="3">

@@ -28,22 +28,24 @@ import { AxiosService } from "../../services/server";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { data1, data2, data3 } from "../Salary/data";
 import { useResize } from "../../hooks";
+import Tab2 from "./tab/tab2";
 
 const { TabPane } = TabsCustom;
 const { Column, ColumnGroup } = TableCustom;
 
-const data = [
-  {
-    key: "1",
-    employee: "Helllo",
-    tgc: "tgc",
-    depart: "Phòng Số 1",
-    t2: "1",
-  },
-];
+// const data = [
+//   {
+//     key: "1",
+//     employee: "Helllo",
+//     tgc: "tgc",
+//     depart: "Phòng Số 1",
+//     t2: "1",
+//   },
+// ];
 
 export default function Worksheet() {
   const [total, setTotal] = useState<number>(0);
+  const [total1, setTotal1] = useState<number>(0);
   const [year, setYear] = useState<any>(dayjs().startOf("year"));
   const [month, setMonth] = useState(dayjs().month() + 1);
   // dayjs().month() + 1
@@ -54,14 +56,18 @@ export default function Worksheet() {
   const [employee, setEmployee] = useState("");
   const PAGE_SIZE = 20;
   const [page, setPage] = useState<number>(1);
+  const [page1, setPage1] = useState<number>(1);
   const [listEmployee, setListEmployee] = useState<any[]>([]);
   const [keySEmployee, setKeySEmployee] = useState("");
   let keySearchEmployee = useDebounce(keySEmployee, 500);
   const size = useResize();
   const [scrollYTable, setScrollYTable] = useState<number>(size?.h * 0.68);
   const containerRef = useRef(null);
+  const [scrollYTable1, setScrollYTable1] = useState<number>(size?.h * 0.68);
+  const containerRef1 = useRef(null);
   const [containerHeight, setContainerHeight] = useState<any>(0);
   const [dataReort, setDataReport] = useState<{ data: any[] }>({ data: [] });
+  const [dataReort1, setDataReport1] = useState<{ data: any[] }>({ data: [] });
   const [clDate, setClDate] = useState<{ date: number; dayOfWeek: string }[]>(
     getDaysAndWeekdays(month, year)
   );
@@ -173,7 +179,31 @@ export default function Worksheet() {
   }, [month, year, page, employee, department]);
 
   useEffect(() => {
-    setScrollYTable(size.h * 0.6);
+    (async () => {
+      const rsData = await AxiosService.get(
+        "/api/method/mbw_sfc_integrations.sfc_integrations.attendance.get_attendance",
+        {
+          params: {
+            page_size: PAGE_SIZE,
+            page_number: page1,
+            month: month,
+            year: year["$y"],
+            employee: employee,
+            department: department,
+          },
+        }
+      );
+
+      let { result: results } = rsData;
+
+      setDataReport1(results);
+      setTotal1(results?.totals);
+    })();
+  }, [month, year, page1]);
+
+  useEffect(() => {
+    setScrollYTable(size.h * 0.52);
+    setScrollYTable1(size.h * 0.52);
   }, [size]);
 
   useEffect(() => {
@@ -188,6 +218,22 @@ export default function Worksheet() {
       return () => resizeObserver.disconnect();
     }
   }, [containerRef]);
+
+  useEffect(() => {
+    const containerElement = containerRef1.current;
+    if (containerElement) {
+      const resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          setContainerHeight(entry.contentRect.height);
+        }
+      });
+      resizeObserver.observe(containerElement);
+      return () => resizeObserver.disconnect();
+    }
+  }, [containerRef1]);
+
+  console.log("abc", containerHeight);
+  
 
   return (
     <>
@@ -287,8 +333,8 @@ export default function Worksheet() {
         </div>
 
         <TabsCustom defaultActiveKey="1">
-          <TabPane  className="bg-white pb-3" tab="Bảng công" key="1">
-            <div ref={containerRef}  className="w-full h-auto">
+          <TabPane className="bg-white pb-3" tab="Bảng công" key="1">
+            <div ref={containerRef} className="w-full h-auto">
               <TableCustom
                 dataSource={dataReort?.data?.map((report: any) => ({
                   key: report.name,
@@ -347,6 +393,14 @@ export default function Worksheet() {
                 />
                 <Column
                   title="Chức danh"
+                  dataIndex="job_title"
+                  key="job_title"
+                  className="!text-left !p-2 !min-w-[175px]"
+                  render={(_: any, record: any) => <>{record.job_title}</>}
+                />
+
+                <Column
+                  title="Phòng ban"
                   dataIndex="department"
                   key="department"
                   className="!text-left !p-2"
@@ -602,147 +656,174 @@ export default function Worksheet() {
             </div>
           </TabPane>
           <TabPane className="bg-white pb-3" tab="Tổng công" key="2">
-            <TableCustom dataSource={data1} bordered scroll={{ x: true }}>
-              <Column
-                title="STT"
-                dataIndex="stt"
-                key="stt"
-                className="!text-center"
-                render={(_: any, record: any, index: number) => index + 1}
-              />
-              <Column
-                title="Nhân viên"
-                dataIndex="employee1"
-                key="employee1"
-                className="!text-left !p-2"
-                render={(_: any, record: any) => (
-                  <Row className="items-center flex-nowrap">
-                    <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
-                      {!record?.user_image &&
-                        record?.employee_name
-                          .split(" ")
-                          .reduce(
-                            (prev: string, now: string) =>
-                              `${prev[0] || ""}${now[0]}`,
-                            ""
-                          )}
-                    </Avatar>
-                    <p className="text-base font-medium  ml-[5px] text-left">
-                      <p className="truncate">{record.employee_name}</p>
-                      <p className="text-xs text-[#637381] font-normal">
-                        {record.employee}
+            <div ref={containerRef1} className="w-full h-auto">
+              <TableCustom
+                dataSource={dataReort1?.data?.map((report: any) => ({
+                  key: report.name,
+                  ...report,
+                }))}
+                bordered
+                pagination={
+                  total1 && total1 > PAGE_SIZE
+                    ? {
+                        pageSize: PAGE_SIZE,
+                        showSizeChanger: false,
+                        total:total1,
+                        onChange(page) {
+                          setPage1(page);
+                        },
+                      }
+                    : false
+                }
+                scroll={{
+                  x: true,
+                  y: containerHeight < 300 ? undefined : scrollYTable1,
+                }}
+              >
+                <Column
+                  title="STT"
+                  dataIndex="stt"
+                  key="stt"
+                  className="!text-center"
+                  render={(_: any, record: any, index: number) => index + 1}
+                />
+                <Column
+                  title="Nhân viên"
+                  dataIndex="employee1"
+                  key="employee1"
+                  className="!text-left !p-2"
+                  render={(_: any, record: any) => (
+                    <Row className="items-center flex-nowrap">
+                      <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
+                        {!record?.user_image &&
+                          record?.employee_name
+                            .split(" ")
+                            .reduce(
+                              (prev: string, now: string) =>
+                                `${prev[0] || ""}${now[0]}`,
+                              ""
+                            )}
+                      </Avatar>
+                      <p className="text-base font-medium  ml-[5px] text-left">
+                        <p className="truncate">{record.employee_name}</p>
+                        <p className="text-xs text-[#637381] font-normal">
+                          {record.employee}
+                        </p>
                       </p>
-                    </p>
-                  </Row>
-                )}
-              />
-              <Column
-                title="Chức danh"
-                dataIndex="cd11"
-                key="cd11"
-                className="!text-left"
-                render={(value: any, record: any) => <>{value}</>}
-              />
-              <Column
-                title="Phòng ban"
-                dataIndex="depart"
-                key="depart"
-                className="!text-left"
-                render={(value: any, record: any) => <>{value}</>}
-              />
-              <Column
-                title="Số phút đi muộn"
-                dataIndex="mm"
-                key="mm"
-                className="!text-center"
-                render={(value: any, record: any) => <>{value}</>}
-              />
-              <Column
-                title="Số phút về sớm"
-                dataIndex="mm1"
-                key="mm1"
-                className="!text-center"
-                render={(value: any, record: any) => <>{value}</>}
-              />
-              <ColumnGroup
-                className="!whitespace-normal !text-center"
-                title="Nghỉ hưởng nguyên lương"
-              >
-                <Column
-                  title="Phép năm"
-                  dataIndex="pn"
-                  key="pn"
-                  className="!text-center"
-                  render={(value: any) => <>{value}</>}
+                    </Row>
+                  )}
                 />
                 <Column
-                  title="Lễ, chế độ"
-                  dataIndex="lpd"
-                  key="lpd"
+                  title="Chức danh"
+                  dataIndex="job_title"
+                  key="job_title"
+                  className="!text-left !p-2"
+                  render={(_: any, record: any) => <>{record.job_title}</>}
+                />
+
+                <Column
+                  title="Phòng ban"
+                  dataIndex="department"
+                  key="department"
+                  className="!text-left !p-2"
+                  render={(_: any, record: any) => <>{record.department}</>}
+                />
+
+                <Column
+                  title="Số phút đi muộn"
+                  dataIndex="late_arrival_time_monthly"
+                  key="late_arrival_time_monthly"
                   className="!text-center"
-                  render={(value: any) => <>{value}</>}
+                  render={(value: any, record: any) => <>{value}</>}
                 />
                 <Column
-                  title="Nghỉ bù"
-                  dataIndex="nb"
-                  key="nb"
+                  title="Số phút về sớm"
+                  dataIndex="early_arrival_time_monthly"
+                  key="early_arrival_time_monthly"
                   className="!text-center"
-                  render={(value: any) => <>{value}</>}
+                  render={(value: any, record: any) => <>{value}</>}
                 />
-              </ColumnGroup>
-              <ColumnGroup
-                className="!whitespace-normal !text-center"
-                title="Công thường"
-              >
+                <ColumnGroup
+                  className="!whitespace-normal !text-center"
+                  title="Nghỉ hưởng nguyên lương"
+                >
+                  <Column
+                    title="Phép năm"
+                    dataIndex="pn"
+                    key="pn"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                  <Column
+                    title="Lễ, chế độ"
+                    dataIndex="lpd"
+                    key="lpd"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                  <Column
+                    title="Nghỉ bù"
+                    dataIndex="nb"
+                    key="nb"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                </ColumnGroup>
+                <ColumnGroup
+                  className="!whitespace-normal !text-center"
+                  title="Công thường"
+                >
+                  <Column
+                    title="Ca gẫy"
+                    dataIndex="cg"
+                    key="cg"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                  <Column
+                    title="Part time"
+                    dataIndex="pt"
+                    key="pt"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                </ColumnGroup>
+                <ColumnGroup
+                  className="!whitespace-normal !text-center"
+                  title="Công lễ"
+                >
+                  <Column
+                    title="Câ gẫy"
+                    dataIndex="cg1"
+                    key="cg1"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                  <Column
+                    title="Part time"
+                    dataIndex="pt1"
+                    key="pt1"
+                    className="!text-center"
+                    render={(value: any) => <>-</>}
+                  />
+                </ColumnGroup>
                 <Column
-                  title="Ca gẫy"
-                  dataIndex="cg"
-                  key="cg"
+                  title="Công đào tạo"
+                  dataIndex="cđt"
+                  key="cđt"
                   className="!text-center"
-                  render={(value: any) => <>{value}</>}
+                  render={(value: any) => <>-</>}
                 />
                 <Column
-                  title="Part time"
-                  dataIndex="pt"
-                  key="pt"
+                  title="Tổng giờ công"
+                  dataIndex="number_hour_shift_monthly"
+                  key="number_hour_shift_monthly"
                   className="!text-center"
-                  render={(value: any) => <>{value}</>}
+                  render={(value: any, record: any) => <>{value}</>}
                 />
-              </ColumnGroup>
-              <ColumnGroup
-                className="!whitespace-normal !text-center"
-                title="Công lễ"
-              >
-                <Column
-                  title="Câ gẫy"
-                  dataIndex="cg1"
-                  key="cg1"
-                  className="!text-center"
-                  render={(value: any) => <>{value}</>}
-                />
-                <Column
-                  title="Part time"
-                  dataIndex="pt1"
-                  key="pt1"
-                  className="!text-center"
-                  render={(value: any) => <>{value}</>}
-                />
-              </ColumnGroup>
-              <Column
-                title="Công đào tạo"
-                dataIndex="cđt"
-                key="cđt"
-                className="!text-center"
-                render={(value: any) => <>{value}</>}
-              />
-              <Column
-                title="Tổng giờ công"
-                dataIndex="tgc"
-                key="tgc"
-                className="!text-center"
-                render={(value: any) => <>{value}</>}
-              />
-            </TableCustom>
+              </TableCustom>
+            </div>
+            {/* <Tab2 data={dataReort1}/> */}
           </TabPane>
 
           <TabPane className="bg-white pb-3" tab="Bảng ca" key="3">

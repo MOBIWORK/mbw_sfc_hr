@@ -1,9 +1,9 @@
 import React from "react";
 import { TabsModal } from "../components/tabmodal";
 import { Avatar, Badge, Col, Row } from "antd";
-import { TableCustom } from "@/components";
 import { ClockBlue } from "../../../icons/clockblue";
 import { CalenderRed } from "../../../icons/calenderred";
+import { TableCustom } from "../../../components";
 
 const { TabPane } = TabsModal;
 

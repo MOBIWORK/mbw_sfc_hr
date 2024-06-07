@@ -9,16 +9,14 @@ export default function Tab2({data}: any) {
     console.log("data", data);
     
   return (
-    <div className="w-full h-auto">
+    <div className="">
       <TableCustom
         dataSource={data?.data?.map((report: any) => ({
           key: report.name,
           ...report,
         }))}
         bordered
-        scroll={{
-          x: true,
-        }}
+        scroll={{ x: 600,y:400 }}
       >
         <Column
           title="STT"

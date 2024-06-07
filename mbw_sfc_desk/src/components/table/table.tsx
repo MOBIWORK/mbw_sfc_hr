@@ -119,9 +119,6 @@ export const TableCustom = styled(Table)<{
 
 
 .ant-table-container {
-  // border-radius: 0px!important;
-  border-start-start-radius: 0px!important;
-  border-start-end-radius: 0px!important;
     table {
       border: 1px solid #ebebeb;
     }
@@ -133,6 +130,7 @@ export const TableCustom = styled(Table)<{
         font-weight: 500;
         letter-spacing: 0.12em;
         color: #8094ae;
+        padding:10px!important;
       }
     }
     .ant-table-thead
@@ -152,6 +150,7 @@ export const TableCustom = styled(Table)<{
 
         .ant-table-cell {
           user-select: none;
+          padding: 10px!important;
         }
       }
 
@@ -251,9 +250,6 @@ export const TableCustom = styled(Table)<{
       border-start-start-radius: 0px!important;
     }
   } 
-
-
-
     background: #fff!important;
-  
+ 
 `;

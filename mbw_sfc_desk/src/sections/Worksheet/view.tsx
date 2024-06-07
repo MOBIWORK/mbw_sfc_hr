@@ -54,7 +54,7 @@ export default function Worksheet() {
   const [keySDepartment, setKeySDepartment] = useState("");
   let keySearchDepartment = useDebounce(keySDepartment, 500);
   const [employee, setEmployee] = useState("");
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 5;
   const [page, setPage] = useState<number>(1);
   const [page1, setPage1] = useState<number>(1);
   const [listEmployee, setListEmployee] = useState<any[]>([]);
@@ -211,6 +211,8 @@ export default function Worksheet() {
     if (containerElement) {
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
+          console.log("================",entry.contentRect.height);
+          
           setContainerHeight(entry.contentRect.height);
         }
       });
@@ -220,8 +222,8 @@ export default function Worksheet() {
   }, [containerRef]);
 
   useEffect(() => {
-    const containerElement = containerRef1.current;
-    if (containerElement) {
+    if ( containerRef1.current) {
+      const containerElement = containerRef1.current;
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
           setContainerHeight(entry.contentRect.height);
@@ -656,8 +658,9 @@ export default function Worksheet() {
             </div>
           </TabPane>
           <TabPane className="bg-white pb-3" tab="Tổng công" key="2">
-            <div ref={containerRef1} className="w-full h-auto">
+            <div ref={containerRef1} className="max-w-full">
               <TableCustom
+              
                 dataSource={dataReort1?.data?.map((report: any) => ({
                   key: report.name,
                   ...report,
@@ -676,8 +679,7 @@ export default function Worksheet() {
                     : false
                 }
                 scroll={{
-                  x: true,
-                  y: containerHeight < 300 ? undefined : scrollYTable1,
+                  x:"max-content",
                 }}
               >
                 <Column
@@ -691,7 +693,7 @@ export default function Worksheet() {
                   title="Nhân viên"
                   dataIndex="employee1"
                   key="employee1"
-                  className="!text-left !p-2"
+                  // className="!text-left !p-2"
                   render={(_: any, record: any) => (
                     <Row className="items-center flex-nowrap">
                       <Avatar style={{ backgroundColor: "#f56a00" }} size={32}>
@@ -718,7 +720,7 @@ export default function Worksheet() {
                   dataIndex="job_title"
                   key="job_title"
                   className="!text-left !p-2"
-                  render={(_: any, record: any) => <>{record.job_title}</>}
+                  // render={(_: any, record: any) => <>{record.job_title}</>}
                 />
 
                 <Column
@@ -726,7 +728,7 @@ export default function Worksheet() {
                   dataIndex="department"
                   key="department"
                   className="!text-left !p-2"
-                  render={(_: any, record: any) => <>{record.department}</>}
+                  // render={(_: any, record: any) => <>{record.department}</>}
                 />
 
                 <Column
@@ -734,14 +736,14 @@ export default function Worksheet() {
                   dataIndex="late_arrival_time_monthly"
                   key="late_arrival_time_monthly"
                   className="!text-center"
-                  render={(value: any, record: any) => <>{value}</>}
+                  // render={(value: any, record: any) => <>{value}</>}
                 />
                 <Column
                   title="Số phút về sớm"
                   dataIndex="early_arrival_time_monthly"
                   key="early_arrival_time_monthly"
                   className="!text-center"
-                  render={(value: any, record: any) => <>{value}</>}
+                  // render={(value: any, record: any) => <>{value}</>}
                 />
                 <ColumnGroup
                   className="!whitespace-normal !text-center"

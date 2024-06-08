@@ -455,8 +455,8 @@ export default function Salary() {
                 key="PTDP"
                 render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
               />
-              <Column title="Hỗ trợ luân chuyển thu ngân" dataIndex="LCTN" key="LCTN"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>}/:"-">
-              <Column title="Tổng thu nhập" dataIndex="gross_pay" key="gross_pay"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>}/:"-">
+              <Column title="Hỗ trợ luân chuyển thu ngân" dataIndex="LCTN" key="LCTN"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
+              <Column title="Tổng thu nhập" dataIndex="gross_pay" key="gross_pay"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
 
               {/* thu người lao động  */}
               <ColumnGroup title="Các khoản phải thu của người lao động">

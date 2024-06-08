@@ -1,9 +1,7 @@
 import {
   EllipsisOutlined,
-  VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import {
-  Avatar,
   Button,
   Col,
   DatePicker,
@@ -25,7 +23,6 @@ import {
 import useDebounce from "../../hooks/useDebount";
 import { AxiosService } from "../../services/server";
 import { ContentPage } from "../../components/content-page";
-import { data } from "./data";
 import { useResize } from "../../hooks";
 
 const currentMonth = dayjs().month() + 1; // Lấy tháng hiện tại (đánh số từ 0)
@@ -115,7 +112,7 @@ export default function Salary() {
   useEffect(() => {
     (async () => {
       try {
-          const rsSalary = await AxiosService.get("/pai/method/mbw_sfc_integrations.api.reports.salary_report.salary_report",{
+          const rsSalary = await AxiosService.get("/api/method/mbw_sfc_integrations.api.reports.salary_report.salary_report",{
             params: {
               month:fmonth,
               year: fyear,
@@ -308,7 +305,7 @@ export default function Salary() {
                 title="Lương cơ bản(BHXH)"
                 dataIndex="LCB"
                 key="LCB"
-                render={(value: number) => Intl.NumberFormat().format(value)}
+                render={(value: number) => value ?  Intl.NumberFormat().format(value): "-"}
               />
               <ColumnGroup title="Mức lương">
                 <Column
@@ -316,22 +313,22 @@ export default function Salary() {
                   title="Ca thẳng"
                   dataIndex="MLCT"
                   key="MLCT"
-                  render={(value) => (
+                  render={(value) =>value ? (
                     <div className="!text-right">
                       {Intl.NumberFormat().format(value)}
                     </div>
-                  )}
+                  ):"-"}
                 />
                 <Column
                   className="!text-right"
                   title="Ca gãy"
                   dataIndex="MLCG"
                   key="MLCG"
-                  render={(value) => (
+                  render={(value) =>value ? (
                     <div className="!text-right">
                       {Intl.NumberFormat().format(value)}
                     </div>
-                  )}
+                  ):"-"}
                 />
               </ColumnGroup>
               {/* chi tiết ngày công  */}
@@ -377,46 +374,46 @@ export default function Salary() {
                   title="Điện thoại"
                   dataIndex="PCDT"
                   key="PCDT"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                   className="!text-right"
                   title="Xăng xe"
                   dataIndex="PCXX"
                   key="PCXX"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                   className="!text-right"
                   title="Gửi xe"
                   dataIndex="PCGX"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   key="PCGX"
                 />
                 <Column
                   className="!text-right"
                   title="Chức vụ/đặc thù cv"
                   dataIndex="PCDT"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   key="PCDT"
                 />
                 <Column
                   className="!text-right"
                   title="Trách nhiệm"
                   dataIndex="PCTN"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   key="PCTN"
                 />
                 <Column
                   className="!text-right"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   title="Ăn ca"
                   dataIndex="PCAC"
                   key="PCAC"
                 />
                 <Column
                   className="cl-c !text-right !min-w-[150px]"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   title="Kiêm nhiệm"
                   dataIndex="PCKN"
                   key="PCKN"
@@ -424,14 +421,14 @@ export default function Salary() {
                 <Column
                   className="!text-right"
                   title="PC giao hàng/PC than"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   dataIndex="PCGH"
                   key="PCGH"
                 />
                 <Column 
                 className="!text-right"
                 title="Chuyên cần lễ"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 dataIndex={"PCCC"}
                 key="PCCC"
                 />
@@ -442,24 +439,24 @@ export default function Salary() {
                 title="Truy thu, truy lĩnh lương"
                 dataIndex="TLL"
                 key="TLL"
-                render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
               />
               <Column
                 className="cl-c !text-right"
                 title="Phụ cấp đào tạo, Audit khác"
                 dataIndex="PCDT"
                 key="PCDT"
-                render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
               />
               <Column
                 className="!text-center"
                 title="Phải trả đồng phục"
                 dataIndex="PTDP"
                 key="PTDP"
-                render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
               />
-              <Column title="Hỗ trợ luân chuyển thu ngân" dataIndex="LCTN" key="LCTN"    render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}/>
-              <Column title="Tổng thu nhập" dataIndex="gross_pay" key="gross_pay"    render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}/>
+              <Column title="Hỗ trợ luân chuyển thu ngân" dataIndex="LCTN" key="LCTN"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>}/:"-">
+              <Column title="Tổng thu nhập" dataIndex="gross_pay" key="gross_pay"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>}/:"-">
 
               {/* thu người lao động  */}
               <ColumnGroup title="Các khoản phải thu của người lao động">
@@ -468,56 +465,56 @@ export default function Salary() {
                   title="BHXH, BHYT, BHTN"
                   dataIndex="BHXH"
                   key="BHXH"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                   className="!text-right"
                   title="Kinh phí công đoàn"
                   dataIndex="KPCD"
                   key="KPCD"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                   className="!text-right"
                   title="Truy thu thẻ BHYT"
                   dataIndex="BHYT"
                   key="BHYT"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                   className="!text-right"
                   title="Lợn đất"
                   dataIndex="LD"
                   key="LD"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                   className="!text-right !p-3"
                   title="Đồng phục"
                   dataIndex="DP"
                   key="DP"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column
                     className="!text-right p-3"
                     title="Thu nhập tính thuế"
                     dataIndex="TNTT"
                     key="TNTT"
-                    render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   />
                   <Column
                     className="!text-right"
                     title="Thuế TNCN"
                     dataIndex="TNCN"
                     key="TNCN"
-                    render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   />
                   <Column
                     className="!text-right"
                     title="Các khoản trừ lương khác"
                     dataIndex="KHAC"
                     key="KHAC"
-                    render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                   />
               </ColumnGroup>
 
@@ -527,7 +524,7 @@ export default function Salary() {
                   title="Còn được lĩnh"
                   dataIndex="net_pay"
                   key="net_pay"
-                  render={(value) => <div className="!text-right">{Intl.NumberFormat().format(value)}</div>}
+                  render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
               
               

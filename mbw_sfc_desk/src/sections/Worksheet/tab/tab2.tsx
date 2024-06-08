@@ -146,6 +146,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
             dataIndex="broken_shift_hours_monthly"
             key="broken_shift_hours_monthly"
             className="!text-center !p-2"
+            render={(value: any) => <>{parseFloat(value?.toFixed(2))}</>}
           />
           <Column
             width={90}
@@ -153,6 +154,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
             dataIndex="straight_shift_hours_monthly"
             key="straight_shift_hours_monthly"
             className="!text-center !p-2"
+            render={(value: any) => <>{parseFloat(value?.toFixed(2))}</>}
           />
         </ColumnGroup>
         <ColumnGroup
@@ -165,6 +167,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
             dataIndex="work_hours_broken_holidays_monthly"
             key="work_hours_broken_holidays_monthly"
             className="!text-center !p-2"
+            render={(value: any) => <>{parseFloat(value?.toFixed(2))}</>}
           />
           <Column
             width={90}
@@ -172,6 +175,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
             dataIndex="work_hours_straight_holidays_monthly"
             key="work_hours_straight_holidays_monthly"
             className="!text-center !p-2"
+            render={(value: any) => <>{parseFloat(value?.toFixed(2))}</>}
           />
         </ColumnGroup>
         <Column
@@ -188,7 +192,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
           dataIndex="number_of_hours_monthly"
           key="number_of_hours_monthly"
           className="!text-center"
-          render={(value: any, record: any) => <>{value}</>}
+          render={(value: any) => <>{parseFloat(value?.toFixed(2))}</>}
         />
       </TableCustom>
     </div>

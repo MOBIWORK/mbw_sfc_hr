@@ -4,7 +4,7 @@ import { useResize } from "../../../hooks";
 
 const { Column, ColumnGroup } = TableCustom;
 
-export default function Tab2({  data, total, setPage, page }: any) {
+export default function Tab5({ data, total, setPage, page }: any) {
   const PAGE_SIZE = 20;
   const containerRef1 = useRef(null);
   const size = useResize();
@@ -42,7 +42,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
                 pageSize: PAGE_SIZE,
                 showSizeChanger: false,
                 total,
-                current:page,
+                current: page,
                 onChange(page) {
                   setPage(page);
                 },
@@ -184,9 +184,9 @@ export default function Tab2({  data, total, setPage, page }: any) {
         />
         <Column
           width={150}
-          title="Tổng giờ công"
-          dataIndex="number_of_hours_monthly"
-          key="number_of_hours_monthly"
+          title="Tổng ngày công"
+          dataIndex="work_hours_monthly"
+          key="work_hours_monthly"
           className="!text-center"
           render={(value: any, record: any) => <>{value}</>}
         />

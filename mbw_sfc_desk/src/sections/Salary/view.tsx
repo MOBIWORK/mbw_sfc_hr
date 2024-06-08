@@ -32,7 +32,7 @@ const year = dayjs().format("YYYY");
 const { Column, ColumnGroup } = TableCustom;
 
 export default function Salary() {
-  const [fyear, setFYear] = useState("");
+  const [fyear, setFYear] = useState(year);
   const [fmonth, setFmonth] = useState(month);
   const [total, setTotal] = useState<number>(0);
   const [listDepartment, setListDepartment] = useState<any[]>([]);
@@ -173,7 +173,7 @@ export default function Salary() {
                 <FormItemCustom className="border-none mr-2 w-[200px]">
                   <Select
                     className="!bg-[#F4F6F8] options:bg-[#F4F6F8] !h-7 rounded-lg mt-[-2px]"
-                    defaultValue={"2"}
+                    defaultValue={month}
                     options={monthAll}
                     onChange={(value: string) => {
                       setFmonth(value);

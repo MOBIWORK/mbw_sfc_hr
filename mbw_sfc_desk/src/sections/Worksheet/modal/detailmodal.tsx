@@ -1,9 +1,9 @@
 import React from "react";
-import { TabsModal } from "../components/tabmodal";
 import { Avatar, Badge, Col, Row } from "antd";
 import { ClockBlue } from "../../../icons/clockblue";
 import { CalenderRed } from "../../../icons/calenderred";
 import { TableCustom } from "../../../components";
+import { TabsModal } from "../components/tabmodal";
 
 const { TabPane } = TabsModal;
 
@@ -85,7 +85,7 @@ const data: any[] = [
 
 export default function Detailmodal() {
   return (
-    <TabsModal className="" defaultActiveKey="1">
+    <TabsModal defaultActiveKey="1">
       <TabPane tab="Tổng hợp" key="1">
         <div className="bg-[#F4F6F8] -mt-4">
           <div className="px-3 pb-4">

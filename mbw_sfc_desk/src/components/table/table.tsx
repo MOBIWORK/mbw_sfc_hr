@@ -117,8 +117,9 @@ export const TableCustom = styled(Table)<{
   border-inline-end: none!important;
 }
 
-
 .ant-table-container {
+  border-start-start-radius: 0px!important;
+  border-start-end-radius: 0px!important;
     table {
       border: 1px solid #ebebeb;
     }
@@ -150,7 +151,7 @@ export const TableCustom = styled(Table)<{
 
         .ant-table-cell {
           user-select: none;
-          padding: 10px!important;
+          // padding: 10px!important;
         }
       }
 

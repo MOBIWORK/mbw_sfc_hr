@@ -45,8 +45,11 @@ export default function Tab1({ data, total, setPage, page, clDate }: any) {
     }
   }, [containerRef1]);
 
+  console.log(containerHeight);
+  
+
   return (
-    <div ref={containerRef1} className="w-full h-auto">
+    <div ref={containerRef1} className="w-full !h-auto">
       <TableCustom
         dataSource={data?.data?.map((report: any) => ({
           key: report.name,
@@ -68,13 +71,14 @@ export default function Tab1({ data, total, setPage, page, clDate }: any) {
         bordered
         scroll={{
           x: true,
-          y: containerHeight < 300 ? undefined : scrollYTable1,
+          y: containerHeight < 330 ? undefined : scrollYTable1,
         }}
       >
         <Column
           title="STT"
           dataIndex="stt"
           key="stt"
+          width={60}
           className="!text-center !min-w-[60px]"
           render={(_: any, record: any, index: number) => index + 1}
         />
@@ -83,11 +87,11 @@ export default function Tab1({ data, total, setPage, page, clDate }: any) {
           title="Mã nhân viên"
           dataIndex="employee"
           key="employee"
-          className="!text-left !p-2"
+          className="!text-left !p-2 !min-w-[150px]"
         />
 
         <Column
-          title="Mã nhân viên"
+          title="Nhân viên"
           dataIndex="employee_name"
           key="employee_name"
           className="!text-left !p-2"

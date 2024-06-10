@@ -52,7 +52,7 @@ export default function Tab3({ data, total, setPage, page, clDate }: any) {
         bordered
         scroll={{
           x: true,
-          y: containerHeight < 300 ? undefined : scrollYTable1,
+          y: containerHeight < 330 ? undefined : scrollYTable1,
         }}
       >
         <Column
@@ -62,15 +62,15 @@ export default function Tab3({ data, total, setPage, page, clDate }: any) {
           className="!text-center !min-w-[60px]"
           render={(_: any, record: any, index: number) => index + 1}
         />
-         <Column
+        <Column
           title="Mã nhân viên"
           dataIndex="employee"
           key="employee"
-          className="!text-left !p-2"
+          className="!text-left !p-2 !min-w-[150px]"
         />
 
         <Column
-          title="Mã nhân viên"
+          title="Nhân viên"
           dataIndex="employee_name"
           key="employee_name"
           className="!text-left !p-2"
@@ -104,7 +104,6 @@ export default function Tab3({ data, total, setPage, page, clDate }: any) {
                 dataIndex={date.date}
                 key={date.dayOfWeek}
                 render={(value: any, record: any) => {
-                  
                   if (
                     value?.dayOfWeek === "Thứ 7" ||
                     value?.dayOfWeek === "Chủ nhật"
@@ -114,14 +113,11 @@ export default function Tab3({ data, total, setPage, page, clDate }: any) {
                         OFF
                       </div>
                     );
-                  } else if(value?.shift === undefined){
-                    return <div>x</div>
-                  }
-                  
-                  else {
+                  } else if (value?.shift === undefined) {
+                    return <div>x</div>;
+                  } else {
                     return <div className="items-center">{value?.shift}</div>;
                   }
-                  
                 }}
               />
             </ColumnGroup>

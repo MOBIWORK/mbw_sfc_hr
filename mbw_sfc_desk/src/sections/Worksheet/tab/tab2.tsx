@@ -70,7 +70,7 @@ export default function Tab2({  data, total, setPage, page }: any) {
         />
 
         <Column
-          title="Mã nhân viên"
+          title="Nhân viên"
           dataIndex="employee_name"
           key="employee_name"
           className="!text-left !p-2"

@@ -66,11 +66,11 @@ export default function Tab5({ data, total, setPage, page }: any) {
           title="Mã nhân viên"
           dataIndex="employee"
           key="employee"
-          className="!text-left !p-2"
+          className="!text-left !p-2 !min-w-[140px]"
         />
 
         <Column
-          title="Mã nhân viên"
+          title="Nhân viên"
           dataIndex="employee_name"
           key="employee_name"
           className="!text-left !p-2"

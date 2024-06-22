@@ -280,7 +280,7 @@ export default function Salary() {
                 dataIndex="designation"
                 key="designation"
               />
-              <Column title="Phòng ban" dataIndex="deparment" key="deparment" />
+              <Column title="Phòng ban" dataIndex="department" key="department" />
               <Column
                 className="cl-c !text-right"
                 title="Nhóm(1:QL 2:NV 3:SV)"

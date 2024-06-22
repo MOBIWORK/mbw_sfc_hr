@@ -274,7 +274,7 @@ export default function Salary() {
                 //   </Row>
                 // )}
               />
-              <Column title="CTC" dataIndex="CTC" key="ctc" />
+              <Column title="CTC" dataIndex="ngay_cong_chuan" key="ngay_cong_chuan" />
               <Column
                 title="Chức danh"
                 dataIndex="designation"
@@ -336,30 +336,30 @@ export default function Salary() {
                 <Column
                   className="!text-center !p-3"
                   title="Tổng ngày công"
-                  dataIndex="TNC"
-                  key="TNC"
+                  dataIndex="tong_cong"
+                  key="tong_cong"
                   render={(value) => <div className="!text-right">{value}</div>}
                 />
                 <ColumnGroup title="Ngày công - theo tháng">
-                  <Column title="Nghỉ PN" dataIndex={"PN"} key="PN" />
-                  <Column title="Lễ, CĐ" dataIndex={"NL"} key="NL" />
+                  <Column title="Nghỉ PN" dataIndex={"number_work_explain_absence_monthly"} key="number_work_explain_absence_monthly" />
+                  <Column title="Lễ, CĐ" dataIndex={"number_of_holiday_monthly"} key="number_of_holiday_monthly" />
                   <Column title="Ca thẳng" dataIndex={"NCCT"} key="NCCT" />
                   <Column title="Đào tạo" dataIndex={"NCDT"} key="NCDT" />
                   <Column title="Ca gãy" dataIndex={"NCCG"} key="NCCG" />
                 </ColumnGroup>
                 <ColumnGroup title="Giờ công - theo tháng">
-                  <Column title="Parttime" dataIndex={"GCCT"} key="GCCT" />
+                  <Column title="Parttime" dataIndex={"straight_shift_hours_monthly"} key="straight_shift_hours_monthly" />
                   <Column title="Đào tạo" dataIndex={"GCDT"} key="GCDT" />
-                  <Column title="Ca gãy" dataIndex={"GCCG"} key="GCCG" />
+                  <Column title="Ca gãy" dataIndex={"broken_shift_hours_monthly"} key="broken_shift_hours_monthly" />
                 </ColumnGroup>
                 <ColumnGroup title="Bù công">
-                  <Column title="Ngày nghỉ bù" dataIndex={"CB"} key="CB" />
+                  <Column title="Ngày nghỉ bù" dataIndex={"cong_bu"} key="cong_bu" />
                   <Column title="Giờ nghỉ bù" dataIndex={"GNB"} key="GNB" />
                 </ColumnGroup>
                 <ColumnGroup title="Ngày lễ">
                   <Column title="Công ca thẳng" dataIndex={"NCCTL"} key="NCCTL" />
-                  <Column title="Công ca gãy" dataIndex={"NCCGL"} key="NCCGL" />
-                  <Column title="Giờ ca thẳng" dataIndex={"GCCTL"} key="GCCTL" />
+                  <Column title="Công ca gãy" dataIndex={"work_hours_broken_holidays_monthly"} key="work_hours_broken_holidays_monthly" />
+                  <Column title="Giờ ca thẳng" dataIndex={"work_hours_straight_holidays_monthly"} key="work_hours_straight_holidays_monthly" />
                   <Column title="Giờ ca gãy" dataIndex={"GCCTL"} key="GCCTL" />
                 </ColumnGroup>
               </ColumnGroup>
@@ -379,8 +379,8 @@ export default function Salary() {
                 <Column
                   className="!text-right"
                   title="Xăng xe"
-                  dataIndex="PCXX"
-                  key="PCXX"
+                  dataIndex="phu_cap_xa_nha"
+                  key="phu_cap_xa_nha"
                   render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
                 />
                 <Column

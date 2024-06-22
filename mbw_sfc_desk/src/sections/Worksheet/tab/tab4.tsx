@@ -103,7 +103,7 @@ export default function Tab4({ data, total, setPage, page, clDate }: any) {
                 title={date.dayOfWeek}
                 dataIndex={date.date}
                 key={date.dayOfWeek}
-                render={(value: any, record: any) => {
+                render={(value: any) => {
                   if (
                     value?.dayOfWeek === "Thứ 7" ||
                     value?.dayOfWeek === "Chủ nhật"
@@ -118,7 +118,7 @@ export default function Tab4({ data, total, setPage, page, clDate }: any) {
                   } else {
                     return (
                       <div className="items-center">
-                        {value?.number_of_hours}
+                        {parseFloat(value?.number_of_hours.toFixed(2))}
                       </div>
                     );
                   }

@@ -282,7 +282,7 @@ export default function Salary() {
               />
               <Column title="Phòng ban" dataIndex="department" key="department" />
               <Column
-                className="cl-c !text-right"
+                className="cl-c !text-center"
                 title="Nhóm(1:QL 2:NV 3:SV)"
                 dataIndex="grade"
                 key="grade"
@@ -364,9 +364,9 @@ export default function Salary() {
                 </ColumnGroup>
               </ColumnGroup>
               {/* end chi tiết ngày công */}
-              <Column title="Lương ngày công làm việc" dataIndex={"LNC"} key="LNC"/>     
-              <Column title="Tiền lương ngày lễ / ngoài giờ" dataIndex={"LNG"} key="LNG"/>     
-              <Column title="Lương KPIs NH" dataIndex={"LKPI"} key="LKPI"/>
+              <Column title="Lương ngày công làm việc" dataIndex={"LNC"} key="LNC" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>     
+              <Column title="Tiền lương ngày lễ / ngoài giờ" dataIndex={"LNG"} key="LNG" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>     
+              <Column title="Lương KPIs NH" dataIndex={"LKPI"} key="LKPI" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
               {/* phụ cấp  */}
               <ColumnGroup title="Phụ cấp">
                 <Column

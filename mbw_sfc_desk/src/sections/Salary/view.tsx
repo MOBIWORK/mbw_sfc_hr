@@ -364,9 +364,9 @@ export default function Salary() {
                 </ColumnGroup>
               </ColumnGroup>
               {/* end chi tiết ngày công */}
-              <Column title="Lương ngày công làm việc" dataIndex={"LNC"} key="LNC" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>     
-              <Column title="Tiền lương ngày lễ / ngoài giờ" dataIndex={"LNG"} key="LNG" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>     
-              <Column title="Lương KPIs NH" dataIndex={"LKPI"} key="LKPI" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
+              <Column className="!text-right" title="Lương ngày công làm việc" dataIndex={"LNC"} key="LNC" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>     
+              <Column className="!text-right" title="Tiền lương ngày lễ / ngoài giờ" dataIndex={"LNG"} key="LNG" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>     
+              <Column className="!text-right" title="Lương KPIs NH" dataIndex={"LKPI"} key="LKPI" render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
               {/* phụ cấp  */}
               <ColumnGroup title="Phụ cấp">
                 <Column
@@ -435,7 +435,7 @@ export default function Salary() {
               </ColumnGroup>
               {/* end phụ cấp  */}
               <Column
-                className="cl-c !text-center"
+                className="cl-c !text-right"
                 title="Truy thu, truy lĩnh lương"
                 dataIndex="TLL"
                 key="TLL"
@@ -449,13 +449,13 @@ export default function Salary() {
                 render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
               />
               <Column
-                className="!text-center"
+                className="!text-right"
                 title="Phải trả đồng phục"
                 dataIndex="PTDP"
                 key="PTDP"
                 render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}
               />
-              <Column title="Hỗ trợ luân chuyển thu ngân" dataIndex="LCTN" key="LCTN"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
+              <Column className="!text-right" title="Hỗ trợ luân chuyển thu ngân" dataIndex="LCTN" key="LCTN"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
               <Column title="Tổng thu nhập" dataIndex="gross_pay" key="gross_pay"    render={(value) => value ?<div className="!text-right">{Intl.NumberFormat().format(value)}</div>:"-"}/>
 
               {/* thu người lao động  */}

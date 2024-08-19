@@ -131,7 +131,7 @@ website_route_rules = [
 
 doc_events = {
     "Salary Slip": {
-        "before_insert": "mbw_sfc_hr.controllers.salary_slip.salary_slip_update"
+        "after_insert": "mbw_sfc_hr.controllers.salary_slip.salary_slip_update"
     },
 }
 

@@ -36,8 +36,10 @@ def salary_slip_update(doc, method):
                     value = None
                     if salary_component.custom_doctype == "DMS KPI":
                         value = frappe.get_value("DMS KPI", {"ngay_hieu_luc_tu": (">=", first_day), "ngay_hieu_luc_den": ("<=", last_day_date), "nhan_vien_ban_hang": employee}, salary_component.field_name)
-                    else:
+                    elif salary_component.custom_doctype == "DMS Summary KPI Monthly":
                         value = frappe.get_value(salary_component.custom_doctype, {"nhan_vien_ban_hang": employee, "thang": month, "nam": year}, salary_component.field_name)
+                    else:
+                        value = frappe.get_value(salary_component.custom_doctype, {"employee": employee, "month": month, "year": year}, salary_component.field_name)
                     if value is not None:
                         for k in doc.earnings:
                             if k.salary_component == i.salary_component:
@@ -51,8 +53,10 @@ def salary_slip_update(doc, method):
                     value = None
                     if salary_component.custom_doctype == "DMS KPI":
                         value = frappe.get_value("DMS KPI", {"ngay_hieu_luc_tu": (">=", first_day), "ngay_hieu_luc_den": ("<=", last_day_date), "nhan_vien_ban_hang": employee}, salary_component.field_name)
-                    else:
+                    elif salary_component.custom_doctype == "DMS Summary KPI Monthly":
                         value = frappe.get_value(salary_component.custom_doctype, {"nhan_vien_ban_hang": employee, "thang": month, "nam": year}, salary_component.field_name)
+                    else:
+                        value = frappe.get_value(salary_component.custom_doctype, {"employee": employee, "month": month, "year": year}, salary_component.field_name)
                     if value is not None:
                         for j in doc.deductions:
                             if j.salary_component == a.salary_component:
